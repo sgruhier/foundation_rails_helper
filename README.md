@@ -1,7 +1,7 @@
 Still in alpha release, don't use it yet.
 
 
-# FoundationRailsHelper
+# FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
 Gem for rails 3 application that uses the excellent Zurb Foundation framework.
 It includes so far
