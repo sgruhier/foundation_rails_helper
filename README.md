@@ -4,6 +4,9 @@ Still in alpha release, don't use it yet.
 # FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
 Gem for rails 3 application that uses the excellent Zurb Foundation framework.
+* [Zurb Foundation](https://github.com/zurb/foundation)
+* [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
+
 It includes so far
 
 * A custum FormBuilder to generate form with Foundation framework. It replaces the current `form_for` so you don't have to
@@ -17,7 +20,7 @@ This gem has only been tested with Rails 3.1 and ruby 1.9.2.
 
 A classic devise sign up views will look like this:
 
-```
+```html-rails
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= f.email_field :email %>
   <%= f.password_field :password %>
