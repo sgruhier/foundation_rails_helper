@@ -23,7 +23,7 @@ module FoundationRailsHelper
     
     def datetime_select(attribute, options = {})
       field attribute, options do |class_name|
-        super(attribute, {:minute_step => 15}, :class => class_name, :autocomplete => :off)
+        super(attribute, {}, :class => class_name, :autocomplete => :off)
       end
     end
   
