@@ -23,6 +23,10 @@ With errors
 
 ![Sign-up-with-errors](http://dl.dropbox.com/u/517768/sign-up-with-errors.png "Sign-up-with-errors")
 
+And success flash message will be display like that:
+
+![Flash-message](http://dl.dropbox.com/u/517768/flash.png "Flash-message")
+
 ## Installation
 
 Add this line to your application's Gemfile:
