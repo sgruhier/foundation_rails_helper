@@ -20,7 +20,7 @@ This gem has only been tested with Rails 3.1 and ruby 1.9.2.
 
 A classic devise sign up views will look like this:
 
-```html-rails
+```erb
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= f.email_field :email %>
   <%= f.password_field :password %>
