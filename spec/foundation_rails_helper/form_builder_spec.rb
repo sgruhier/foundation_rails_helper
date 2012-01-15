@@ -58,6 +58,16 @@ describe "FoundationRailsHelper::FormHelper" do
         node.find_field('author_avatar').value.should  be_nil
       end    
     end
+    
+    it "should generate select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.select(:description, [["Choice #1", :a], ["Choice #2", :b]])
+        node.should have_css('label[for="author_description"]', :text => "Description")
+        node.should have_css('select[name="author[description]"]')
+        node.should have_css('select[name="author[description]"] option[value="a"]', :text => "Choice #1")
+        node.should have_css('select[name="author[description]"] option[value="b"]', :text => "Choice #2")
+      end    
+    end
   
     it "should generate check_box input" do
       form_for(@author) do |builder|

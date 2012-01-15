@@ -7,7 +7,7 @@ module FoundationRailsHelper
       content_tag(:small, object.errors[attribute].join(', '), :class => :error) unless object.errors[attribute].blank?
     end
   
-    %w(file_field email_field text_field text_area select).each do |method_name|
+    %w(file_field email_field text_field text_area).each do |method_name|
       define_method(method_name) do |attribute, options = {}|
         field(attribute, options) do |class_name|
           super(attribute, :class => class_name) 
@@ -46,6 +46,13 @@ module FoundationRailsHelper
       end
     end
   
+    def select(attribute, choices, options = {}, html_options = {})
+      field attribute, options do |class_name|
+        html_options[:autocomplete] ||= :off
+        super(attribute, choices, options, html_options)
+      end
+    end
+    
     def autocomplete(attribute, url, options = {})
       field attribute, options do |class_name|
         autocomplete_field(attribute, url, :class => class_name, 
