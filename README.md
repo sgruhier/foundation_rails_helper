@@ -1,6 +1,3 @@
-Still in alpha release, don't use it yet.
-
-
 # FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
 Gem for rails 3 application that uses the excellent Zurb Foundation framework.
@@ -14,7 +11,7 @@ change your rails code.
 Errors messages are propertly displayed
 * A `display_flash_messages` helper method to use Zurb Foundation Alerts UI
 
-This gem has only been tested with Rails 3.1 and ruby 1.9.2. 
+I use this gem only been with Rails 3.1 and ruby 1.9.2. It should work for Rails 3.0.
 
 ## Screenshots
 
