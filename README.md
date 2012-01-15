@@ -12,7 +12,7 @@ It includes so far
 * A custum FormBuilder to generate form with Foundation framework. It replaces the current `form_for` so you don't have to
 change your rails code.
 Errors messages are propertly displayed
-* A `display_flash` helper method to use Zurb Foundation Alerts UI
+* A `display_flash_messages` helper method to use Zurb Foundation Alerts UI
 
 This gem has only been tested with Rails 3.1 and ruby 1.9.2. 
 
@@ -56,7 +56,7 @@ And then execute:
 
 For form helpers, nothing to do,
 
-To get access to `display_flash` in your views add in your `app/helpers/application_helper.rb` file
+To get access to `display_flash_messages` in your views add in your `app/helpers/application_helper.rb` file
 
 ```
   include FoundationRailsHelper::FlashHelper
