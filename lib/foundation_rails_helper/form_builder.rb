@@ -15,6 +15,12 @@ module FoundationRailsHelper
       end
     end
   
+    def check_box(attribute, options = {}) 
+      l = label(attribute, options)
+      c = super(attribute, options)
+      l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
+    end
+    
     def password_field(attribute, options = {})
       field attribute, options do |class_name|
         super(attribute, :class => class_name, :autocomplete => :off)
@@ -47,7 +53,6 @@ module FoundationRailsHelper
       super(value, options)
     end
     
-
   private
     def custom_label(attribute, text = nil)
       has_error = !object.errors[attribute].blank?
@@ -63,7 +68,7 @@ module FoundationRailsHelper
   
     def field(attribute, options, &block)
       html = custom_label(attribute, options[:label]) 
-      html += yield("#{options[:class] || "medium"} input-text placeholder")
+      html += yield("#{options[:class] || "medium"} input-text")
       html += error_and_hint(attribute)
     end
   end

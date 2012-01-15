@@ -70,6 +70,7 @@ module FoundationRailsSpecHelper
     @author.stub!(:login).and_return('fred_smith')
     @author.stub!(:email).and_return('fred@foo.com')
     @author.stub!(:password).and_return('secret')
+    @author.stub!(:active).and_return(true)
     @author.stub!(:description).and_return('bla bla bla')
     @author.stub!(:avatar).and_return('avatar.png')
     @author.stub!(:birthdate).and_return(Date.parse("1969-06-18 20:30"))
