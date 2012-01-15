@@ -34,8 +34,8 @@ A classic devise sign up views will look like this:
     <th>Form with errors</th>
   </tr>
   <tr>
-    <td>![Sign-up](http://dl.dropbox.com/u/517768/sign-up.png "Sign-up")</td>
-    <td>![Sign-up-with-errors](http://dl.dropbox.com/u/517768/sign-up-with-errors.png "Sign-up-with-errors")</td>
+    <td valign='top'> <img src="http://dl.dropbox.com/u/517768/sign-up.png"/></td>
+    <td valign='top'> <img src="http://dl.dropbox.com/u/517768/sign-up-with-errors.png"/></td>
   </tr>
 </table>
 
