@@ -16,6 +16,7 @@ I use this gem only been with Rails 3.1 and ruby 1.9.2. It should work for Rails
 
 ## Screenshots
 
+### Forms
 A classic devise sign up views will look like this:
 
 ```erb
@@ -27,14 +28,18 @@ A classic devise sign up views will look like this:
   <%= f.submit "S'enregistrer" %>
 <% end %>
 ```
+<table>
+  <tr>
+    <th>Form</th>
+    <th>Form with errors</th>
+  </tr>
+  <tr>
+    <td>![Sign-up](http://dl.dropbox.com/u/517768/sign-up.png "Sign-up")</td>
+    <td>![Sign-up-with-errors](http://dl.dropbox.com/u/517768/sign-up-with-errors.png "Sign-up-with-errors")</td>
+  </tr>
+</table>
 
-![Sign-up](http://dl.dropbox.com/u/517768/sign-up.png "Sign-up")
-
-With errors
-
-![Sign-up-with-errors](http://dl.dropbox.com/u/517768/sign-up-with-errors.png "Sign-up-with-errors")
-
-And success flash message will be display like that:
+### Flash messages
 
 ![Flash-message](http://dl.dropbox.com/u/517768/flash.png "Flash-message")
 
