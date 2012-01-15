@@ -65,6 +65,11 @@ To get access to `display_flash_messages` in your views add in your `app/helpers
   include FoundationRailsHelper::FlashHelper
 ```
 
+## TODO
+
+* Handle more UI components
+* Make somehting for ajax forms
+
 ## Contributing
 
 1. Fork it
