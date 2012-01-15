@@ -21,6 +21,13 @@ module FoundationRailsHelper
       l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
     end
     
+    def radio_button(attribute, tag_value, options = {})
+      options[:for] ||= "#{object.class.to_s.downcase}_#{attribute}_#{tag_value}"
+      l = label(attribute, options)
+      c = super(attribute, tag_value, options)
+      l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
+    end
+    
     def password_field(attribute, options = {})
       field attribute, options do |class_name|
         super(attribute, :class => class_name, :autocomplete => :off)
