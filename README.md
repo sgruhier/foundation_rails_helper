@@ -20,7 +20,7 @@ This gem has only been tested with Rails 3.1 and ruby 1.9.2.
 
 A classic devise sign up views will look like this:
 
-```html-rails
+```erb
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= f.email_field :email %>
   <%= f.password_field :password %>
@@ -54,9 +54,9 @@ And then execute:
 
 ## Usage
 
-Nothing to do, just add this gem to your Gemfile
+For form helpers, nothing to do,
 
-To get access to `display_flash` in your views add in your `app/helpers/application_helper.rb`
+To get access to `display_flash` in your views add in your `app/helpers/application_helper.rb` file
 
 ```
   include FoundationRailsHelper::FlashHelper

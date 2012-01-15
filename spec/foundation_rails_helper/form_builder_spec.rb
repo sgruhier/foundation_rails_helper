@@ -73,6 +73,18 @@ describe "FoundationRailsHelper::FormHelper" do
   end
   
   describe "errors generator" do
-    
+    it "should not display errors" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.text_field(:login)
+        node.should_not have_css('small.error')
+      end
+    end
+    it "should display errors" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:login => ['required']})
+        node = Capybara.string builder.text_field(:login)
+        node.should have_css('small.error', :text => "required")
+      end
+    end
   end
 end
