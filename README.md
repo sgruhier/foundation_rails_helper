@@ -1,6 +1,7 @@
 # FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
 Gem for rails 3 application that uses the excellent Zurb Foundation framework.
+
 * [Zurb Foundation](https://github.com/zurb/foundation)
 * [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
 
