@@ -25,7 +25,7 @@ A classic devise sign up views will look like this:
   <%= f.password_field :password %>
   <%= f.password_field :password_confirmation %>
 
-  <%= f.submit "S'enregistrer" %>
+  <%= f.submit %>
 <% end %>
 ```
 <table>
