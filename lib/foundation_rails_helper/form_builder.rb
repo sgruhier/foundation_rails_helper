@@ -8,7 +8,8 @@ module FoundationRailsHelper
     end
   
     %w(file_field email_field text_field text_area).each do |method_name|
-      define_method(method_name) do |attribute, options = {}|
+      define_method(method_name) do |attribute, options|
+        options ||= {}
         field(attribute, options) do |class_name|
           super(attribute, :class => class_name) 
         end  
