@@ -11,8 +11,8 @@ module FoundationRailsHelper
       define_method(method_name) do |*args|
         attribute = args[0]
         options   = args[1] || {}
-        field(attribute, options) do |class_name|
-          super(attribute, :class => class_name) 
+        field(attribute, options) do |options|
+          super(attribute, options) 
         end  
       end
     end
@@ -31,36 +31,35 @@ module FoundationRailsHelper
     end
     
     def password_field(attribute, options = {})
-      field attribute, options do |class_name|
-        super(attribute, :class => class_name, :autocomplete => :off)
+      field attribute, options do |options|
+        super(attribute, options.merge(:autocomplete => :off))
       end
     end
     
     def datetime_select(attribute, options = {})
-      field attribute, options do |class_name|
-        super(attribute, {}, :class => class_name, :autocomplete => :off)
+      field attribute, options do |options|
+        super(attribute, {}, options.merge(:autocomplete => :off))
       end
     end
   
     def date_select(attribute, options = {})
-      field attribute, options do |class_name|
-        super(attribute, {}, :class => class_name, :autocomplete => :off)
+      field attribute, options do |options|
+        super(attribute, {}, options.merge(:autocomplete => :off))
       end
     end
   
     def select(attribute, choices, options = {}, html_options = {})
-      field attribute, options do |class_name|
+      field attribute, options do |options|
         html_options[:autocomplete] ||= :off
         super(attribute, choices, options, html_options)
       end
     end
     
     def autocomplete(attribute, url, options = {})
-      field attribute, options do |class_name|
-        autocomplete_field(attribute, url, :class => class_name, 
-                                           :update_elements => options[:update_elements],
-                                           :min_lenth => 0,
-                                           :value => object.send(attribute)) 
+      field attribute, options do |options|
+        autocomplete_field(attribute, url, options.merge(:update_elements => options[:update_elements],
+                                                         :min_lenth => 0,
+                                                         :value => object.send(attribute))) 
       end                                          
     end
 
@@ -84,7 +83,9 @@ module FoundationRailsHelper
   
     def field(attribute, options, &block)
       html = custom_label(attribute, options[:label]) 
-      html += yield("#{options[:class] || "medium"} input-text")
+      options[:class] ||= "medium"
+      options[:class] = "#{options[:class]} input-text"
+      html += yield(options)
       html += error_and_hint(attribute)
     end
   end
