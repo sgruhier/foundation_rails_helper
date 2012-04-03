@@ -5,7 +5,7 @@ Gem for Rails 3 applications that use the excellent Zurb Foundation framework.
 * [Zurb Foundation](https://github.com/zurb/foundation)
 * [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
 
-So far, it includes:
+So far it includes:
 
 * A custom FormBuilder that generates a form using the Foundation framework. It replaces the current `form_for` so you don't have to
 change your Rails code.  Error messages are properly displayed.
@@ -57,9 +57,9 @@ And then execute:
 
 ## Usage
 
-For form helpers, there is nothing additional to do.
+There is nothing additional to do for form helpers.
 
-To get access to `display_flash_messages` in your views, add:
+To get access to `display_flash_messages` in your views, add
 
 ```
   include FoundationRailsHelper::FlashHelper
@@ -67,18 +67,19 @@ To get access to `display_flash_messages` in your views, add:
 
 to `app/helpers/application_helper.rb`
 
+
 ## TODO
 
-* Handle more UI components.
-* Make something for ajax forms.
+* Handle more UI components
+* Make something for ajax forms
 
 ## Contributing
 
-1. Fork it.
-2. Create your feature branch (`git checkout -b my-new-feature`).
-3. Commit your changes (`git commit -am 'Added some feature'`).
-4. Push to the branch (`git push origin my-new-feature`).
-5. Create a new Pull Request.
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
 
 
 ## Copyright
