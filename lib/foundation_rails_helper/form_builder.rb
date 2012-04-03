@@ -58,7 +58,7 @@ module FoundationRailsHelper
     def autocomplete(attribute, url, options = {})
       field attribute, options do |options|
         autocomplete_field(attribute, url, options.merge(:update_elements => options[:update_elements],
-                                                         :min_lenth => 0,
+                                                         :min_length => 0,
                                                          :value => object.send(attribute))) 
       end                                          
     end
