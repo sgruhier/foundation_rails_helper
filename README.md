@@ -9,7 +9,7 @@ It includes so far
 
 * A custom FormBuilder to generate form with Foundation framework. It replaces the current `form_for` so you don't have to
 change your rails code.
-Errors messages are property displayed
+Errors messages are properly displayed
 * A `display_flash_messages` helper method to use Zurb Foundation Alerts UI
 
 I use this gem only been with Rails 3.1 and ruby 1.9.2. It should work for Rails 3.0.
