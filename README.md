@@ -1,23 +1,23 @@
 # FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
-Gem for rails 3 application that uses the excellent Zurb Foundation framework.
+Gem for Rails 3 applications that use the excellent Zurb Foundation framework.
 
 * [Zurb Foundation](https://github.com/zurb/foundation)
 * [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
 
-It includes so far
+So far it includes:
 
-* A custom FormBuilder to generate form with Foundation framework. It replaces the current `form_for` so you don't have to
-change your rails code.
-Errors messages are properly displayed
-* A `display_flash_messages` helper method to use Zurb Foundation Alerts UI
+* A custom FormBuilder that generates a form using the Foundation framework. It replaces the current `form_for` so you don't have to
+change your Rails code.  Error messages are properly displayed.
 
-I use this gem only been with Rails 3.1 and ruby 1.9.2. It should work for Rails 3.0.
+* A `display_flash_messages` helper method that uses Zurb Foundation Alerts UI.
+
+This gem has been used with Rails 3.1 and ruby 1.9.2. It should work for Rails 3.0.
 
 ## Screenshots
 
 ### Forms
-A classic devise sign up views will look like this:
+A classic devise sign up view will look like this:
 
 ```erb
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
@@ -57,13 +57,16 @@ And then execute:
 
 ## Usage
 
-For form helpers, nothing to do,
+There is nothing additional to do for form helpers.
 
-To get access to `display_flash_messages` in your views add in your `app/helpers/application_helper.rb` file
+To get access to `display_flash_messages` in your views, add
 
 ```
   include FoundationRailsHelper::FlashHelper
 ```
+
+to `app/helpers/application_helper.rb`
+
 
 ## TODO
 
@@ -76,7 +79,7 @@ To get access to `display_flash_messages` in your views add in your `app/helpers
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+5. Create a new Pull Request
 
 
 ## Copyright
