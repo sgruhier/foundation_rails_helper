@@ -7,9 +7,9 @@ Gem for rails 3 application that uses the excellent Zurb Foundation framework.
 
 It includes so far
 
-* A custum FormBuilder to generate form with Foundation framework. It replaces the current `form_for` so you don't have to
+* A custom FormBuilder to generate form with Foundation framework. It replaces the current `form_for` so you don't have to
 change your rails code.
-Errors messages are propertly displayed
+Errors messages are property displayed
 * A `display_flash_messages` helper method to use Zurb Foundation Alerts UI
 
 I use this gem only been with Rails 3.1 and ruby 1.9.2. It should work for Rails 3.0.
@@ -68,7 +68,7 @@ To get access to `display_flash_messages` in your views add in your `app/helpers
 ## TODO
 
 * Handle more UI components
-* Make somehting for ajax forms
+* Make something for ajax forms
 
 ## Contributing
 
