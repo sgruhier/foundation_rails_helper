@@ -20,7 +20,7 @@ module FoundationRailsHelper
     def check_box(attribute, options = {})
       custom_label(attribute, options[:label]) do
         super(attribute, options)
-      end
+      end + error_and_hint(attribute)
     end
 
     def radio_button(attribute, tag_value, options = {})
