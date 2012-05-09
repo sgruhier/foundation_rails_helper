@@ -74,7 +74,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.check_box(:active)
         node.should have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
         node.should have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
-        node.should have_css('label[for="author_active"]', :text => "Acctive")
+        node.should have_css('label[for="author_active"]', :text => "Active")
       end    
     end
   
