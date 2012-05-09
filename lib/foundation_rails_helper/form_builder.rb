@@ -18,6 +18,8 @@ module FoundationRailsHelper
     end
 
     def check_box(attribute, options = {})
+      unless options[:label]
+        options[:label] = object.class.human_attribute_name(attribute.to_s)
       custom_label(attribute, options[:label]) do
         super(attribute, options)
       end + error_and_hint(attribute)
