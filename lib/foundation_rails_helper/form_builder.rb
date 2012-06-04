@@ -18,8 +18,7 @@ module FoundationRailsHelper
     end
 
     def check_box(attribute, options = {})
-      options[:label] ||= object.class.human_attribute_name(attribute.to_s)
-      custom_label(attribute, options[:label]) do
+      custom_label(attribute, options[:label] || attribute.to_s.humanize, options[:label_options]) do
         super(attribute, options)
       end + error_and_hint(attribute)
     end
@@ -70,10 +69,13 @@ module FoundationRailsHelper
     end
 
   private
-    def custom_label(attribute, text = nil, options={}, &block)
+    def custom_label(attribute, text, options, &block)
       has_error = !object.errors[attribute].blank?
       text = block.call.html_safe + text if block_given?
-      label(attribute, text, options.merge(:class => has_error ? :red : ''))
+      options ||= {}
+      options[:class] ||= ""
+      options[:class] += ' red' if has_error
+      label(attribute, text, options)
     end
 
     def error_and_hint(attribute)
@@ -84,7 +86,7 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, &block)
-      html = custom_label(attribute, options[:label])
+      html = custom_label(attribute, options[:label], options[:label_options])
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
       html += yield(options)
