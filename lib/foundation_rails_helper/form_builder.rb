@@ -19,6 +19,8 @@ module FoundationRailsHelper
 
     def check_box(attribute, options = {})
       custom_label(attribute, options[:label] || attribute.to_s.humanize, options[:label_options]) do
+        options.delete(:label)
+        options.delete(:label_options)
         super(attribute, options)
       end + error_and_hint(attribute)
     end
@@ -89,6 +91,8 @@ module FoundationRailsHelper
       html = custom_label(attribute, options[:label], options[:label_options])
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
+      options.delete(:label)
+      options.delete(:label_options)
       html += yield(options)
       html += error_and_hint(attribute)
     end
