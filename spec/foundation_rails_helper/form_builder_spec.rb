@@ -46,8 +46,8 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.text_area(:description)
         node.should have_css('label[for="author_description"]', :text => "Description")
         node.should have_css('textarea.medium.input-text[name="author[description]"]')
-        node.find_field('author_description').value.should == @author.description
-      end    
+        node.find_field('author_description').value.strip.should == @author.description
+      end
     end
   
     it "should generate file_field input" do
