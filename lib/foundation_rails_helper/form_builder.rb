@@ -50,6 +50,12 @@ module FoundationRailsHelper
       end
     end
 
+    def time_zone_select(attribute, options = {})
+      field attribute, options do |options|
+        super(attribute, {}, options.merge(:autocomplete => :off))
+      end
+    end
+
     def select(attribute, choices, options = {}, html_options = {})
       field attribute, options do |options|
         html_options[:autocomplete] ||= :off
