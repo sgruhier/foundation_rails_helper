@@ -22,7 +22,7 @@ module FoundationRailsHelper
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options)
-      end + error_and_hint(attribute)
+      end + error_and_hint(attribute, options)
     end
 
     def radio_button(attribute, tag_value, options = {})
@@ -86,7 +86,7 @@ module FoundationRailsHelper
       label(attribute, text, options)
     end
 
-    def error_and_hint(attribute)
+    def error_and_hint(attribute, options = {})
       html = ""
       html += content_tag(:span, options[:hint], :class => :hint) if options[:hint]
       html += error_for(attribute) || ""
@@ -100,7 +100,7 @@ module FoundationRailsHelper
       options.delete(:label)
       options.delete(:label_options)
       html += yield(options)
-      html += error_and_hint(attribute)
+      html += error_and_hint(attribute, options)
     end
   end
 end
