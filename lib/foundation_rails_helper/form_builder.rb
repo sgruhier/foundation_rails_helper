@@ -3,10 +3,6 @@ require 'action_view/helpers'
 module FoundationRailsHelper
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
-    def error_for(attribute)
-      content_tag(:small, object.errors[attribute].join(', '), :class => :error) unless object.errors[attribute].blank?
-    end
-
     %w(file_field email_field text_field text_area).each do |method_name|
       define_method(method_name) do |*args|
         attribute = args[0]
@@ -77,6 +73,12 @@ module FoundationRailsHelper
     end
 
   private
+    def error_for(attribute, options = {})
+      class_name = "error"
+      class_name += " #{options[:class]}" if options[:class]
+      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) unless object.errors[attribute].blank?
+    end
+
     def custom_label(attribute, text, options, &block)
       has_error = !object.errors[attribute].blank?
       text = block.call.html_safe + text if block_given?
@@ -89,7 +91,7 @@ module FoundationRailsHelper
     def error_and_hint(attribute, options = {})
       html = ""
       html += content_tag(:span, options[:hint], :class => :hint) if options[:hint]
-      html += error_for(attribute) || ""
+      html += error_for(attribute, options) || ""
       html.html_safe
     end
 
