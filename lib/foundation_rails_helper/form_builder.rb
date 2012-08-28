@@ -14,7 +14,7 @@ module FoundationRailsHelper
     end
 
     def check_box(attribute, options = {})
-      custom_label(attribute, options[:label] || attribute.to_s.humanize, options[:label_options]) do
+      custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options)
