@@ -74,13 +74,15 @@ module FoundationRailsHelper
 
   private
     def error_for(attribute, options = {})
-      class_name = "error"
-      class_name += " #{options[:class]}" if options[:class]
-      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) unless object.errors[attribute].blank?
+      if object != nil && !object.errors[attribute].blank?
+        class_name = "error"
+        class_name += " #{options[:class]}" if options[:class]
+        content_tag(:small, object.errors[attribute].join(', '), :class => class_name)
+      end
     end
 
     def custom_label(attribute, text, options, &block)
-      has_error = !object.errors[attribute].blank?
+      has_error = object && !object.errors[attribute].blank?
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""
