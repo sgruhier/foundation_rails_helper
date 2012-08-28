@@ -96,7 +96,10 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, &block)
-      html = custom_label(attribute, options[:label], options[:label_options])
+      html = ''.html_safe
+      if options[:label]
+        html = custom_label(attribute, options[:label], options[:label_options])
+      end
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
       options.delete(:label)
