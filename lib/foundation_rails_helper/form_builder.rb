@@ -40,9 +40,9 @@ module FoundationRailsHelper
       end
     end
 
-    def date_select(attribute, options = {})
-      field attribute, options do |options|
-        super(attribute, {}, options.merge(:autocomplete => :off))
+    def date_select(attribute, options = {}, html_options = {})
+      field attribute, html_options do |html_options|
+        super(attribute, options, html_options.merge(:autocomplete => :off))
       end
     end
 
