@@ -14,7 +14,7 @@ module FoundationRailsHelper
     end
 
     def check_box(attribute, options = {})
-      custom_label(attribute, options[:label] || attribute.to_s.humanize, options[:label_options]) do
+      custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options)
@@ -40,9 +40,9 @@ module FoundationRailsHelper
       end
     end
 
-    def date_select(attribute, options = {})
-      field attribute, options do |options|
-        super(attribute, {}, options.merge(:autocomplete => :off))
+    def date_select(attribute, options = {}, html_options = {})
+      field attribute, html_options do |html_options|
+        super(attribute, options, html_options.merge(:autocomplete => :off))
       end
     end
 
@@ -74,13 +74,15 @@ module FoundationRailsHelper
 
   private
     def error_for(attribute, options = {})
-      class_name = "error"
-      class_name += " #{options[:class]}" if options[:class]
-      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) unless object.errors[attribute].blank?
+      if object != nil && !object.errors[attribute].blank?
+        class_name = "error"
+        class_name += " #{options[:class]}" if options[:class]
+        content_tag(:small, object.errors[attribute].join(', '), :class => class_name)
+      end
     end
 
     def custom_label(attribute, text, options, &block)
-      has_error = !object.errors[attribute].blank?
+      has_error = object && !object.errors[attribute].blank?
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""
@@ -96,7 +98,10 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, &block)
-      html = custom_label(attribute, options[:label], options[:label_options])
+      html = ''.html_safe
+      if options[:label]
+        html = custom_label(attribute, options[:label], options[:label_options])
+      end
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
       options.delete(:label)
