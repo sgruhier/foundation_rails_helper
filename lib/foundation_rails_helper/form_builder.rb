@@ -21,11 +21,15 @@ module FoundationRailsHelper
       end + error_and_hint(attribute, options)
     end
 
-    def radio_button(attribute, tag_value, options = {})
+    def radio_button(attribute, tag_value, options = {}, label_text = nil)
       options[:for] ||= "#{object.class.to_s.downcase}_#{attribute}_#{tag_value}"
-      l = label(attribute, options)
       c = super(attribute, tag_value, options)
-      l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
+      label_text ||= attribute
+      # take the id of previous radio_button
+      radio_id = c.match(/id=\"(\w*)/)[1]
+      label(attribute, :for => radio_id) do
+        c << label_text
+      end
     end
 
     def password_field(attribute, options = {})
