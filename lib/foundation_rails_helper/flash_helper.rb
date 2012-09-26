@@ -2,19 +2,19 @@ require 'action_view/helpers'
 
 module FoundationRailsHelper
   module FlashHelper
-    # <div class="alert-box [success warning error]">
-    #   This is a success alert (div.alert-box.success).
+    # <div class="alert-box [success alert secondary]">
+    #   This is an alert box.
     #   <a href="" class="close">&times;</a>
     # </div>
     KEY_MATCHING = {
+      :alert   => :standard,
       :notice  => :success,
-      :info    => :warning,
-      :failure => :error,
-      :alert   => :error,
+      :failure => :alert,
+      :info    => :secondary,
     }
     def display_flash_messages
       flash.inject "" do |message, (key, value)| 
-        message += content_tag :div, :class => "alert-box #{KEY_MATCHING[key] || key}" do
+        message += content_tag :div, :class => "alert-box #{KEY_MATCHING[key] || key unless KEY_MATCHING[key] == :standard}" do
           (value + link_to("x", "#", :class => :close)).html_safe
         end
       end.html_safe
