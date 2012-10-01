@@ -86,7 +86,7 @@ module FoundationRailsHelper
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""
-      options[:class] += ' red' if has_error
+      options[:class] += ' error' if has_error
       label(attribute, text, options)
     end
 
@@ -102,8 +102,14 @@ module FoundationRailsHelper
       if options[:label]
         html = custom_label(attribute, options[:label], options[:label_options])
       end
+
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
+
+      if object != nil && !object.errors[attribute].blank?
+        options[:class] += ' error'
+      end
+
       options.delete(:label)
       options.delete(:label_options)
       html += yield(options)
