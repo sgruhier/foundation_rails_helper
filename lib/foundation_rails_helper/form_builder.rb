@@ -13,6 +13,7 @@ module FoundationRailsHelper
       end
     end
 
+=begin
     def check_box(attribute, options = {})
       custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
@@ -21,7 +22,6 @@ module FoundationRailsHelper
       end + error_and_hint(attribute, options)
     end
 
-=begin
     def radio_button(attribute, tag_value, options = {})
       options[:for] ||= "#{object.class.to_s.downcase}_#{attribute}_#{tag_value}"
       l = label(attribute, options)
