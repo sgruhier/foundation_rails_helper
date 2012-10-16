@@ -68,7 +68,7 @@ module FoundationRailsHelper
     end
 
     def submit(value=nil, options={})
-      options[:class] ||= "nice small radius blue button"
+      options[:class] ||= "small radius success button"
       super(value, options)
     end
 
