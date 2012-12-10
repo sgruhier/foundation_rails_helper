@@ -73,18 +73,21 @@ module FoundationRailsHelper
     end
 
   private
+    def has_error?(attribute)
+      !object.errors[attribute].blank?
+    end
+
     def error_for(attribute, options = {})
       class_name = "error"
       class_name += " #{options[:class]}" if options[:class]
-      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) unless object.errors[attribute].blank?
+      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) if has_error?(attribute)
     end
 
     def custom_label(attribute, text, options, &block)
-      has_error = !object.errors[attribute].blank?
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""
-      options[:class] += ' red' if has_error
+      options[:class] += " error" if has_error?(attribute)
       label(attribute, text, options)
     end
 
@@ -99,6 +102,7 @@ module FoundationRailsHelper
       html = custom_label(attribute, options[:label], options[:label_options])
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
+      options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
       html += yield(options)
