@@ -14,7 +14,7 @@ module FoundationRailsHelper
     end
 
     def check_box(attribute, options = {})
-      custom_label(attribute, options[:label] || attribute.to_s.humanize, options[:label_options]) do
+      custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options)
@@ -68,23 +68,26 @@ module FoundationRailsHelper
     end
 
     def submit(value=nil, options={})
-      options[:class] ||= "nice small radius blue button"
+      options[:class] ||= "small radius success button"
       super(value, options)
     end
 
   private
+    def has_error?(attribute)
+      !object.errors[attribute].blank?
+    end
+
     def error_for(attribute, options = {})
       class_name = "error"
       class_name += " #{options[:class]}" if options[:class]
-      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) unless object.errors[attribute].blank?
+      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) if has_error?(attribute)
     end
 
     def custom_label(attribute, text, options, &block)
-      has_error = !object.errors[attribute].blank?
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""
-      options[:class] += ' red' if has_error
+      options[:class] += " error" if has_error?(attribute)
       label(attribute, text, options)
     end
 
@@ -96,9 +99,11 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, &block)
-      html = custom_label(attribute, options[:label], options[:label_options])
+      html = ''.html_safe
+      html = custom_label(attribute, options[:label], options[:label_options]) if false != options[:label]
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
+      options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
       html += yield(options)

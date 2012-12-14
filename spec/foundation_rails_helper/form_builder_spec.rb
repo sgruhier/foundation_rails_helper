@@ -20,7 +20,16 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('label[for="author_login"]', :text => "Login")
         node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
-      end    
+      end
+    end
+
+    it "should generate text_field input without label" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.text_field(:login, :label => false)
+        node.should_not have_css('label[for="author_login"]', :text => "Login")
+        node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
+        node.find_field('author_login').value.should == @author.login
+      end
     end
   
     it "should generate password_field input" do
@@ -71,7 +80,7 @@ describe "FoundationRailsHelper::FormHelper" do
   
     it "should generate check_box input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.check_box(:active)
+        node = Capybara.string builder.label(:active) + builder.check_box(:active)
         node.should have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
         node.should have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
         node.should have_css('label[for="author_active"]', :text => "Active")
@@ -80,14 +89,14 @@ describe "FoundationRailsHelper::FormHelper" do
   
     it "should generate radio_button input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.radio_button(:active, "ok")
+        node = Capybara.string  builder.label(:active) + builder.radio_button(:active, "ok")
         node.should have_css('label[for="author_active_ok"] input[type="radio"][name="author[active]"]')
       end    
     end
   
     it "should generate date_select input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.date_select(:birthdate)
+        node = Capybara.string builder.label(:birthdate) + builder.date_select(:birthdate)
         node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
         %w(1 2 3).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
         node.should have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
