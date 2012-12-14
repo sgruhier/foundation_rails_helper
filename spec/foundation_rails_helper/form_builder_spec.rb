@@ -16,16 +16,25 @@ describe "FoundationRailsHelper::FormHelper" do
   describe "input generators" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.label(:login) + builder.text_field(:login)
+        node = Capybara.string builder.text_field(:login)
         node.should have_css('label[for="author_login"]', :text => "Login")
         node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
-      end    
+      end
+    end
+
+    it "should generate text_field input without label" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.text_field(:login, :label => false)
+        node.should_not have_css('label[for="author_login"]', :text => "Login")
+        node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
+        node.find_field('author_login').value.should == @author.login
+      end
     end
   
     it "should generate password_field input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.label(:password) + builder.password_field(:password)
+        node = Capybara.string builder.password_field(:password)
         node.should have_css('label[for="author_password"]', :text => "Password")
         node.should have_css('input.medium.input-text[type="password"][name="author[password]"]')
         node.find_field('author_password').value.should be_nil
@@ -34,7 +43,7 @@ describe "FoundationRailsHelper::FormHelper" do
   
     it "should generate email_field input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.label(:email) + builder.email_field(:email)
+        node = Capybara.string builder.email_field(:email)
         node.should have_css('label[for="author_email"]', :text => "Email")
         node.should have_css('input.medium.input-text[type="email"][name="author[email]"]')
         node.find_field('author_email').value.should == @author.email
@@ -43,7 +52,7 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should generate text_area input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.label(:description) + builder.text_area(:description)
+        node = Capybara.string builder.text_area(:description)
         node.should have_css('label[for="author_description"]', :text => "Description")
         node.should have_css('textarea.medium.input-text[name="author[description]"]')
         node.find_field('author_description').value.strip.should == @author.description
@@ -52,7 +61,7 @@ describe "FoundationRailsHelper::FormHelper" do
   
     it "should generate file_field input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.label(:avatar) + builder.file_field(:avatar)
+        node = Capybara.string builder.file_field(:avatar)
         node.should have_css('label[for="author_avatar"]', :text => "Avatar")
         node.should have_css('input.medium.input-text[type="file"][name="author[avatar]"]')
         node.find_field('author_avatar').value.should  be_nil
@@ -61,7 +70,7 @@ describe "FoundationRailsHelper::FormHelper" do
     
     it "should generate select input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.label(:description) + builder.select(:description, [["Choice #1", :a], ["Choice #2", :b]])
+        node = Capybara.string builder.select(:description, [["Choice #1", :a], ["Choice #2", :b]])
         node.should have_css('label[for="author_description"]', :text => "Description")
         node.should have_css('select[name="author[description]"]')
         node.should have_css('select[name="author[description]"] option[value="a"]', :text => "Choice #1")
