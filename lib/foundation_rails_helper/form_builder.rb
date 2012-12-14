@@ -13,8 +13,9 @@ module FoundationRailsHelper
       end
     end
 
+=begin
     def check_box(attribute, options = {})
-      custom_label(attribute, options[:label] || attribute.to_s.humanize, options[:label_options]) do
+      custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options)
@@ -27,7 +28,7 @@ module FoundationRailsHelper
       c = super(attribute, tag_value, options)
       l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
     end
-
+=end
     def password_field(attribute, options = {})
       field attribute, options do |options|
         super(attribute, options.merge(:autocomplete => :off))
@@ -99,7 +100,11 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, &block)
-      html = custom_label(attribute, options[:label], options[:label_options])
+      html = ''.html_safe
+      if options[:label]
+        html = custom_label(attribute, options[:label], options[:label_options])
+      end
+
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
       options[:class] += " error" if has_error?(attribute)
