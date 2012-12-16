@@ -84,6 +84,11 @@ module FoundationRailsHelper
     end
 
     def custom_label(attribute, text, options, &block)
+      if text == false
+        text = ""
+      elsif text.nil?
+        text = object.class.human_attribute_name(attribute)
+      end
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""

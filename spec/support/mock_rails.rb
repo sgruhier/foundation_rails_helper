@@ -56,7 +56,7 @@ module FoundationRailsSpecHelper
     def persisted?
     end
   end
-  
+
   def mock_everything
     # Resource-oriented styles like form_for(@post) will expect a path method for the object,
     # so we're defining some here.
@@ -84,7 +84,7 @@ module FoundationRailsSpecHelper
     ::Author.stub!(:find).and_return([@author])
     ::Author.stub!(:all).and_return([@author])
     ::Author.stub!(:where).and_return([@author])
-    ::Author.stub!(:human_attribute_name).and_return { |column_name| column_name.humanize }
+    ::Author.stub!(:human_attribute_name).and_return { |column_name| column_name.to_s.humanize }
     ::Author.stub!(:human_name).and_return('::Author')
     ::Author.stub!(:content_columns).and_return([mock('column', :name => 'login'), mock('column', :name => 'created_at')])
     ::Author.stub!(:to_key).and_return(nil)
