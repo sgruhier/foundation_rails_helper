@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "spec_helper"
 
 describe "FoundationRailsHelper::FlashHelper" do
@@ -11,8 +13,7 @@ describe "FoundationRailsHelper::FlashHelper" do
       self.stub!(:flash).and_return({message_type => "Error message"})
       node = Capybara.string display_flash_messages
       node.should have_css("div.alert-box.#{message_type}", :text => "Error message")
-      node.should have_css("div.alert-box a.close", :text => "x")
-      
+      node.should have_css("div.alert-box a.close", :text => "×")
     end
   end
   it "should use flash key matching" do
