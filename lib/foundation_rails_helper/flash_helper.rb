@@ -15,7 +15,7 @@ module FoundationRailsHelper
     def display_flash_messages
       flash.inject "" do |message, (key, value)| 
         message += content_tag :div, :class => "alert-box #{KEY_MATCHING[key] || key unless KEY_MATCHING[key] == :standard}" do
-          (value + link_to("x", "#", :class => :close)).html_safe
+          (value + link_to("&times;".html_safe, "#", :class => :close)).html_safe
         end
       end.html_safe
     end
