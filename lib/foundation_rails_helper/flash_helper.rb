@@ -6,15 +6,17 @@ module FoundationRailsHelper
     #   This is an alert box.
     #   <a href="" class="close">&times;</a>
     # </div>
-    KEY_MATCHING = {
-      :alert   => :standard,
-      :notice  => :success,
-      :failure => :alert,
-      :info    => :secondary,
+    DEFAULT_KEY_MATCHING = {
+      :alert     => :alert,
+      :notice    => :success,
+      :info      => :standard,
+      :secondary => :secondary,
     }
-    def display_flash_messages
-      flash.inject "" do |message, (key, value)| 
-        message += content_tag :div, :class => "alert-box #{KEY_MATCHING[key] || key unless KEY_MATCHING[key] == :standard}" do
+    def display_flash_messages(key_matching = {})
+      key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
+      
+      flash.inject "" do |message, (key, value)|
+        message += content_tag :div, :class => "alert-box #{key_matching[key] || :standard}" do
           (value + link_to("&times;".html_safe, "#", :class => :close)).html_safe
         end
       end.html_safe
