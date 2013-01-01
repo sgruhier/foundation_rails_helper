@@ -7,12 +7,11 @@ Gem for Rails 3 applications that use the excellent Zurb Foundation framework.
 
 So far it includes:
 
-* A custom FormBuilder that generates a form using the Foundation framework. It replaces the current `form_for` so you don't have to
-change your Rails code.  Error messages are properly displayed.
+* A custom FormBuilder that generates a form using the Foundation framework. It replaces the current `form_for` so you don't have to change your Rails code. Error messages are properly displayed.
 
 * A `display_flash_messages` helper method that uses Zurb Foundation Alerts UI.
 
-This gem has been used with Rails 3.1 and ruby 1.9.2. It should work for Rails 3.0.
+This gem has been used with Rails 3.1, 3.2 and ruby 1.9.2, 1.9.3. It should work for Rails 3.0.
 
 ## Screenshots
 
@@ -28,6 +27,7 @@ A classic devise sign up view will look like this:
   <%= f.submit %>
 <% end %>
 ```
+
 <table>
   <tr>
     <th>Form</th>
@@ -47,13 +47,16 @@ A classic devise sign up view will look like this:
 
 Add this line to your application's Gemfile:
 
-    gem "zurb-foundation"
-    gem 'foundation_rails_helper'
+```ruby
+gem 'zurb-foundation'
+gem 'foundation_rails_helper'
+```
 
 And then execute:
 
-    $ bundle
-
+```bash
+$ bundle
+```
 
 ## Usage
 
@@ -61,12 +64,11 @@ There is nothing additional to do for form helpers.
 
 To get access to `display_flash_messages` in your views, add
 
-```
-  include FoundationRailsHelper::FlashHelper
+```ruby
+include FoundationRailsHelper::FlashHelper
 ```
 
 to `app/helpers/application_helper.rb`
-
 
 ## TODO
 
@@ -81,6 +83,6 @@ to `app/helpers/application_helper.rb`
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
-
 ## Copyright
+
 Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE - 2012
