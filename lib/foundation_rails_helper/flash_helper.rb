@@ -16,7 +16,7 @@ module FoundationRailsHelper
       key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
       
       flash.inject "" do |message, (key, value)|
-        message += content_tag :div, :class => "alert-box #{key_matching[key] || :standard}" do
+        message += content_tag :div, :data => { :alert => "" }, :class => "alert-box #{key_matching[key] || :standard}" do
           (value + link_to("&times;".html_safe, "#", :class => :close)).html_safe
         end
       end.html_safe
