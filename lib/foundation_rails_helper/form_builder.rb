@@ -13,11 +13,11 @@ module FoundationRailsHelper
       end
     end
 
-    def check_box(attribute, options = {})
+    def check_box(attribute, options = {}, checked_value = "1", unchecked_value = "0")
       custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
         options.delete(:label_options)
-        super(attribute, options)
+        super(attribute, options, checked_value, unchecked_value)
       end + error_and_hint(attribute, options)
     end
 
