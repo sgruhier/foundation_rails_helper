@@ -23,8 +23,8 @@ module FoundationRailsHelper
 
     def radio_button(attribute, tag_value, options = {})
       options[:for] ||= "#{object.class.to_s.downcase}_#{attribute}_#{tag_value}"
-      l = label(attribute, options)
       c = super(attribute, tag_value, options)
+      l = label(attribute, options.delete(:text), options)
       l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
     end
 
