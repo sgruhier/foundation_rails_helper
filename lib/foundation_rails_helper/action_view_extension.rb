@@ -5,16 +5,16 @@ module ActionView
         options[:builder] ||= FoundationRailsHelper::FormBuilder
         options[:html] ||= {}
         options[:html][:class] ||= 'nice'
-        form_for_without_foundation(record, options, &block) 
+        form_for_without_foundation(record, options, &block)
       end
-      
+
       def fields_for_with_foundation(record_name, record_object = nil, options = {}, &block)
         options[:builder] ||= FoundationRailsHelper::FormBuilder
         options[:html] ||= {}
         options[:html][:class] ||= 'nice'
         fields_for_without_foundation(record_name, record_object, options, &block)
       end
-      
+
       alias_method_chain :form_for, :foundation
       alias_method_chain :fields_for, :foundation
     end

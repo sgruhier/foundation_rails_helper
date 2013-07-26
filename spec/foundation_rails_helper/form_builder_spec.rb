@@ -49,14 +49,14 @@ describe "FoundationRailsHelper::FormHelper" do
         node.find_field('author_email').value.should == @author.email
       end
     end
-    
+
     it "should generate url_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.url_field(:url)
         node.should have_css('label[for="author_url"]', :text => "Url")
         node.should have_css('input.medium.input-text[type="url"][name="author[url]"]')
         node.find_field('author_url').value.should == @author.url
-      end    
+      end
     end
 
     it "should generate phone_field input" do
@@ -65,7 +65,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('label[for="author_phone"]', :text => "Phone")
         node.should have_css('input.medium.input-text[type="tel"][name="author[phone]"]')
         node.find_field('author_phone').value.should == @author.phone
-      end    
+      end
     end
 
     it "should generate number_field input" do
@@ -74,7 +74,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('label[for="author_some_number"]', :text => "Some number")
         node.should have_css('input.medium.input-text[type="number"][name="author[some_number]"]')
         node.find_field('author_some_number').value.should == @author.some_number
-      end    
+      end
     end
 
     it "should generate text_area input" do

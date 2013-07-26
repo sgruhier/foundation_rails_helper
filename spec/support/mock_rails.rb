@@ -1,9 +1,11 @@
-require 'rails'
+require 'bundler/setup'
 require 'active_support'
 require 'action_pack'
 require 'action_view'
 require 'action_controller'
 require 'action_dispatch'
+require 'active_model'
+require 'active_support/core_ext'
 
 # Thanks to Justin French for formtastic spec
 module FoundationRailsSpecHelper
@@ -23,6 +25,7 @@ module FoundationRailsSpecHelper
   include ActionView::Helpers::AssetTagHelper
   include ActiveSupport
   include ActionController::PolymorphicRoutes if defined?(ActionController::PolymorphicRoutes)
+  include ActionDispatch::Routing::UrlFor
 
   def active_model_validator(kind, attributes, options = {})
     validator = mock("ActiveModel::Validations::#{kind.to_s.titlecase}Validator", :attributes => attributes, :options => options)
