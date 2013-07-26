@@ -58,9 +58,7 @@ And then execute:
 $ bundle
 ```
 
-## Usage
-
-There is nothing additional to do for form helpers.
+### Flash Messages
 
 To get access to `display_flash_messages` in your views, add
 
@@ -69,6 +67,117 @@ include FoundationRailsHelper::FlashHelper
 ```
 
 to `app/helpers/application_helper.rb`
+
+## Usage
+
+### form_for
+
+Form_for wraps the standard rails form_for helper and adds a 'nice' class by default.
+
+```erb
+<%= form_for @user do |f| %>
+  ...
+<% end %>
+```
+
+generates:
+
+```html
+<form accept-charset="UTF-8" action="/users" class="nice" id="new_user" method="post">
+  ...
+```
+
+Override the default class like so:
+
+```erb
+<%= form_for(@user, html: {class: 'mean'}) do |f| %>
+  ...
+```
+
+### text_field and Field Helpers
+
+Field helpers add a label element and an input of the proper type.
+
+```ruby
+f.text_field :name
+```
+
+generates:
+
+```html
+<label for="user_email">Name</label>
+<input class="medium input-text" id="user_name" name="user[name]" type="text">
+```
+
+The 'input-text' class will always be added to the input element, but the 'medium' class can be replaced.
+
+```ruby
+f.text_field :name, class: 'large'
+```
+
+generates:
+
+```html
+<input class="large input-text" ... >
+```
+
+Prevent the generation of a label:
+
+```ruby
+f.text_field :name, label: false
+```
+
+Change the label text and add a class on the label:
+
+```ruby
+f.text_field :name, label: 'Nombre', label_options: { class: 'large' }
+```
+
+If the hint option is specified
+
+```ruby
+f.text_field :name, hint: "I'm a text field"
+```
+
+an additional span element will be added after the input element:
+
+```html
+<span class="hint">I'm a text field</span>
+```
+
+### Submit Button
+
+The 'submit' helper wraps the rails helper and sets the class attribute to "small radius success button" by default.
+
+```ruby
+f.submit
+```
+
+generates:
+
+```html
+<input class="small radius success button" name="commit" type="submit" value="Create User">
+```
+
+Specify the class option to override the default classes.
+
+### Errors
+
+On error,
+
+```ruby
+f.email_field :email
+```
+
+generates:
+
+```html
+<label class=" error" for="user_email">Email</label>
+<input class="medium input-text error" id="user_email" name="user[email]" type="email" value="">
+<small class="error medium input-text error">can't be blank</small>
+```
+
+The class attribute of the 'small' element will mirror the class attribute of the 'input' element.
 
 ## TODO
 
