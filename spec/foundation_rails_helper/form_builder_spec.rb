@@ -161,6 +161,32 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
+    it "should generate datetime_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.label(:birthdate) + builder.datetime_select(:birthdate)
+        node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
+        %w(1 2 3 4 5).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        node.should have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
+        node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
+        node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
+        node.should have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
+        node.should have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
+      end
+    end
+
+    it "should generate datetime_select input with  :discard_year => true" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.label(:birthdate) + builder.datetime_select(:birthdate, :discard_year => true)
+        node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
+        %w(2 3 4 5).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        node.should_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
+        node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
+        node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
+        node.should have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
+        node.should have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
+        %w(1).each   {|i| node.should_not have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+      end
+    end
   end
 
   describe "errors generator" do
