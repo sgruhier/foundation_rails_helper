@@ -79,7 +79,7 @@ module FoundationRailsSpecHelper
     @author.stub!(:active).and_return(true)
     @author.stub!(:description).and_return('bla bla bla')
     @author.stub!(:avatar).and_return('avatar.png')
-    @author.stub!(:birthdate).and_return(Date.parse("1969-06-18 20:30"))
+    @author.stub!(:birthdate).and_return(DateTime.parse("1969-06-18 20:30"))
     @author.stub!(:id).and_return(37)
     @author.stub!(:new_record?).and_return(false)
     @author.stub!(:errors).and_return(mock('errors', :[] => nil))
