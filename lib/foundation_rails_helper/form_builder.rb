@@ -74,7 +74,7 @@ module FoundationRailsHelper
 
   private
     def has_error?(attribute)
-      !object.errors[attribute].blank?
+      object.respond_to(:errors) && !object.errors[attribute].blank?
     end
 
     def error_for(attribute, options = {})
@@ -87,7 +87,11 @@ module FoundationRailsHelper
       if text == false
         text = ""
       elsif text.nil?
-        text = object.class.human_attribute_name(attribute)
+        text = if object.class.respond_to?(:human_attribute_name)
+          object.class.human_attribute_name(attribute)
+        else
+          attribute.to_s.humanize
+        end
       end
       text = block.call.html_safe + text if block_given?
       options ||= {}
