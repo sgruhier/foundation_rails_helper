@@ -74,7 +74,7 @@ module FoundationRailsHelper
 
   private
     def has_error?(attribute)
-      object.respond_to(:errors) && !object.errors[attribute].blank?
+      object.respond_to?(:errors) && !object.errors[attribute].blank?
     end
 
     def error_for(attribute, options = {})
