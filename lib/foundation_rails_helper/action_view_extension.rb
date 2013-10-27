@@ -4,7 +4,7 @@ module ActionView
       def form_for_with_foundation(record, options = {}, &block)
         options[:builder] ||= FoundationRailsHelper::FormBuilder
         options[:html] ||= {}
-        options[:html][:class] ||= 'nice'
+        options[:html][:class] ||= 'nice custom'
         form_for_without_foundation(record, options, &block)
       end
 
