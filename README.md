@@ -195,3 +195,6 @@ The class attribute of the 'small' element will mirror the class attribute of th
 ## Copyright
 
 Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE - 2012
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sgruhier/foundation_rails_helper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
