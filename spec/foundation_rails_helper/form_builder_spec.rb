@@ -203,5 +203,19 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('small.error', :text => "required")
       end
     end
+    it "should display HTML errors when the option is specified" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
+        node = Capybara.string builder.text_field(:login, html_safe_errors: true)
+        node.should have_link('link', href: 'link_target')
+      end
+    end
+    it "should not display HTML errors when the option is not specified" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
+        node = Capybara.string builder.text_field(:login)
+        node.should_not have_link('link', href: 'link')
+      end
+    end
   end
 end

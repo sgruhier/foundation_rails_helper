@@ -179,6 +179,8 @@ generates:
 
 The class attribute of the 'small' element will mirror the class attribute of the 'input' element.
 
+If the `html_safe_errors: true` option is specified on a field, then any HTML you may have embedded in a custom error string will be displayed with the html_safe option.
+
 ## TODO
 
 * Handle more UI components
