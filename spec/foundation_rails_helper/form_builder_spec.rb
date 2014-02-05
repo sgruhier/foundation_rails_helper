@@ -196,6 +196,28 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('select[name="author[time_zone]"] option[value="Perth"]', :text => "(GMT+08:00) Perth")
       end
     end
+
+    it "should generate date_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.date_field(:publish_date)
+        node.should have_css('label[for="author_publish_date"]', :text => "date")
+        node.should have_css('input.medium.input-text[type="date"][name="author[publish_date]"]')
+        node.find_field('author_publish_date').value.should == @author.publish_date.to_s
+      end
+    end
+
+    it "should generate datetime_field input" do
+      form_for(@author) do |builder|
+        f = builder.datetime_field(:forty_two)
+        puts "*" * 40
+        puts f
+        node = Capybara.string f
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="datetime"][name="author[forty_two]"]')
+        value = DateTime.parse( node.find_field('author_forty_two').value)
+        value.should == @author.forty_two.to_s
+      end
+    end
   end
 
   describe "errors generator" do

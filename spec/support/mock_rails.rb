@@ -86,6 +86,8 @@ module FoundationRailsSpecHelper
     @author.stub!(:to_key).and_return(nil)
     @author.stub!(:persisted?).and_return(nil)
     @author.stub!(:time_zone).and_return("Perth")
+    @author.stub!(:publish_date).and_return(Date.new( 2000, 1, 1 ))
+    @author.stub!(:forty_two).and_return(@author.birthdate + 42.years)
 
     ::Author.stub!(:scoped).and_return(::Author)
     ::Author.stub!(:find).and_return([@author])
