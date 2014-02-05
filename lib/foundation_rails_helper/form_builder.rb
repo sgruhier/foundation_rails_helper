@@ -3,6 +3,7 @@ require 'action_view/helpers'
 module FoundationRailsHelper
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
+    include ActionView::Context
     %w(file_field email_field text_field text_area telephone_field phone_field url_field number_field).each do |method_name|
       define_method(method_name) do |*args|
         attribute = args[0]
@@ -69,7 +70,15 @@ module FoundationRailsHelper
 
     def submit(value=nil, options={})
       options[:class] ||= "small radius success button"
-      super(value, options)
+      if @options[:inline]
+        content_tag :div, class: 'row' do
+          content_tag :div, class: 'eight columns offset-by-four' do
+            super(value, options)
+          end
+        end
+      else
+        super(value, options)
+      end
     end
 
   private
@@ -100,6 +109,7 @@ module FoundationRailsHelper
       text = block.call.html_safe + text if block_given?
       options ||= {}
       options[:class] ||= ""
+      options[:class] += " right inline" if @options[:inline]
       options[:class] += " error" if has_error?(attribute)
       label(attribute, text, options)
     end
@@ -112,15 +122,33 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, &block)
-      html = ''.html_safe
-      html = custom_label(attribute, options[:label], options[:label_options]) if false != options[:label]
+      label = custom_label(attribute, options[:label], options[:label_options]) if false != options[:label]
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
       options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
-      html += yield(options)
-      html += error_and_hint(attribute, options)
+      field = yield(options)
+      field << error_and_hint(attribute, options)
+
+      html = ''.html_safe
+      if @options[:inline]
+        html << inline_field(label, field)
+      else
+        html << label << field
+      end
+    end
+
+    def inline_field(label, field)
+      content_label = content_tag :div, class: 'four mobile-one columns' do
+                        label
+                      end
+      content_field = content_tag :div, class: 'eight mobile-three columns' do
+                        field
+                      end
+      content_tag :div, class: 'row' do
+        content_label + content_field
+      end
     end
   end
 end

@@ -189,6 +189,24 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  describe "inline form" do
+    it "should generate inline text_field input" do
+      form_for(@author, :inline => true) do |builder|
+        node = Capybara.string builder.text_field(:login)
+        node.should have_css('div.row > div.four.mobile-one.columns > label[for="author_login"]', :text => "Login")
+        node.should have_css('div.row > div.eight.mobile-three.columns > input.medium.input-text[type="text"][name="author[login]"]')
+        node.find_field('author_login').value.should == @author.login
+      end
+    end
+
+    it "should generate submit" do
+      form_for(@author, :inline => true) do |builder|
+        node = Capybara.string builder.submit
+        node.should have_css('div.row > div.eight.columns.offset-by-four > input[type="submit"]')
+      end
+    end
+  end
+
   describe "errors generator" do
     it "should not display errors" do
       form_for(@author) do |builder|
