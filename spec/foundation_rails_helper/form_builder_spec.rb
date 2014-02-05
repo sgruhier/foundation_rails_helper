@@ -187,6 +187,15 @@ describe "FoundationRailsHelper::FormHelper" do
         %w(1).each   {|i| node.should_not have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
       end
     end
+
+    it "should generate time_zone_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.label(:time_zone) + builder.time_zone_select(:time_zone)
+        node.should have_css('label[for="author_time_zone"]', :text => "Time zone")
+        node.should have_css('select[name="author[time_zone]"]')
+        node.should have_css('select[name="author[time_zone]"] option[value="Perth"]', :text => "(GMT+08:00) Perth")
+      end
+    end
   end
 
   describe "errors generator" do
