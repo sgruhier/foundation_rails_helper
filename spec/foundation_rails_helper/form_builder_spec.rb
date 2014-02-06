@@ -215,6 +215,17 @@ describe "FoundationRailsHelper::FormHelper" do
         value.should == @author.forty_two.to_s
       end
     end
+
+    it "should generate datetime_local_field"
+    it "should generate month_field input"
+    it "should generate week_field"
+    it "should generate time_field"
+
+    it "should generate range_field"
+    it "should generate search_field"
+    it "should generate color_field"
+
+
   end
 
   describe "errors generator" do
