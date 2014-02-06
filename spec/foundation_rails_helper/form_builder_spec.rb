@@ -233,7 +233,16 @@ describe "FoundationRailsHelper::FormHelper" do
         node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m")
       end
     end
-    it "should generate week_field"
+
+    it "should generate week_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.week_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="week"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-W%V")
+      end
+    end
+
     it "should generate time_field"
 
     it "should generate range_field"

@@ -5,7 +5,7 @@ module FoundationRailsHelper
     include ActionView::Helpers::TagHelper
     %w(file_field email_field text_field text_area telephone_field phone_field 
        url_field number_field date_field datetime_field datetime_local_field
-       month_field ).each do |method_name|
+       month_field week_field ).each do |method_name|
       define_method(method_name) do |*args|
         attribute = args[0]
         options   = args[1] || {}
