@@ -217,7 +217,15 @@ describe "FoundationRailsHelper::FormHelper" do
     end
 
     it "should generate datetime_local_field"
-    it "should generate month_field input"
+
+    it "should generate month_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.month_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="month"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m")
+      end
+    end
     it "should generate week_field"
     it "should generate time_field"
 
