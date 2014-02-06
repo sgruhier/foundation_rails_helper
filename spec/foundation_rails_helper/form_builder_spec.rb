@@ -208,10 +208,7 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should generate datetime_field input" do
       form_for(@author) do |builder|
-        f = builder.datetime_field(:forty_two)
-        puts "*" * 40
-        puts f
-        node = Capybara.string f
+        node = Capybara.string  builder.datetime_field(:forty_two)
         node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
         node.should have_css('input.medium.input-text[type="datetime"][name="author[forty_two]"]')
         value = DateTime.parse( node.find_field('author_forty_two').value)
