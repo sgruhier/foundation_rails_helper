@@ -261,7 +261,15 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    it "should generate search_field"
+    it "should generate search_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.search_field(:description)
+        node.should have_css('label[for="author_description"]', :text => "Description")
+        node.should have_css('input.medium.input-text[type="search"][name="author[description]"]')
+        node.find_field('author_description').value.should == @author.description
+      end
+    end
+
     it "should generate color_field"
 
 
