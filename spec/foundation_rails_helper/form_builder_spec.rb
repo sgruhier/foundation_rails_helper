@@ -216,7 +216,14 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    it "should generate datetime_local_field"
+    it "should generate datetime_local_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.datetime_local_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="datetime-local"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
+      end
+    end
 
     it "should generate month_field input" do
       form_for(@author) do |builder|
