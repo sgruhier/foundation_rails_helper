@@ -270,9 +270,14 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    it "should generate color_field"
-
-
+    it "should generate color_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.color_field(:favorite_color)
+        node.should have_css('label[for="author_favorite_color"]', :text => "Favorite color")
+        node.should have_css('input.medium.input-text[type="color"][name="author[favorite_color]"]')
+        node.find_field('author_favorite_color').value.should == @author.favorite_color
+      end
+    end
   end
 
   describe "errors generator" do
