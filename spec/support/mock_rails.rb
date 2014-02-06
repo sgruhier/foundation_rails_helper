@@ -85,6 +85,7 @@ module FoundationRailsSpecHelper
     @author.stub!(:errors).and_return(mock('errors', :[] => nil))
     @author.stub!(:to_key).and_return(nil)
     @author.stub!(:persisted?).and_return(nil)
+    @author.stub!(:time_zone).and_return("Perth")
 
     ::Author.stub!(:scoped).and_return(::Author)
     ::Author.stub!(:find).and_return([@author])

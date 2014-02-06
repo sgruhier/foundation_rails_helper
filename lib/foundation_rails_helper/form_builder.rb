@@ -46,9 +46,9 @@ module FoundationRailsHelper
       end
     end
 
-    def time_zone_select(attribute, options = {})
+    def time_zone_select(attribute, priorities = nil, options = {}, html_options = {})
       field attribute, options do |options|
-        super(attribute, {}, options.merge(:autocomplete => :off))
+        super(attribute, priorities, options, html_options.merge(:autocomplete => :off))
       end
     end
 
