@@ -252,7 +252,15 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    it "should generate range_field"
+    it "should generate range_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.range_field(:some_number)
+        node.should have_css('label[for="author_some_number"]', :text => "Some number")
+        node.should have_css('input.medium.input-text[type="range"][name="author[some_number]"]')
+        node.find_field('author_some_number').value.should == @author.some_number
+      end
+    end
+
     it "should generate search_field"
     it "should generate color_field"
 
