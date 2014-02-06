@@ -13,6 +13,13 @@ module FoundationRailsHelper
       end
     end
 
+    def label(attribute, text = nil, options = {})
+      options[:class] ||= ""
+      options[:class] += " error" if has_error?(attribute)
+      super(attribute, text, options)
+    end
+
+
     def check_box(attribute, options = {}, checked_value = "1", unchecked_value = "0")
       custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
@@ -88,16 +95,15 @@ module FoundationRailsHelper
     end
 
     def custom_label(attribute, text, options, &block)
-      if text == false
-        text = ""
-      elsif text.nil?
+      return block_given? ? block.call.html_safe : "".html_safe if text == false
+      if text.nil? || text == true
         text = if object.class.respond_to?(:human_attribute_name)
           object.class.human_attribute_name(attribute)
         else
           attribute.to_s.humanize
         end
       end
-      text = block.call.html_safe + text if block_given?
+      text = block.call.html_safe + " #{text}" if block_given?
       options ||= {}
       options[:class] ||= ""
       options[:class] += " error" if has_error?(attribute)
@@ -113,7 +119,7 @@ module FoundationRailsHelper
 
     def field(attribute, options, &block)
       html = ''.html_safe
-      html = custom_label(attribute, options[:label], options[:label_options]) if false != options[:label]
+      html = custom_label(attribute, options[:label], options[:label_options]) if @options[:auto_labels] || options[:label]
       options[:class] ||= "medium"
       options[:class] = "#{options[:class]} input-text"
       options[:class] += " error" if has_error?(attribute)

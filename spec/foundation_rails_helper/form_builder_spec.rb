@@ -116,9 +116,9 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate check_box input without a label" do
       form_for(@author) do |builder|
         node = Capybara.string builder.check_box(:active, :label => false)
-        node.should have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
-        node.should have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
-        node.should have_css('label[for="author_active"]', :text => "")
+        node.should have_css('input[type="hidden"][name="author[active]"][value="0"]')
+        node.should have_css('input[type="checkbox"][name="author[active]"]')
+        node.should_not have_css('label[for="author_active"]')
       end
     end
 
@@ -226,5 +226,18 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should_not have_link('link', href: 'link')
       end
     end
+
+    it "should not display labels unless specified in the builder method" do
+      form_for(@author, auto_labels: false) do |builder|
+        node = Capybara.string builder.text_field(:login) +
+          builder.check_box(:active, label: true) +
+          builder.text_field(:description, label: 'Tell me about you')
+
+        node.should_not have_css('label[for="author_login"]')
+        node.should have_css('label[for="author_active"]', text: 'Active')
+        node.should have_css('label[for="author_description"]', text: 'Tell me about you')
+      end
+    end
+    
   end
 end
