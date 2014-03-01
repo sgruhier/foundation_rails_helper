@@ -13,10 +13,32 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  it "should display labels by default" do
+    form_for(@author) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      node.should have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
+  it "should not display labels by if there are options without auto_labels: false" do
+    form_for(@author, {html: {class: 'myclass'}}) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      node.should have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
+  it "should not display labels by if there are options without auto_labels: false" do
+    form_for(@author, {html: {class: 'myclass'}, auto_labels: false}) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      node.should_not have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
   describe "input generators" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
+        puts builder.text_field(:login)
         node.should have_css('label[for="author_login"]', :text => "Login")
         node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
@@ -238,6 +260,6 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('label[for="author_description"]', text: 'Tell me about you')
       end
     end
-    
+
   end
 end
