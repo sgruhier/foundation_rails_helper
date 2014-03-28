@@ -218,6 +218,88 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('select[name="author[time_zone]"] option[value="Perth"]', :text => "(GMT+08:00) Perth")
       end
     end
+
+    it "should generate date_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.date_field(:publish_date)
+        node.should have_css('label[for="author_publish_date"]', :text => "date")
+        node.should have_css('input.medium.input-text[type="date"][name="author[publish_date]"]')
+        node.find_field('author_publish_date').value.should == @author.publish_date.to_s
+      end
+    end
+
+    it "should generate datetime_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.datetime_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="datetime"][name="author[forty_two]"]')
+        value = DateTime.parse( node.find_field('author_forty_two').value)
+        value.should == @author.forty_two.to_s
+      end
+    end
+
+    it "should generate datetime_local_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.datetime_local_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="datetime-local"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
+      end
+    end
+
+    it "should generate month_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.month_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="month"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m")
+      end
+    end
+
+    it "should generate week_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.week_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="week"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-W%V")
+      end
+    end
+
+    it "should generate time_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.time_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="time"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%H:%M:%S.%L")
+      end
+    end
+
+    it "should generate range_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.range_field(:some_number)
+        node.should have_css('label[for="author_some_number"]', :text => "Some number")
+        node.should have_css('input.medium.input-text[type="range"][name="author[some_number]"]')
+        node.find_field('author_some_number').value.should == @author.some_number
+      end
+    end
+
+    it "should generate search_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.search_field(:description)
+        node.should have_css('label[for="author_description"]', :text => "Description")
+        node.should have_css('input.medium.input-text[type="search"][name="author[description]"]')
+        node.find_field('author_description').value.should == @author.description
+      end
+    end
+
+    it "should generate color_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.color_field(:favorite_color)
+        node.should have_css('label[for="author_favorite_color"]', :text => "Favorite color")
+        node.should have_css('input.medium.input-text[type="color"][name="author[favorite_color]"]')
+        node.find_field('author_favorite_color').value.should == @author.favorite_color
+      end
+    end
   end
 
   describe "errors generator" do
