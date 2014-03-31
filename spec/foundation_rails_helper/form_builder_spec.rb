@@ -159,6 +159,14 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
+    it 'should generate a radio button in the presence of extra attributes' do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.radio_button(:active, true, text: "Functioning", required: true)
+        node.should have_css('input[type="radio"][name="author[active]"]')
+        node.should have_css('label[for="author_active_true"]', text: "Functioning")
+      end
+    end
+
     it "should generate date_select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.date_select(:birthdate)
