@@ -299,6 +299,26 @@ describe "FoundationRailsHelper::FormHelper" do
         node.find_field('author_favorite_color').value.should == @author.favorite_color
       end
     end
+
+    it "should generate collection_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
+        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        node.should have_css('select[name="author[favorite_book]"]')
+        node.should have_css('select[name="author[favorite_book]"] option[value="78"]', :text => "Gulliver's Travels")
+        node.should have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
+      end
+    end
+
+    it "should generate grouped_collection_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
+        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        node.should have_css('select[name="author[favorite_book]"]')
+        node.should have_css('select[name="author[favorite_book]"] optgroup[label="Exploration"] option[value="78"]', :text => "Gulliver's Travels")
+        node.should have_css('select[name="author[favorite_book]"] optgroup[label="Pirate Exploits"] option[value="133"]', :text => "Treasure Island")
+      end
+    end
   end
 
   describe "errors generator" do

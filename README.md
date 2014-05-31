@@ -1,6 +1,6 @@
 # FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
-Gem for Rails 3 applications that use the excellent Zurb Foundation framework.
+Gem for Rails 4.1.x applications that use the excellent Zurb Foundation framework. For older rails versions, check out rails3 or rails4.0 branch)
 
 * [Zurb Foundation](https://github.com/zurb/foundation)
 * [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
@@ -10,8 +10,6 @@ So far it includes:
 * A custom FormBuilder that generates a form using the Foundation framework. It replaces the current `form_for` so you don't have to change your Rails code. Error messages are properly displayed.
 
 * A `display_flash_messages` helper method that uses Zurb Foundation Alerts UI.
-
-This gem has been used with Rails 3.1, 3.2 and ruby 1.9.2, 1.9.3. It should work for Rails 3.0.
 
 ## Screenshots
 
