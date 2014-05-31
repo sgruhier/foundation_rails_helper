@@ -68,6 +68,13 @@ module FoundationRailsHelper
       end
     end
 
+    def collection_select(attribute, collection, value_method, text_method, options = {}, html_options = {})
+      field attribute, options do |options|
+        html_options[:autocomplete] ||= :off
+        super(attribute, collection, value_method, text_method, options, html_options)
+      end
+    end
+
     def autocomplete(attribute, url, options = {})
       field attribute, options do |options|
         autocomplete_field(attribute, url, options.merge(:update_elements => options[:update_elements],
