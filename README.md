@@ -81,7 +81,7 @@ Form_for wraps the standard rails form_for helper.
 generates:
 
 ```html
-<form accept-charset="UTF-8" action="/users" id="new_user" method="post">
+<form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
   ...
 ```
 
