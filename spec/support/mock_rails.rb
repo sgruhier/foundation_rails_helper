@@ -11,8 +11,7 @@ require 'active_support/core_ext'
 module FoundationRailsSpecHelper
   include ActionPack
   include ActionView::Context if defined?(ActionView::Context)
-  # include ActionController::RecordIdentifier
-  include ActionView::RecordIdentifier
+  include ActionController::RecordIdentifier
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::FormTagHelper
   include ActionView::Helpers::FormOptionsHelper
@@ -114,6 +113,19 @@ module FoundationRailsSpecHelper
     @author.stub!(:favorite_color).and_return("#424242")
     @author.stub!(:favorite_book).and_return()
 
+    @book_0 = ::Book.new
+    @book_0.stub!(:id).and_return("78")
+    @book_0.stub!(:title).and_return("Gulliver's Travels")
+    @book_1 = ::Book.new
+    @book_1.stub!(:id).and_return("133")
+    @book_1.stub!(:title).and_return("Treasure Island")
+    @genre_0 = ::Genre.new
+    @genre_0.stub!(:name).and_return("Exploration")
+    @genre_0.stub!(:books).and_return([@book_0])
+    @genre_1 = ::Genre.new
+    @genre_1.stub!(:name).and_return("Pirate Exploits")
+    @genre_1.stub!(:books).and_return([@book_1])
+
     ::Author.stub!(:scoped).and_return(::Author)
     ::Author.stub!(:find).and_return([@author])
     ::Author.stub!(:all).and_return([@author])
@@ -124,32 +136,8 @@ module FoundationRailsSpecHelper
     ::Author.stub!(:to_key).and_return(nil)
     ::Author.stub!(:persisted?).and_return(nil)
 
-    @book_0 = ::Book.new
-    @book_0.stub!(:id).and_return("78")
-    @book_0.stub!(:title).and_return("Gulliver's Travels")
-
-    @book_1 = ::Book.new
-    @book_1.stub!(:id).and_return("133")
-    @book_1.stub!(:title).and_return("Treasure Island")
-
-    @genre_0 = ::Genre.new
-    @genre_0.stub!(:name).and_return("Exploration")
-    @genre_0.stub!(:books).and_return([@book_0])
-
-    @genre_1 = ::Genre.new
-    @genre_1.stub!(:name).and_return("Pirate Exploits")
-    @genre_1.stub!(:books).and_return([@book_1])
-
-    # ::Book.stub!(:scoped).and_return(::Book)
-    # ::Book.stub!(:find).and_return([@book_0])
     ::Book.stub!(:all).and_return([@book_0, @book_1])
     ::Genre.stub!(:all).and_return([@genre_0, @genre_1])
-    # ::Book.stub!(:where).and_return([@book_0, @book_1])
-    # ::Book.stub!(:human_attribute_name).and_return { |column_name| column_name.to_s.humanize }
-    # ::Book.stub!(:human_name).and_return('::Book')
-    # ::Book.stub!(:content_columns).and_return([mock('column', :name => 'login'), mock('column', :name => 'created_at')])
-    # ::Book.stub!(:to_key).and_return(nil)
-    # ::Book.stub!(:persisted?).and_return(nil)
   end
 
   def self.included(base)
