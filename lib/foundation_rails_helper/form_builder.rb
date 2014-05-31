@@ -75,6 +75,13 @@ module FoundationRailsHelper
       end
     end
 
+    def grouped_collection_select(attribute, collection, group_method, group_label_method, option_key_method, option_value_method, options = {}, html_options = {})
+      field attribute, options do |options|
+        html_options[:autocomplete] ||= :off
+        super(attribute, collection, group_method, group_label_method, option_key_method, option_value_method, options, html_options)
+      end
+    end
+
     def autocomplete(attribute, url, options = {})
       field attribute, options do |options|
         autocomplete_field(attribute, url, options.merge(:update_elements => options[:update_elements],

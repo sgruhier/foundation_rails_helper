@@ -11,7 +11,8 @@ require 'active_support/core_ext'
 module FoundationRailsSpecHelper
   include ActionPack
   include ActionView::Context if defined?(ActionView::Context)
-  include ActionController::RecordIdentifier
+  # include ActionController::RecordIdentifier
+  include ActionView::RecordIdentifier
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::FormTagHelper
   include ActionView::Helpers::FormOptionsHelper
@@ -71,6 +72,17 @@ module FoundationRailsSpecHelper
     end
   end
 
+  class ::Genre
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+
+    def to_label
+    end
+
+    def persisted?
+    end
+  end
+
   def mock_everything
     # Resource-oriented styles like form_for(@post) will expect a path method for the object,
     # so we're defining some here.
@@ -120,9 +132,18 @@ module FoundationRailsSpecHelper
     @book_1.stub!(:id).and_return("133")
     @book_1.stub!(:title).and_return("Treasure Island")
 
+    @genre_0 = ::Genre.new
+    @genre_0.stub!(:name).and_return("Exploration")
+    @genre_0.stub!(:books).and_return([@book_0])
+
+    @genre_1 = ::Genre.new
+    @genre_1.stub!(:name).and_return("Pirate Exploits")
+    @genre_1.stub!(:books).and_return([@book_1])
+
     # ::Book.stub!(:scoped).and_return(::Book)
     # ::Book.stub!(:find).and_return([@book_0])
     ::Book.stub!(:all).and_return([@book_0, @book_1])
+    ::Genre.stub!(:all).and_return([@genre_0, @genre_1])
     # ::Book.stub!(:where).and_return([@book_0, @book_1])
     # ::Book.stub!(:human_attribute_name).and_return { |column_name| column_name.to_s.humanize }
     # ::Book.stub!(:human_name).and_return('::Book')

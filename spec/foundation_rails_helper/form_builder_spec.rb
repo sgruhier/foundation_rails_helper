@@ -310,6 +310,16 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
       end
     end
+
+    it "should generate grouped_collection_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
+        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        # node.should have_css('select[name="author[favorite_book]"]')
+        # node.should have_css('select[name="author[favorite_book]"] option[value="78"]', :text => "Gulliver's Travels")
+        # node.should have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
+      end
+    end
   end
 
   describe "errors generator" do
@@ -317,13 +327,6 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
         node.should_not have_css('small.error')
-      end
-    end
-    it "should display errors" do
-      form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:login => ['required']})
-        node = Capybara.string builder.text_field(:login)
-        node.should have_css('small.error', :text => "required")
       end
     end
     it "should display HTML errors when the option is specified" do
