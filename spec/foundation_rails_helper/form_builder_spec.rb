@@ -38,7 +38,6 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
-        # puts builder.text_field(:login)
         node.should have_css('label[for="author_login"]', :text => "Login")
         node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
