@@ -11,7 +11,7 @@ require 'active_support/core_ext'
 module FoundationRailsSpecHelper
   include ActionPack
   include ActionView::Context if defined?(ActionView::Context)
-  include ActionController::RecordIdentifier
+  include ActionView::RecordIdentifier
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::FormTagHelper
   include ActionView::Helpers::FormOptionsHelper
