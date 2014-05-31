@@ -89,6 +89,7 @@ module FoundationRailsSpecHelper
     @author.stub!(:publish_date).and_return(Date.new( 2000, 1, 1 ))
     @author.stub!(:forty_two).and_return(@author.birthdate + 42.years)
     @author.stub!(:favorite_color).and_return("#424242")
+    @author.stub!(:favorite_book).and_return()
 
     ::Author.stub!(:scoped).and_return(::Author)
     ::Author.stub!(:find).and_return([@author])

@@ -38,7 +38,7 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
-        puts builder.text_field(:login)
+        # puts builder.text_field(:login)
         node.should have_css('label[for="author_login"]', :text => "Login")
         node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
@@ -298,6 +298,15 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('label[for="author_favorite_color"]', :text => "Favorite color")
         node.should have_css('input.medium.input-text[type="color"][name="author[favorite_color]"]')
         node.find_field('author_favorite_color').value.should == @author.favorite_color
+      end
+    end
+
+    it "should generate collection_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.collection_select(:favorite_book, Author.all, :id, :login)
+        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        node.should have_css('select[name="author[favorite_book]"]')
+        node.should have_css('select[name="author[favorite_book]"] option[value="37"]', :text => "fred_smith")
       end
     end
   end
