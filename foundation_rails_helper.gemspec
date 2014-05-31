@@ -15,9 +15,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = FoundationRailsHelper::VERSION
 
-  gem.add_dependency 'railties', '>= 3.0'
-  gem.add_dependency "actionpack", '>= 3.0'
-  gem.add_dependency "activemodel", '>= 3.0'
+  gem.add_dependency 'railties', '~> 4.1.1'
+  gem.add_dependency "actionpack", '~> 4.1.1'
+  gem.add_dependency "activemodel", '~> 4.1.1'
   gem.add_dependency "tzinfo", "~> 1.1.0"
   gem.add_development_dependency "rspec-rails", '2.8.1'
   gem.add_development_dependency "capybara"
