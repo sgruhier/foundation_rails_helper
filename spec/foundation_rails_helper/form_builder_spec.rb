@@ -303,10 +303,11 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should generate collection_select input" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.collection_select(:favorite_book, Author.all, :id, :login)
+        node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
         node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
         node.should have_css('select[name="author[favorite_book]"]')
-        node.should have_css('select[name="author[favorite_book]"] option[value="37"]', :text => "fred_smith")
+        node.should have_css('select[name="author[favorite_book]"] option[value="78"]', :text => "Gulliver's Travels")
+        node.should have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
       end
     end
   end

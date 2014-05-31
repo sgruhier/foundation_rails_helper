@@ -60,6 +60,17 @@ module FoundationRailsSpecHelper
     end
   end
 
+  class ::Book
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+
+    def to_label
+    end
+
+    def persisted?
+    end
+  end
+
   def mock_everything
     # Resource-oriented styles like form_for(@post) will expect a path method for the object,
     # so we're defining some here.
@@ -100,6 +111,24 @@ module FoundationRailsSpecHelper
     ::Author.stub!(:content_columns).and_return([mock('column', :name => 'login'), mock('column', :name => 'created_at')])
     ::Author.stub!(:to_key).and_return(nil)
     ::Author.stub!(:persisted?).and_return(nil)
+
+    @book_0 = ::Book.new
+    @book_0.stub!(:id).and_return("78")
+    @book_0.stub!(:title).and_return("Gulliver's Travels")
+
+    @book_1 = ::Book.new
+    @book_1.stub!(:id).and_return("133")
+    @book_1.stub!(:title).and_return("Treasure Island")
+
+    # ::Book.stub!(:scoped).and_return(::Book)
+    # ::Book.stub!(:find).and_return([@book_0])
+    ::Book.stub!(:all).and_return([@book_0, @book_1])
+    # ::Book.stub!(:where).and_return([@book_0, @book_1])
+    # ::Book.stub!(:human_attribute_name).and_return { |column_name| column_name.to_s.humanize }
+    # ::Book.stub!(:human_name).and_return('::Book')
+    # ::Book.stub!(:content_columns).and_return([mock('column', :name => 'login'), mock('column', :name => 'created_at')])
+    # ::Book.stub!(:to_key).and_return(nil)
+    # ::Book.stub!(:persisted?).and_return(nil)
   end
 
   def self.included(base)
