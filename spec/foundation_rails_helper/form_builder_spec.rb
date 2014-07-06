@@ -335,6 +335,20 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('small.error', :text => "required")
       end
     end
+    it "should display errors on input" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:login => ['required']})
+        node = Capybara.string builder.text_field(:login)
+        node.should have_css('input.error[name="author[login]"]')
+      end
+    end
+    it "should display errors on select" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
+        node.should have_css('select.error[name="author[favorite_book]"]')
+      end
+    end
     it "should display HTML errors when the option is specified" do
       form_for(@author) do |builder|
         @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
