@@ -3,7 +3,7 @@ require 'action_view/helpers'
 module FoundationRailsHelper
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
-    %w(file_field email_field text_field text_area telephone_field phone_field 
+    %w(file_field email_field text_field text_area telephone_field phone_field
        url_field number_field date_field datetime_field datetime_local_field
        month_field week_field time_field range_field search_field color_field ).each do |method_name|
       define_method(method_name) do |*args|
@@ -44,39 +44,39 @@ module FoundationRailsHelper
     end
 
     def datetime_select(attribute, options = {}, html_options = {})
-      field attribute, html_options do |html_options|
+      field attribute, options, html_options do |html_options|
         super(attribute, options, html_options.merge(:autocomplete => :off))
       end
     end
 
     def date_select(attribute, options = {}, html_options = {})
-      field attribute, html_options do |html_options|
+      field attribute, options, html_options do |html_options|
         super(attribute, options, html_options.merge(:autocomplete => :off))
       end
     end
 
     def time_zone_select(attribute, priorities = nil, options = {}, html_options = {})
-      field attribute, options do |options|
+      field attribute, options, html_options do |html_options|
         super(attribute, priorities, options, html_options.merge(:autocomplete => :off))
       end
     end
 
     def select(attribute, choices, options = {}, html_options = {})
-      field attribute, options do |options|
+      field attribute, options, html_options do |html_options|
         html_options[:autocomplete] ||= :off
         super(attribute, choices, options, html_options)
       end
     end
 
     def collection_select(attribute, collection, value_method, text_method, options = {}, html_options = {})
-      field attribute, options do |options|
+      field attribute, options, html_options do |html_options|
         html_options[:autocomplete] ||= :off
         super(attribute, collection, value_method, text_method, options, html_options)
       end
     end
 
     def grouped_collection_select(attribute, collection, group_method, group_label_method, option_key_method, option_value_method, options = {}, html_options = {})
-      field attribute, options do |options|
+      field attribute, options, html_options do |html_options|
         html_options[:autocomplete] ||= :off
         super(attribute, collection, group_method, group_label_method, option_key_method, option_value_method, options, html_options)
       end
@@ -133,15 +133,16 @@ module FoundationRailsHelper
       html.html_safe
     end
 
-    def field(attribute, options, &block)
+    def field(attribute, options, html_options=nil, &block)
       html = ''.html_safe
       html = custom_label(attribute, options[:label], options[:label_options]) if @options[:auto_labels] || options[:label]
-      options[:class] ||= "medium"
-      options[:class] = "#{options[:class]} input-text"
-      options[:class] += " error" if has_error?(attribute)
+      class_options = html_options || options
+      class_options[:class] ||= "medium"
+      class_options[:class] = "#{class_options[:class]} input-text"
+      class_options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
-      html += yield(options)
+      html += yield(class_options)
       html += error_and_hint(attribute, options)
     end
   end
