@@ -335,20 +335,65 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('small.error', :text => "required")
       end
     end
-    it "should display errors on input" do
-      form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:login => ['required']})
-        node = Capybara.string builder.text_field(:login)
-        node.should have_css('input.error[name="author[login]"]')
+    %w(file_field email_field text_field telephone_field phone_field
+       url_field number_field date_field datetime_field datetime_local_field
+       month_field week_field time_field range_field search_field color_field
+
+       password_field
+       ).each do |field|
+      it "should display errors on #{field} inputs" do
+        form_for(@author) do |builder|
+          @author.stub!(:errors).and_return({:description => ['required']})
+          node = Capybara.string builder.public_send(field, :description)
+          node.should have_css('input.error[name="author[description]"]')
+        end
       end
     end
-    it "should display errors on select" do
+    it "should display errors on text_area inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:description => ['required']})
+        node = Capybara.string builder.text_area(:description)
+        node.should have_css('textarea.error[name="author[description]"]')
+      end
+    end
+    it "should display errors on select inputs" do
       form_for(@author) do |builder|
         @author.stub!(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
         node.should have_css('select.error[name="author[favorite_book]"]')
       end
     end
+    it "should display errors on date_select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:birthdate => ['required']})
+        node = Capybara.string builder.date_select(:birthdate)
+        %w(1 2 3).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
+      end
+    end
+    it "should display errors on datetime_select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:birthdate => ['required']})
+        node = Capybara.string builder.datetime_select(:birthdate)
+        %w(1 2 3 4 5).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
+      end
+    end
+    it "should display errors on time_zone_select inputs"  do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:time_zone => ['required']})
+        node = Capybara.string builder.time_zone_select(:time_zone)
+        node.should have_css('select.error[name="author[time_zone]"]')
+      end
+    end
+
+    it "should display errors on collection_select inputs" do
+      pending("Not sure how to test this")
+    end
+    it "should display errors on grouped_collection_select inputs" do
+      pending("Not sure how to test this")
+    end
+
+    # N.B. check_box and radio_button inputs don't have the error class applied
+
     it "should display HTML errors when the option is specified" do
       form_for(@author) do |builder|
         @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
