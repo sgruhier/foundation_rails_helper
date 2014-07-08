@@ -386,10 +386,21 @@ describe "FoundationRailsHelper::FormHelper" do
     end
 
     it "should display errors on collection_select inputs" do
-      pending("Not sure how to test this")
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
+        node.should have_css('label.error[for="author_favorite_book"]')
+        node.should have_css('select.error[name="author[favorite_book]"]')
+      end
     end
+
     it "should display errors on grouped_collection_select inputs" do
-      pending("Not sure how to test this")
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
+        node.should have_css('label.error[for="author_favorite_book"]')
+        node.should have_css('select.error[name="author[favorite_book]"]')
+      end
     end
 
     # N.B. check_box and radio_button inputs don't have the error class applied
