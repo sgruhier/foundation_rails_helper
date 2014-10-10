@@ -14,14 +14,14 @@ Gem::Specification.new do |gem|
   gem.name          = "foundation_rails_helper"
   gem.require_paths = ["lib"]
   gem.version       = FoundationRailsHelper::VERSION
+  gem.license       = 'MIT'
 
+  gem.add_dependency 'railties',      '~> 4.1', '>= 4.1.1'
+  gem.add_dependency 'actionpack',    '~> 4.1', '>= 4.1.1'
+  gem.add_dependency 'activemodel',   '~> 4.1', '>= 4.1.1'
+  gem.add_dependency 'activesupport', '~> 4.1', '>= 4.1.1'
+  gem.add_dependency 'tzinfo',        '~> 1.2', '>= 1.2.2'
 
-  gem.add_dependency 'railties', '~> 4.1.1'
-  gem.add_dependency "actionpack", '~> 4.1.1'
-  gem.add_dependency "activemodel", '~> 4.1.1'
-  gem.add_dependency "activesupport", '~> 4.1.1'
-  gem.add_dependency "tzinfo", "~> 1.2.2"
-
-  gem.add_development_dependency "rspec-rails", '2.8.1'
-  gem.add_development_dependency "capybara"
+  gem.add_development_dependency 'rspec-rails', '~> 2.8', '>= 2.8.1'
+  gem.add_development_dependency 'capybara',    '~> 2.4', '>= 2.4.3'
 end
