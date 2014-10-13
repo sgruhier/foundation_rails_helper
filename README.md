@@ -77,7 +77,7 @@ to `app/helpers/application_helper.rb`
 
 ### form_for
 
-Form_for wraps the standard rails form_for helper and adds a 'nice' class by default.
+Form_for wraps the standard rails form_for helper.
 
 ```erb
 <%= form_for @user do |f| %>
@@ -88,7 +88,7 @@ Form_for wraps the standard rails form_for helper and adds a 'nice' class by def
 generates:
 
 ```html
-<form accept-charset="UTF-8" action="/users" class="nice" id="new_user" method="post">
+<form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
   ...
 ```
 
