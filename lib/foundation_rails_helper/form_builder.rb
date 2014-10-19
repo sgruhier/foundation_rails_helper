@@ -3,7 +3,9 @@ require 'action_view/helpers'
 module FoundationRailsHelper
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
-    %w(file_field email_field text_field text_area telephone_field phone_field url_field number_field).each do |method_name|
+    %w(file_field email_field text_field text_area telephone_field phone_field
+       url_field number_field date_field datetime_field datetime_local_field
+       month_field week_field time_field range_field search_field color_field ).each do |method_name|
       define_method(method_name) do |*args|
         attribute = args[0]
         options   = args[1] || {}
@@ -12,6 +14,13 @@ module FoundationRailsHelper
         end
       end
     end
+
+    def label(attribute, text = nil, options = {})
+      options[:class] ||= ""
+      options[:class] += " error" if has_error?(attribute)
+      super(attribute, (text || "").html_safe, options)
+    end
+
 
     def check_box(attribute, options = {}, checked_value = "1", unchecked_value = "0")
       custom_label(attribute, options[:label], options[:label_options]) do
@@ -22,7 +31,7 @@ module FoundationRailsHelper
     end
 
     def radio_button(attribute, tag_value, options = {})
-      options[:for] ||= "#{object.class.to_s.downcase}_#{attribute}_#{tag_value}"
+      options[:for] ||= "#{@object_name}_#{attribute}_#{tag_value}"
       c = super(attribute, tag_value, options)
       l = label(attribute, options.delete(:text), options)
       l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
@@ -35,27 +44,41 @@ module FoundationRailsHelper
     end
 
     def datetime_select(attribute, options = {}, html_options = {})
-      field attribute, html_options do |html_options|
+      field attribute, options, html_options do |html_options|
         super(attribute, options, html_options.merge(:autocomplete => :off))
       end
     end
 
     def date_select(attribute, options = {}, html_options = {})
-      field attribute, html_options do |html_options|
+      field attribute, options, html_options do |html_options|
         super(attribute, options, html_options.merge(:autocomplete => :off))
       end
     end
 
-    def time_zone_select(attribute, options = {})
-      field attribute, options do |options|
-        super(attribute, {}, options.merge(:autocomplete => :off))
+    def time_zone_select(attribute, priorities = nil, options = {}, html_options = {})
+      field attribute, options, html_options do |html_options|
+        super(attribute, priorities, options, html_options.merge(:autocomplete => :off))
       end
     end
 
     def select(attribute, choices, options = {}, html_options = {})
-      field attribute, options do |options|
+      field attribute, options, html_options do |html_options|
         html_options[:autocomplete] ||= :off
         super(attribute, choices, options, html_options)
+      end
+    end
+
+    def collection_select(attribute, collection, value_method, text_method, options = {}, html_options = {})
+      field attribute, options, html_options do |html_options|
+        html_options[:autocomplete] ||= :off
+        super(attribute, collection, value_method, text_method, options, html_options)
+      end
+    end
+
+    def grouped_collection_select(attribute, collection, group_method, group_label_method, option_key_method, option_value_method, options = {}, html_options = {})
+      field attribute, options, html_options do |html_options|
+        html_options[:autocomplete] ||= :off
+        super(attribute, collection, group_method, group_label_method, option_key_method, option_value_method, options, html_options)
       end
     end
 
@@ -80,20 +103,23 @@ module FoundationRailsHelper
     def error_for(attribute, options = {})
       class_name = "error"
       class_name += " #{options[:class]}" if options[:class]
-      content_tag(:small, object.errors[attribute].join(', '), :class => class_name) if has_error?(attribute)
+      if has_error?(attribute)
+        error_messages = object.errors[attribute].join(', ')
+        error_messages = error_messages.html_safe if options[:html_safe_errors]
+        content_tag(:small, error_messages, :class => class_name)
+      end
     end
 
     def custom_label(attribute, text, options, &block)
-      if text == false
-        text = ""
-      elsif text.nil?
+      return block_given? ? block.call.html_safe : "".html_safe if text == false
+      if text.nil? || text == true
         text = if object.class.respond_to?(:human_attribute_name)
           object.class.human_attribute_name(attribute)
         else
           attribute.to_s.humanize
         end
       end
-      text = block.call.html_safe + text if block_given?
+      text = block.call.html_safe + " #{text}" if block_given?
       options ||= {}
       options[:class] ||= ""
       options[:class] += " error" if has_error?(attribute)
@@ -107,15 +133,16 @@ module FoundationRailsHelper
       html.html_safe
     end
 
-    def field(attribute, options, &block)
+    def field(attribute, options, html_options=nil, &block)
       html = ''.html_safe
-      html = custom_label(attribute, options[:label], options[:label_options]) if false != options[:label]
-      options[:class] ||= "medium"
-      options[:class] = "#{options[:class]} input-text"
-      options[:class] += " error" if has_error?(attribute)
+      html = custom_label(attribute, options[:label], options[:label_options]) if @options[:auto_labels] || options[:label]
+      class_options = html_options || options
+      class_options[:class] ||= "medium"
+      class_options[:class] = "#{class_options[:class]} input-text"
+      class_options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
-      html += yield(options)
+      html += yield(class_options)
       html += error_and_hint(attribute, options)
     end
   end

@@ -1,6 +1,6 @@
 # FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
-Gem for Rails 3 applications that use the excellent Zurb Foundation framework.
+Gem for Rails 4.1.x applications that use the excellent Zurb Foundation framework.
 
 * [Zurb Foundation](https://github.com/zurb/foundation)
 * [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
@@ -11,7 +11,12 @@ So far it includes:
 
 * A `display_flash_messages` helper method that uses Zurb Foundation Alerts UI.
 
-This gem has been used with Rails 3.1, 3.2 and ruby 1.9.2, 1.9.3. It should work for Rails 3.0.
+#### Compatibility
+
+* Only Rails 4.1 and Foundation 4 and 5 are fully supported
+* Some features may work with Foundation 3 and older, but results may vary, and markup which exists only for those versions will be gradually removed
+* Legacy branches exist for Rails 3 and 4.0 (see the rails3 and rails4.0 branches). These are not actively supported, and fixes are not retroactively applied, but pull requests are welcomed.
+
 
 ## Screenshots
 
@@ -179,6 +184,8 @@ generates:
 
 The class attribute of the 'small' element will mirror the class attribute of the 'input' element.
 
+If the `html_safe_errors: true` option is specified on a field, then any HTML you may have embedded in a custom error string will be displayed with the html_safe option.
+
 ## TODO
 
 * Handle more UI components
@@ -195,3 +202,6 @@ The class attribute of the 'small' element will mirror the class attribute of th
 ## Copyright
 
 Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE - 2012
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sgruhier/foundation_rails_helper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

@@ -5,6 +5,7 @@ module ActionView
         options[:builder] ||= FoundationRailsHelper::FormBuilder
         options[:html] ||= {}
         options[:html][:class] ||= 'nice custom'
+        options[:auto_labels] = true unless options.has_key? :auto_labels
         form_for_without_foundation(record, options, &block)
       end
 
@@ -12,6 +13,8 @@ module ActionView
         options[:builder] ||= FoundationRailsHelper::FormBuilder
         options[:html] ||= {}
         options[:html][:class] ||= 'nice'
+        options[:html][:attached_labels] = options[:attached_labels]
+        options[:auto_labels] = true unless options.has_key? :auto_labels
         fields_for_without_foundation(record_name, record_object, options, &block)
       end
 

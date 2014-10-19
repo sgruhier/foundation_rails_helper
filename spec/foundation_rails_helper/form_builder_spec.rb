@@ -13,6 +13,27 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  it "should display labels by default" do
+    form_for(@author) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      node.should have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
+  it "should not display labels by if there are options without auto_labels: false" do
+    form_for(@author, {html: {class: 'myclass'}}) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      node.should have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
+  it "should not display labels by if there are options without auto_labels: false" do
+    form_for(@author, {html: {class: 'myclass'}, auto_labels: false}) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      node.should_not have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
   describe "input generators" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
@@ -116,9 +137,9 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate check_box input without a label" do
       form_for(@author) do |builder|
         node = Capybara.string builder.check_box(:active, :label => false)
-        node.should have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
-        node.should have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
-        node.should have_css('label[for="author_active"]', :text => "")
+        node.should have_css('input[type="hidden"][name="author[active]"][value="0"]')
+        node.should have_css('input[type="checkbox"][name="author[active]"]')
+        node.should_not have_css('label[for="author_active"]')
       end
     end
 
@@ -187,6 +208,117 @@ describe "FoundationRailsHelper::FormHelper" do
         %w(1).each   {|i| node.should_not have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
       end
     end
+
+    it "should generate time_zone_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.label(:time_zone) + builder.time_zone_select(:time_zone)
+        node.should have_css('label[for="author_time_zone"]', :text => "Time zone")
+        node.should have_css('select[name="author[time_zone]"]')
+        node.should have_css('select[name="author[time_zone]"] option[value="Perth"]', :text => "(GMT+08:00) Perth")
+      end
+    end
+
+    it "should generate date_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.date_field(:publish_date)
+        node.should have_css('label[for="author_publish_date"]', :text => "date")
+        node.should have_css('input.medium.input-text[type="date"][name="author[publish_date]"]')
+        node.find_field('author_publish_date').value.should == @author.publish_date.to_s
+      end
+    end
+
+    it "should generate datetime_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.datetime_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="datetime"][name="author[forty_two]"]')
+        value = DateTime.parse( node.find_field('author_forty_two').value)
+        value.should == @author.forty_two.to_s
+      end
+    end
+
+    it "should generate datetime_local_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.datetime_local_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="datetime-local"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
+      end
+    end
+
+    it "should generate month_field input" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.month_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="month"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m")
+      end
+    end
+
+    it "should generate week_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.week_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="week"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-W%V")
+      end
+    end
+
+    it "should generate time_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string  builder.time_field(:forty_two)
+        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
+        node.should have_css('input.medium.input-text[type="time"][name="author[forty_two]"]')
+        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%H:%M:%S.%L")
+      end
+    end
+
+    it "should generate range_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.range_field(:some_number)
+        node.should have_css('label[for="author_some_number"]', :text => "Some number")
+        node.should have_css('input.medium.input-text[type="range"][name="author[some_number]"]')
+        node.find_field('author_some_number').value.should == @author.some_number
+      end
+    end
+
+    it "should generate search_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.search_field(:description)
+        node.should have_css('label[for="author_description"]', :text => "Description")
+        node.should have_css('input.medium.input-text[type="search"][name="author[description]"]')
+        node.find_field('author_description').value.should == @author.description
+      end
+    end
+
+    it "should generate color_field" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.color_field(:favorite_color)
+        node.should have_css('label[for="author_favorite_color"]', :text => "Favorite color")
+        node.should have_css('input.medium.input-text[type="color"][name="author[favorite_color]"]')
+        node.find_field('author_favorite_color').value.should == @author.favorite_color
+      end
+    end
+
+    it "should generate collection_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
+        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        node.should have_css('select[name="author[favorite_book]"]')
+        node.should have_css('select[name="author[favorite_book]"] option[value="78"]', :text => "Gulliver's Travels")
+        node.should have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
+      end
+    end
+
+    it "should generate grouped_collection_select input" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
+        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        node.should have_css('select[name="author[favorite_book]"]')
+        node.should have_css('select[name="author[favorite_book]"] optgroup[label="Exploration"] option[value="78"]', :text => "Gulliver's Travels")
+        node.should have_css('select[name="author[favorite_book]"] optgroup[label="Pirate Exploits"] option[value="133"]', :text => "Treasure Island")
+      end
+    end
   end
 
   describe "errors generator" do
@@ -203,5 +335,108 @@ describe "FoundationRailsHelper::FormHelper" do
         node.should have_css('small.error', :text => "required")
       end
     end
+    %w(file_field email_field text_field telephone_field phone_field
+       url_field number_field date_field datetime_field datetime_local_field
+       month_field week_field time_field range_field search_field color_field
+
+       password_field
+       ).each do |field|
+      it "should display errors on #{field} inputs" do
+        form_for(@author) do |builder|
+          @author.stub!(:errors).and_return({:description => ['required']})
+          node = Capybara.string builder.public_send(field, :description)
+          node.should have_css('label.error[for="author_description"]')
+          node.should have_css('input.error[name="author[description]"]')
+        end
+      end
+    end
+    it "should display errors on text_area inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:description => ['required']})
+        node = Capybara.string builder.text_area(:description)
+        node.should have_css('label.error[for="author_description"]')
+        node.should have_css('textarea.error[name="author[description]"]')
+      end
+    end
+    it "should display errors on select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
+        node.should have_css('label.error[for="author_favorite_book"]')
+        node.should have_css('select.error[name="author[favorite_book]"]')
+      end
+    end
+    it "should display errors on date_select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:birthdate => ['required']})
+        node = Capybara.string builder.date_select(:birthdate)
+        node.should have_css('label.error[for="author_birthdate"]')
+        %w(1 2 3).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
+      end
+    end
+    it "should display errors on datetime_select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:birthdate => ['required']})
+        node = Capybara.string builder.datetime_select(:birthdate)
+        node.should have_css('label.error[for="author_birthdate"]')
+        %w(1 2 3 4 5).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
+      end
+    end
+    it "should display errors on time_zone_select inputs"  do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:time_zone => ['required']})
+        node = Capybara.string builder.time_zone_select(:time_zone)
+        node.should have_css('label.error[for="author_time_zone"]')
+        node.should have_css('select.error[name="author[time_zone]"]')
+      end
+    end
+
+    it "should display errors on collection_select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
+        node.should have_css('label.error[for="author_favorite_book"]')
+        node.should have_css('select.error[name="author[favorite_book]"]')
+      end
+    end
+
+    it "should display errors on grouped_collection_select inputs" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
+        node.should have_css('label.error[for="author_favorite_book"]')
+        node.should have_css('select.error[name="author[favorite_book]"]')
+      end
+    end
+
+    # N.B. check_box and radio_button inputs don't have the error class applied
+
+    it "should display HTML errors when the option is specified" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
+        node = Capybara.string builder.text_field(:login, html_safe_errors: true)
+        node.should have_link('link', href: 'link_target')
+      end
+    end
+    it "should not display HTML errors when the option is not specified" do
+      form_for(@author) do |builder|
+        @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
+        node = Capybara.string builder.text_field(:login)
+        node.should_not have_link('link', href: 'link')
+      end
+    end
+
+    it "should not display labels unless specified in the builder method" do
+      form_for(@author, auto_labels: false) do |builder|
+        node = Capybara.string builder.text_field(:login) +
+          builder.check_box(:active, label: true) +
+          builder.text_field(:description, label: 'Tell me about you')
+
+        node.should_not have_css('label[for="author_login"]')
+        node.should have_css('label[for="author_active"]', text: 'Active')
+        node.should have_css('label[for="author_description"]', text: 'Tell me about you')
+      end
+    end
+
   end
 end
