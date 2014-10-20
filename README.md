@@ -186,6 +186,17 @@ The class attribute of the 'small' element will mirror the class attribute of th
 
 If the `html_safe_errors: true` option is specified on a field, then any HTML you may have embedded in a custom error string will be displayed with the html_safe option.
 
+## Configuration
+Add a Ruby file inside your Rails app's *config/initializers* directory and name it something appropriate (eg. *foundation_rails_helper.rb*).  See below for current options.
+
+### Submit Button Class
+To use a different class for the [submit button](https://github.com/sgruhier/foundation_rails_helper#submit-button) used in `form_for`, add a config named **button_class**.  Please note, the button class can still be overridden by an options hash.
+```ruby
+FoundationRailsHelper.configure do |config|
+  config.button_class = 'button small'
+end
+```
+
 ## TODO
 
 * Handle more UI components
@@ -204,4 +215,3 @@ If the `html_safe_errors: true` option is specified on a field, then any HTML yo
 Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE - 2012
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sgruhier/foundation_rails_helper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

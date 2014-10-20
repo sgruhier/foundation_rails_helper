@@ -1,3 +1,8 @@
+## Version HEAD
+
+* Not Released
+* Added configuration option to set button class in an initializer
+
 ## Version 0.5.0
 
 * Released Oct 10th 2014
