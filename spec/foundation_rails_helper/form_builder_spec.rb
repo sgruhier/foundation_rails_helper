@@ -330,7 +330,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:login => ['required']})
+        allow(@author).to receive(:errors).and_return({:login => ['required']})
         node = Capybara.string builder.text_field(:login)
         node.should have_css('small.error', :text => "required")
       end
@@ -343,7 +343,7 @@ describe "FoundationRailsHelper::FormHelper" do
        ).each do |field|
       it "should display errors on #{field} inputs" do
         form_for(@author) do |builder|
-          @author.stub!(:errors).and_return({:description => ['required']})
+          allow(@author).to receive(:errors).and_return({:description => ['required']})
           node = Capybara.string builder.public_send(field, :description)
           node.should have_css('label.error[for="author_description"]')
           node.should have_css('input.error[name="author[description]"]')
@@ -352,7 +352,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on text_area inputs" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:description => ['required']})
+        allow(@author).to receive(:errors).and_return({:description => ['required']})
         node = Capybara.string builder.text_area(:description)
         node.should have_css('label.error[for="author_description"]')
         node.should have_css('textarea.error[name="author[description]"]')
@@ -360,7 +360,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on select inputs" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        allow(@author).to receive(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
         node.should have_css('label.error[for="author_favorite_book"]')
         node.should have_css('select.error[name="author[favorite_book]"]')
@@ -368,7 +368,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on date_select inputs" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:birthdate => ['required']})
+        allow(@author).to receive(:errors).and_return({:birthdate => ['required']})
         node = Capybara.string builder.date_select(:birthdate)
         node.should have_css('label.error[for="author_birthdate"]')
         %w(1 2 3).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
@@ -376,7 +376,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on datetime_select inputs" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:birthdate => ['required']})
+        allow(@author).to receive(:errors).and_return({:birthdate => ['required']})
         node = Capybara.string builder.datetime_select(:birthdate)
         node.should have_css('label.error[for="author_birthdate"]')
         %w(1 2 3 4 5).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
@@ -384,7 +384,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on time_zone_select inputs"  do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:time_zone => ['required']})
+        allow(@author).to receive(:errors).and_return({:time_zone => ['required']})
         node = Capybara.string builder.time_zone_select(:time_zone)
         node.should have_css('label.error[for="author_time_zone"]')
         node.should have_css('select.error[name="author[time_zone]"]')
@@ -393,7 +393,7 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should display errors on collection_select inputs" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        allow(@author).to receive(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
         node.should have_css('label.error[for="author_favorite_book"]')
         node.should have_css('select.error[name="author[favorite_book]"]')
@@ -402,7 +402,7 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should display errors on grouped_collection_select inputs" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:favorite_book => ['required']})
+        allow(@author).to receive(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
         node.should have_css('label.error[for="author_favorite_book"]')
         node.should have_css('select.error[name="author[favorite_book]"]')
@@ -413,14 +413,14 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should display HTML errors when the option is specified" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
+        allow(@author).to receive(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
         node = Capybara.string builder.text_field(:login, html_safe_errors: true)
         node.should have_link('link', href: 'link_target')
       end
     end
     it "should not display HTML errors when the option is not specified" do
       form_for(@author) do |builder|
-        @author.stub!(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
+        allow(@author).to receive(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
         node = Capybara.string builder.text_field(:login)
         node.should_not have_link('link', href: 'link')
       end
