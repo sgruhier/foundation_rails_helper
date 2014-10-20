@@ -91,7 +91,7 @@ module FoundationRailsHelper
     end
 
     def submit(value=nil, options={})
-      options[:class] ||= "small radius success button"
+      options[:class] ||= FoundationRailsHelper.configuration.button_class
       super(value, options)
     end
 
