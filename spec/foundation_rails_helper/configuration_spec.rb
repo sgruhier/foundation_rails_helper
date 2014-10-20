@@ -29,7 +29,6 @@ describe FoundationRailsHelper do
         FoundationRailsHelper.reset
 
         config = FoundationRailsHelper.configuration
-
         expect(config.button_class).to eq('small radius success button')
       end
     end
