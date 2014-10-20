@@ -439,4 +439,43 @@ describe "FoundationRailsHelper::FormHelper" do
     end
 
   end
+
+  describe 'submit button generator' do
+    after :each do
+      FoundationRailsHelper.reset
+    end
+
+    context 'when button_class config is not set' do
+      it "should display form button with default class" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.submit('Save')
+          node.should have_css('input[type="submit"][class="small radius success button"]')
+        end
+      end
+    end
+
+    context 'when button_class config is "superduper"' do
+      before do
+        FoundationRailsHelper.configure do |config|
+          config.button_class = 'superduper'
+        end
+      end
+
+      it "should display form button with 'superduper' class" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.submit('Save')
+          node.should have_css('input[type="submit"][class="superduper"]')
+        end
+      end
+    end
+
+    context 'when option value is "superduper"' do
+      it "should display form button with 'superduper' class" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.submit('Save', class: 'superduper')
+          node.should have_css('input[type="submit"][class="superduper"]')
+        end
+      end
+    end
+  end
 end
