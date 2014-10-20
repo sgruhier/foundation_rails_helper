@@ -39,7 +39,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
         node.should have_css('label[for="author_login"]', :text => "Login")
-        node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
+        node.should have_css('input[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
       end
     end
@@ -48,7 +48,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login, :label => false)
         node.should_not have_css('label[for="author_login"]', :text => "Login")
-        node.should have_css('input.medium.input-text[type="text"][name="author[login]"]')
+        node.should have_css('input[type="text"][name="author[login]"]')
         node.find_field('author_login').value.should == @author.login
       end
     end
@@ -57,7 +57,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.password_field(:password)
         node.should have_css('label[for="author_password"]', :text => "Password")
-        node.should have_css('input.medium.input-text[type="password"][name="author[password]"]')
+        node.should have_css('input[type="password"][name="author[password]"]')
         node.find_field('author_password').value.should be_nil
       end
     end
@@ -66,7 +66,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.email_field(:email)
         node.should have_css('label[for="author_email"]', :text => "Email")
-        node.should have_css('input.medium.input-text[type="email"][name="author[email]"]')
+        node.should have_css('input[type="email"][name="author[email]"]')
         node.find_field('author_email').value.should == @author.email
       end
     end
@@ -75,7 +75,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.url_field(:url)
         node.should have_css('label[for="author_url"]', :text => "Url")
-        node.should have_css('input.medium.input-text[type="url"][name="author[url]"]')
+        node.should have_css('input[type="url"][name="author[url]"]')
         node.find_field('author_url').value.should == @author.url
       end
     end
@@ -84,7 +84,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.phone_field(:phone)
         node.should have_css('label[for="author_phone"]', :text => "Phone")
-        node.should have_css('input.medium.input-text[type="tel"][name="author[phone]"]')
+        node.should have_css('input[type="tel"][name="author[phone]"]')
         node.find_field('author_phone').value.should == @author.phone
       end
     end
@@ -93,7 +93,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.number_field(:some_number)
         node.should have_css('label[for="author_some_number"]', :text => "Some number")
-        node.should have_css('input.medium.input-text[type="number"][name="author[some_number]"]')
+        node.should have_css('input[type="number"][name="author[some_number]"]')
         node.find_field('author_some_number').value.should == @author.some_number
       end
     end
@@ -102,7 +102,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_area(:description)
         node.should have_css('label[for="author_description"]', :text => "Description")
-        node.should have_css('textarea.medium.input-text[name="author[description]"]')
+        node.should have_css('textarea[name="author[description]"]')
         node.find_field('author_description').value.strip.should == @author.description
       end
     end
@@ -111,7 +111,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.file_field(:avatar)
         node.should have_css('label[for="author_avatar"]', :text => "Avatar")
-        node.should have_css('input.medium.input-text[type="file"][name="author[avatar]"]')
+        node.should have_css('input[type="file"][name="author[avatar]"]')
         node.find_field('author_avatar').value.should  be_nil
       end
     end
@@ -162,11 +162,11 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.date_select(:birthdate)
         node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(1 2 3).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(1 2 3).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
         node.should have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
         node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
         node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
-        %w(4 5).each   {|i| node.should_not have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(4 5).each   {|i| node.should_not have_css("select[name='author[birthdate(#{i}i)]']") }
       end
     end
 
@@ -174,11 +174,11 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.date_select(:birthdate, :discard_year => true)
         node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(2 3).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(2 3).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
         node.should_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
         node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
         node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
-        %w(1 4 5).each   {|i| node.should_not have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(1 4 5).each   {|i| node.should_not have_css("select[name='author[birthdate(#{i}i)]']") }
       end
     end
 
@@ -186,7 +186,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.datetime_select(:birthdate)
         node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(1 2 3 4 5).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(1 2 3 4 5).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
         node.should have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
         node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
         node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
@@ -199,13 +199,13 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.datetime_select(:birthdate, :discard_year => true)
         node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(2 3 4 5).each {|i| node.should     have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(2 3 4 5).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
         node.should_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
         node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
         node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
         node.should have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
         node.should have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
-        %w(1).each   {|i| node.should_not have_css("select.medium.input-text[name='author[birthdate(#{i}i)]']") }
+        %w(1).each   {|i| node.should_not have_css("select[name='author[birthdate(#{i}i)]']") }
       end
     end
 
@@ -222,7 +222,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.date_field(:publish_date)
         node.should have_css('label[for="author_publish_date"]', :text => "date")
-        node.should have_css('input.medium.input-text[type="date"][name="author[publish_date]"]')
+        node.should have_css('input[type="date"][name="author[publish_date]"]')
         node.find_field('author_publish_date').value.should == @author.publish_date.to_s
       end
     end
@@ -231,7 +231,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.datetime_field(:forty_two)
         node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input.medium.input-text[type="datetime"][name="author[forty_two]"]')
+        node.should have_css('input[type="datetime"][name="author[forty_two]"]')
         value = DateTime.parse( node.find_field('author_forty_two').value)
         value.should == @author.forty_two.to_s
       end
@@ -241,7 +241,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.datetime_local_field(:forty_two)
         node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input.medium.input-text[type="datetime-local"][name="author[forty_two]"]')
+        node.should have_css('input[type="datetime-local"][name="author[forty_two]"]')
         node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
       end
     end
@@ -250,7 +250,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.month_field(:forty_two)
         node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input.medium.input-text[type="month"][name="author[forty_two]"]')
+        node.should have_css('input[type="month"][name="author[forty_two]"]')
         node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m")
       end
     end
@@ -259,7 +259,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.week_field(:forty_two)
         node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input.medium.input-text[type="week"][name="author[forty_two]"]')
+        node.should have_css('input[type="week"][name="author[forty_two]"]')
         node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-W%V")
       end
     end
@@ -268,7 +268,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.time_field(:forty_two)
         node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input.medium.input-text[type="time"][name="author[forty_two]"]')
+        node.should have_css('input[type="time"][name="author[forty_two]"]')
         node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%H:%M:%S.%L")
       end
     end
@@ -277,7 +277,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.range_field(:some_number)
         node.should have_css('label[for="author_some_number"]', :text => "Some number")
-        node.should have_css('input.medium.input-text[type="range"][name="author[some_number]"]')
+        node.should have_css('input[type="range"][name="author[some_number]"]')
         node.find_field('author_some_number').value.should == @author.some_number
       end
     end
@@ -286,7 +286,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.search_field(:description)
         node.should have_css('label[for="author_description"]', :text => "Description")
-        node.should have_css('input.medium.input-text[type="search"][name="author[description]"]')
+        node.should have_css('input[type="search"][name="author[description]"]')
         node.find_field('author_description').value.should == @author.description
       end
     end
@@ -295,7 +295,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.color_field(:favorite_color)
         node.should have_css('label[for="author_favorite_color"]', :text => "Favorite color")
-        node.should have_css('input.medium.input-text[type="color"][name="author[favorite_color]"]')
+        node.should have_css('input[type="color"][name="author[favorite_color]"]')
         node.find_field('author_favorite_color').value.should == @author.favorite_color
       end
     end
