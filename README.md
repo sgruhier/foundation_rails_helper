@@ -111,10 +111,10 @@ generates:
 
 ```html
 <label for="user_email">Name</label>
-<input class="medium input-text" id="user_name" name="user[name]" type="text">
+<input id="user_name" name="user[name]" type="text">
 ```
 
-The 'input-text' class will always be added to the input element, but the 'medium' class can be replaced.
+A class name can be added with an options hash:
 
 ```ruby
 f.text_field :name, class: 'large'
@@ -123,7 +123,7 @@ f.text_field :name, class: 'large'
 generates:
 
 ```html
-<input class="large input-text" ... >
+<input class="large" ... >
 ```
 
 Prevent the generation of a label:
@@ -178,8 +178,8 @@ generates:
 
 ```html
 <label class=" error" for="user_email">Email</label>
-<input class="medium input-text error" id="user_email" name="user[email]" type="email" value="">
-<small class="error medium input-text error">can't be blank</small>
+<input class=" error" id="user_email" name="user[email]" type="email" value="">
+<small class=" error">can't be blank</small>
 ```
 
 The class attribute of the 'small' element will mirror the class attribute of the 'input' element.
@@ -204,4 +204,3 @@ If the `html_safe_errors: true` option is specified on a field, then any HTML yo
 Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE - 2012
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sgruhier/foundation_rails_helper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
