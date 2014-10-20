@@ -104,7 +104,7 @@ module FoundationRailsSpecHelper
     allow(@author).to receive(:birthdate).and_return(DateTime.parse("1969-06-18 20:30"))
     allow(@author).to receive(:id).and_return(37)
     allow(@author).to receive(:new_record?).and_return(false)
-    allow(@author).to receive(:errors).and_return(mock('errors', :[] => nil))
+    allow(@author).to receive(:errors).and_return(double(:[] => nil))
     allow(@author).to receive(:to_key).and_return(nil)
     allow(@author).to receive(:persisted?).and_return(nil)
     allow(@author).to receive(:time_zone).and_return("Perth")
@@ -132,7 +132,7 @@ module FoundationRailsSpecHelper
     allow(::Author).to receive(:where).and_return([@author])
     allow(::Author).to receive(:human_attribute_name) { |column_name| column_name.to_s.humanize }
     allow(::Author).to receive(:human_name).and_return('::Author')
-    allow(::Author).to receive(:content_columns).and_return([mock('column', :name => 'login'), mock('column', :name => 'created_at')])
+    allow(::Author).to receive(:content_columns).and_return([double('column', :name => 'login'), double('column', :name => 'created_at')])
     allow(::Author).to receive(:to_key).and_return(nil)
     allow(::Author).to receive(:persisted?).and_return(nil)
 
