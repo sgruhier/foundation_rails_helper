@@ -123,7 +123,7 @@ f.text_field :name, class: 'large'
 generates:
 
 ```html
-<input class="large" ... >
+<input class="large" id="user_name" name="user[name]" type="text">
 ```
 
 Prevent the generation of a label:
