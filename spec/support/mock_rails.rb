@@ -104,7 +104,7 @@ module FoundationRailsSpecHelper
     allow(@author).to receive(:birthdate).and_return(DateTime.parse("1969-06-18 20:30"))
     allow(@author).to receive(:id).and_return(37)
     allow(@author).to receive(:new_record?).and_return(false)
-    allow(@author).to receive(:errors).and_return(double(:[] => nil))
+    allow(@author).to receive(:errors).and_return(double('errors', :[] => nil))
     allow(@author).to receive(:to_key).and_return(nil)
     allow(@author).to receive(:persisted?).and_return(nil)
     allow(@author).to receive(:time_zone).and_return("Perth")
