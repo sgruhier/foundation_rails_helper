@@ -92,13 +92,6 @@ generates:
   ...
 ```
 
-Override the default class like so:
-
-```erb
-<%= form_for(@user, html: {class: 'mean'}) do |f| %>
-  ...
-```
-
 ### text_field and Field Helpers
 
 Field helpers add a label element and an input of the proper type.
@@ -112,18 +105,6 @@ generates:
 ```html
 <label for="user_email">Name</label>
 <input id="user_name" name="user[name]" type="text">
-```
-
-A class name can be added with an options hash:
-
-```ruby
-f.text_field :name, class: 'large'
-```
-
-generates:
-
-```html
-<input class="large" id="user_name" name="user[name]" type="text">
 ```
 
 Prevent the generation of a label:
