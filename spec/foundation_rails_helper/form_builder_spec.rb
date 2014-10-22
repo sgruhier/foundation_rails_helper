@@ -53,6 +53,13 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
+    it "should generate text_field with class from options" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.text_field(:login, :class => 'righteous')
+        node.should have_css('input.righteous[type="text"][name="author[login]"]')
+      end
+    end
+
     it "should generate password_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.password_field(:password)
@@ -438,5 +445,24 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
+    context 'when class option given' do
+      it "should add it to the error class" do
+        form_for(@author) do |builder|
+          allow(@author).to receive(:errors).and_return({:email => ['required']})
+          node = Capybara.string builder.text_field(:email, class: 'righteous')
+          node.should have_css('input.righteous.error[name="author[email]"]')
+        end
+      end
+    end
+
+    context 'when invalid class option given' do
+      it "should add it to the error class" do
+        form_for(@author) do |builder|
+          allow(@author).to receive(:errors).and_return({:email => ['required']})
+          node = Capybara.string builder.text_field(:email, class: :illgotten)
+          node.should have_css('input.illgotten.error[name="author[email]"]')
+        end
+      end
+    end
   end
 end
