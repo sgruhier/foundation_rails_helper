@@ -77,7 +77,7 @@ to `app/helpers/application_helper.rb`
 
 ### form_for
 
-Form_for wraps the standard rails form_for helper.
+Form_for wraps the standard rails form_for helper and adds a 'nice' and 'custom' class by default.
 
 ```erb
 <%= form_for @user do |f| %>
@@ -88,7 +88,7 @@ Form_for wraps the standard rails form_for helper.
 generates:
 
 ```html
-<form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post">
+<form accept-charset="UTF-8" action="/users" class="nice custom" id="new_user" method="post">
   ...
 ```
 
@@ -152,7 +152,7 @@ an additional span element will be added after the input element:
 
 ### Submit Button
 
-The 'submit' helper wraps the rails helper and sets the class attribute to "small radius success button" by default.
+The 'submit' helper wraps the rails helper and sets the class attribute to "small radius button" by default.
 
 ```ruby
 f.submit
@@ -161,7 +161,7 @@ f.submit
 generates:
 
 ```html
-<input class="small radius success button" name="commit" type="submit" value="Create User">
+<input class="small radius button" name="commit" type="submit" value="Create User">
 ```
 
 Specify the class option to override the default classes.
