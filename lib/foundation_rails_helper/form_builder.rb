@@ -137,8 +137,7 @@ module FoundationRailsHelper
       html = ''.html_safe
       html = custom_label(attribute, options[:label], options[:label_options]) if @options[:auto_labels] || options[:label]
       class_options = html_options || options
-      class_options[:class] ||= "medium"
-      class_options[:class] = "#{class_options[:class]} input-text"
+      class_options[:class] = class_options[:class].to_s
       class_options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
