@@ -158,9 +158,9 @@ f.email_field :email
 generates:
 
 ```html
-<label class=" error" for="user_email">Email</label>
-<input class=" error" id="user_email" name="user[email]" type="email" value="">
-<small class=" error">can't be blank</small>
+<label class="error" for="user_email">Email</label>
+<input class="error" id="user_email" name="user[email]" type="email" value="">
+<small class="error">can't be blank</small>
 ```
 
 The class attribute of the 'small' element will mirror the class attribute of the 'input' element.
