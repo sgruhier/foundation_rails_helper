@@ -9,28 +9,28 @@ describe "FoundationRailsHelper::FormHelper" do
 
   it 'should have FoundationRailsHelper::FormHelper as default buidler' do
     form_for(@author) do |builder|
-      builder.class.should == FoundationRailsHelper::FormBuilder
+      expect(builder.class).to eq FoundationRailsHelper::FormBuilder
     end
   end
 
   it "should display labels by default" do
     form_for(@author) do |builder|
       node = Capybara.string builder.text_field(:login)
-      node.should have_css('label[for="author_login"]', :text => "Login")
+      expect(node).to have_css('label[for="author_login"]', :text => "Login")
     end
   end
 
   it "should not display labels by if there are options without auto_labels: false" do
     form_for(@author, {html: {class: 'myclass'}}) do |builder|
       node = Capybara.string builder.text_field(:login)
-      node.should have_css('label[for="author_login"]', :text => "Login")
+      expect(node).to have_css('label[for="author_login"]', :text => "Login")
     end
   end
 
   it "should not display labels by if there are options without auto_labels: false" do
     form_for(@author, {html: {class: 'myclass'}, auto_labels: false}) do |builder|
       node = Capybara.string builder.text_field(:login)
-      node.should_not have_css('label[for="author_login"]', :text => "Login")
+      expect(node).to_not have_css('label[for="author_login"]', :text => "Login")
     end
   end
 
@@ -38,292 +38,292 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
-        node.should have_css('label[for="author_login"]', :text => "Login")
-        node.should have_css('input[type="text"][name="author[login]"]')
-        node.find_field('author_login').value.should == @author.login
+        expect(node).to have_css('label[for="author_login"]', :text => "Login")
+        expect(node).to have_css('input[type="text"][name="author[login]"]')
+        expect(node.find_field('author_login').value).to eq @author.login
       end
     end
 
     it "should generate text_field input without label" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login, :label => false)
-        node.should_not have_css('label[for="author_login"]', :text => "Login")
-        node.should have_css('input[type="text"][name="author[login]"]')
-        node.find_field('author_login').value.should == @author.login
+        expect(node).to_not have_css('label[for="author_login"]', :text => "Login")
+        expect(node).to have_css('input[type="text"][name="author[login]"]')
+        expect(node.find_field('author_login').value).to eq @author.login
       end
     end
 
     it "should generate text_field with class from options" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login, :class => 'righteous')
-        node.should have_css('input.righteous[type="text"][name="author[login]"]')
+        expect(node).to have_css('input.righteous[type="text"][name="author[login]"]')
       end
     end
 
     it "should generate password_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.password_field(:password)
-        node.should have_css('label[for="author_password"]', :text => "Password")
-        node.should have_css('input[type="password"][name="author[password]"]')
-        node.find_field('author_password').value.should be_nil
+        expect(node).to have_css('label[for="author_password"]', :text => "Password")
+        expect(node).to have_css('input[type="password"][name="author[password]"]')
+        expect(node.find_field('author_password').value).to be_nil
       end
     end
 
     it "should generate email_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.email_field(:email)
-        node.should have_css('label[for="author_email"]', :text => "Email")
-        node.should have_css('input[type="email"][name="author[email]"]')
-        node.find_field('author_email').value.should == @author.email
+        expect(node).to have_css('label[for="author_email"]', :text => "Email")
+        expect(node).to have_css('input[type="email"][name="author[email]"]')
+        expect(node.find_field('author_email').value).to eq @author.email
       end
     end
 
     it "should generate url_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.url_field(:url)
-        node.should have_css('label[for="author_url"]', :text => "Url")
-        node.should have_css('input[type="url"][name="author[url]"]')
-        node.find_field('author_url').value.should == @author.url
+        expect(node).to have_css('label[for="author_url"]', :text => "Url")
+        expect(node).to have_css('input[type="url"][name="author[url]"]')
+        expect(node.find_field('author_url').value).to eq @author.url
       end
     end
 
     it "should generate phone_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.phone_field(:phone)
-        node.should have_css('label[for="author_phone"]', :text => "Phone")
-        node.should have_css('input[type="tel"][name="author[phone]"]')
-        node.find_field('author_phone').value.should == @author.phone
+        expect(node).to have_css('label[for="author_phone"]', :text => "Phone")
+        expect(node).to have_css('input[type="tel"][name="author[phone]"]')
+        expect(node.find_field('author_phone').value).to eq @author.phone
       end
     end
 
     it "should generate number_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.number_field(:some_number)
-        node.should have_css('label[for="author_some_number"]', :text => "Some number")
-        node.should have_css('input[type="number"][name="author[some_number]"]')
-        node.find_field('author_some_number').value.should == @author.some_number
+        expect(node).to have_css('label[for="author_some_number"]', :text => "Some number")
+        expect(node).to have_css('input[type="number"][name="author[some_number]"]')
+        expect(node.find_field('author_some_number').value).to eq @author.some_number
       end
     end
 
     it "should generate text_area input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_area(:description)
-        node.should have_css('label[for="author_description"]', :text => "Description")
-        node.should have_css('textarea[name="author[description]"]')
-        node.find_field('author_description').value.strip.should == @author.description
+        expect(node).to have_css('label[for="author_description"]', :text => "Description")
+        expect(node).to have_css('textarea[name="author[description]"]')
+        expect(node.find_field('author_description').value.strip).to eq @author.description
       end
     end
 
     it "should generate file_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.file_field(:avatar)
-        node.should have_css('label[for="author_avatar"]', :text => "Avatar")
-        node.should have_css('input[type="file"][name="author[avatar]"]')
-        node.find_field('author_avatar').value.should  be_nil
+        expect(node).to have_css('label[for="author_avatar"]', :text => "Avatar")
+        expect(node).to have_css('input[type="file"][name="author[avatar]"]')
+        expect(node.find_field('author_avatar').value).to  be_nil
       end
     end
 
     it "should generate select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.select(:description, [["Choice #1", :a], ["Choice #2", :b]])
-        node.should have_css('label[for="author_description"]', :text => "Description")
-        node.should have_css('select[name="author[description]"]')
-        node.should have_css('select[name="author[description]"] option[value="a"]', :text => "Choice #1")
-        node.should have_css('select[name="author[description]"] option[value="b"]', :text => "Choice #2")
+        expect(node).to have_css('label[for="author_description"]', :text => "Description")
+        expect(node).to have_css('select[name="author[description]"]')
+        expect(node).to have_css('select[name="author[description]"] option[value="a"]', :text => "Choice #1")
+        expect(node).to have_css('select[name="author[description]"] option[value="b"]', :text => "Choice #2")
       end
     end
 
     it "should generate check_box input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.check_box(:active)
-        node.should have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
-        node.should have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
-        node.should have_css('label[for="author_active"]', :text => "Active")
+        expect(node).to have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
+        expect(node).to have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
+        expect(node).to have_css('label[for="author_active"]', :text => "Active")
       end
     end
     it "should generate check_box input without a label" do
       form_for(@author) do |builder|
         node = Capybara.string builder.check_box(:active, :label => false)
-        node.should have_css('input[type="hidden"][name="author[active]"][value="0"]')
-        node.should have_css('input[type="checkbox"][name="author[active]"]')
-        node.should_not have_css('label[for="author_active"]')
+        expect(node).to have_css('input[type="hidden"][name="author[active]"][value="0"]')
+        expect(node).to have_css('input[type="checkbox"][name="author[active]"]')
+        expect(node).to_not have_css('label[for="author_active"]')
       end
     end
 
     it "should generate radio_button input" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.label(:active) + builder.radio_button(:active, "ok")
-        node.should have_css('label[for="author_active_ok"] input[type="radio"][name="author[active]"]')
+        expect(node).to have_css('label[for="author_active_ok"] input[type="radio"][name="author[active]"]')
       end
     end
 
     it "should generate radio_button input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.radio_button(:active, true, text: "Functioning")
-        node.should have_css('input[type="radio"][name="author[active]"]')
-        node.should have_css('label[for="author_active_true"]', text: "Functioning")
+        expect(node).to have_css('input[type="radio"][name="author[active]"]')
+        expect(node).to have_css('label[for="author_active_true"]', text: "Functioning")
       end
     end
 
     it "should generate date_select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.date_select(:birthdate)
-        node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(1 2 3).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
-        node.should have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
-        node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
-        node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
-        %w(4 5).each   {|i| node.should_not have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label[for="author_birthdate"]', :text => "Birthdate")
+        %w(1 2 3).each {|i| expect(node).to     have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
+        expect(node).to have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
+        expect(node).to have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
+        %w(4 5).each   {|i| expect(node).to_not have_css("select[name='author[birthdate(#{i}i)]']") }
       end
     end
 
     it "should generate date_select input with  :discard_year => true" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.date_select(:birthdate, :discard_year => true)
-        node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(2 3).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
-        node.should_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
-        node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
-        node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
-        %w(1 4 5).each   {|i| node.should_not have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label[for="author_birthdate"]', :text => "Birthdate")
+        %w(2 3).each {|i| expect(node).to     have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
+        expect(node).to have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
+        expect(node).to have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
+        %w(1 4 5).each   {|i| expect(node).to_not have_css("select[name='author[birthdate(#{i}i)]']") }
       end
     end
 
     it "should generate datetime_select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.datetime_select(:birthdate)
-        node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(1 2 3 4 5).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
-        node.should have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
-        node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
-        node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
-        node.should have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
-        node.should have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
+        expect(node).to have_css('label[for="author_birthdate"]', :text => "Birthdate")
+        %w(1 2 3 4 5).each {|i| expect(node).to     have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
+        expect(node).to have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
+        expect(node).to have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
+        expect(node).to have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
+        expect(node).to have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
       end
     end
 
     it "should generate datetime_select input with  :discard_year => true" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:birthdate) + builder.datetime_select(:birthdate, :discard_year => true)
-        node.should have_css('label[for="author_birthdate"]', :text => "Birthdate")
-        %w(2 3 4 5).each {|i| node.should     have_css("select[name='author[birthdate(#{i}i)]']") }
-        node.should_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
-        node.should have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
-        node.should have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
-        node.should have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
-        node.should have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
-        %w(1).each   {|i| node.should_not have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label[for="author_birthdate"]', :text => "Birthdate")
+        %w(2 3 4 5).each {|i| expect(node).to     have_css("select[name='author[birthdate(#{i}i)]']") }
+        expect(node).to_not have_css('select#author_birthdate_1i option[selected="selected"][value="1969"]')
+        expect(node).to have_css('select#author_birthdate_2i option[selected="selected"][value="6"]')
+        expect(node).to have_css('select#author_birthdate_3i option[selected="selected"][value="18"]')
+        expect(node).to have_css('select#author_birthdate_4i option[selected="selected"][value="20"]')
+        expect(node).to have_css('select#author_birthdate_5i option[selected="selected"][value="30"]')
+        %w(1).each   {|i| expect(node).to_not have_css("select[name='author[birthdate(#{i}i)]']") }
       end
     end
 
     it "should generate time_zone_select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.label(:time_zone) + builder.time_zone_select(:time_zone)
-        node.should have_css('label[for="author_time_zone"]', :text => "Time zone")
-        node.should have_css('select[name="author[time_zone]"]')
-        node.should have_css('select[name="author[time_zone]"] option[value="Perth"]', :text => "(GMT+08:00) Perth")
+        expect(node).to have_css('label[for="author_time_zone"]', :text => "Time zone")
+        expect(node).to have_css('select[name="author[time_zone]"]')
+        expect(node).to have_css('select[name="author[time_zone]"] option[value="Perth"]', :text => "(GMT+08:00) Perth")
       end
     end
 
     it "should generate date_field input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.date_field(:publish_date)
-        node.should have_css('label[for="author_publish_date"]', :text => "date")
-        node.should have_css('input[type="date"][name="author[publish_date]"]')
-        node.find_field('author_publish_date').value.should == @author.publish_date.to_s
+        expect(node).to have_css('label[for="author_publish_date"]', :text => "date")
+        expect(node).to have_css('input[type="date"][name="author[publish_date]"]')
+        expect(node.find_field('author_publish_date').value).to eq @author.publish_date.to_s
       end
     end
 
     it "should generate datetime_field input" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.datetime_field(:forty_two)
-        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input[type="datetime"][name="author[forty_two]"]')
+        expect(node).to have_css('label[for="author_forty_two"]', :text => "Forty two")
+        expect(node).to have_css('input[type="datetime"][name="author[forty_two]"]')
         value = DateTime.parse( node.find_field('author_forty_two').value)
-        value.should == @author.forty_two.to_s
+        expect(value).to eq @author.forty_two.to_s
       end
     end
 
     it "should generate datetime_local_field" do
       form_for(@author) do |builder|
         node = Capybara.string builder.datetime_local_field(:forty_two)
-        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input[type="datetime-local"][name="author[forty_two]"]')
-        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
+        expect(node).to have_css('label[for="author_forty_two"]', :text => "Forty two")
+        expect(node).to have_css('input[type="datetime-local"][name="author[forty_two]"]')
+        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
       end
     end
 
     it "should generate month_field input" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.month_field(:forty_two)
-        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input[type="month"][name="author[forty_two]"]')
-        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-%m")
+        expect(node).to have_css('label[for="author_forty_two"]', :text => "Forty two")
+        expect(node).to have_css('input[type="month"][name="author[forty_two]"]')
+        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%Y-%m")
       end
     end
 
     it "should generate week_field" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.week_field(:forty_two)
-        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input[type="week"][name="author[forty_two]"]')
-        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%Y-W%V")
+        expect(node).to have_css('label[for="author_forty_two"]', :text => "Forty two")
+        expect(node).to have_css('input[type="week"][name="author[forty_two]"]')
+        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%Y-W%V")
       end
     end
 
     it "should generate time_field" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.time_field(:forty_two)
-        node.should have_css('label[for="author_forty_two"]', :text => "Forty two")
-        node.should have_css('input[type="time"][name="author[forty_two]"]')
-        node.find_field('author_forty_two').value.should == @author.forty_two.strftime("%H:%M:%S.%L")
+        expect(node).to have_css('label[for="author_forty_two"]', :text => "Forty two")
+        expect(node).to have_css('input[type="time"][name="author[forty_two]"]')
+        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%H:%M:%S.%L")
       end
     end
 
     it "should generate range_field" do
       form_for(@author) do |builder|
         node = Capybara.string builder.range_field(:some_number)
-        node.should have_css('label[for="author_some_number"]', :text => "Some number")
-        node.should have_css('input[type="range"][name="author[some_number]"]')
-        node.find_field('author_some_number').value.should == @author.some_number
+        expect(node).to have_css('label[for="author_some_number"]', :text => "Some number")
+        expect(node).to have_css('input[type="range"][name="author[some_number]"]')
+        expect(node.find_field('author_some_number').value).to eq @author.some_number
       end
     end
 
     it "should generate search_field" do
       form_for(@author) do |builder|
         node = Capybara.string builder.search_field(:description)
-        node.should have_css('label[for="author_description"]', :text => "Description")
-        node.should have_css('input[type="search"][name="author[description]"]')
-        node.find_field('author_description').value.should == @author.description
+        expect(node).to have_css('label[for="author_description"]', :text => "Description")
+        expect(node).to have_css('input[type="search"][name="author[description]"]')
+        expect(node.find_field('author_description').value).to eq @author.description
       end
     end
 
     it "should generate color_field" do
       form_for(@author) do |builder|
         node = Capybara.string builder.color_field(:favorite_color)
-        node.should have_css('label[for="author_favorite_color"]', :text => "Favorite color")
-        node.should have_css('input[type="color"][name="author[favorite_color]"]')
-        node.find_field('author_favorite_color').value.should == @author.favorite_color
+        expect(node).to have_css('label[for="author_favorite_color"]', :text => "Favorite color")
+        expect(node).to have_css('input[type="color"][name="author[favorite_color]"]')
+        expect(node.find_field('author_favorite_color').value).to eq @author.favorite_color
       end
     end
 
     it "should generate collection_select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
-        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
-        node.should have_css('select[name="author[favorite_book]"]')
-        node.should have_css('select[name="author[favorite_book]"] option[value="78"]', :text => "Gulliver's Travels")
-        node.should have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
+        expect(node).to have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        expect(node).to have_css('select[name="author[favorite_book]"]')
+        expect(node).to have_css('select[name="author[favorite_book]"] option[value="78"]', :text => "Gulliver's Travels")
+        expect(node).to have_css('select[name="author[favorite_book]"] option[value="133"]', :text => "Treasure Island")
       end
     end
 
     it "should generate grouped_collection_select input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
-        node.should have_css('label[for="author_favorite_book"]', :text => "Favorite book")
-        node.should have_css('select[name="author[favorite_book]"]')
-        node.should have_css('select[name="author[favorite_book]"] optgroup[label="Exploration"] option[value="78"]', :text => "Gulliver's Travels")
-        node.should have_css('select[name="author[favorite_book]"] optgroup[label="Pirate Exploits"] option[value="133"]', :text => "Treasure Island")
+        expect(node).to have_css('label[for="author_favorite_book"]', :text => "Favorite book")
+        expect(node).to have_css('select[name="author[favorite_book]"]')
+        expect(node).to have_css('select[name="author[favorite_book]"] optgroup[label="Exploration"] option[value="78"]', :text => "Gulliver's Travels")
+        expect(node).to have_css('select[name="author[favorite_book]"] optgroup[label="Pirate Exploits"] option[value="133"]', :text => "Treasure Island")
       end
     end
   end
@@ -332,14 +332,14 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should not display errors" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
-        node.should_not have_css('small.error')
+        expect(node).to_not have_css('small.error')
       end
     end
     it "should display errors" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:login => ['required']})
         node = Capybara.string builder.text_field(:login)
-        node.should have_css('small.error', :text => "required")
+        expect(node).to have_css('small.error', :text => "required")
       end
     end
     %w(file_field email_field text_field telephone_field phone_field
@@ -352,8 +352,8 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           allow(@author).to receive(:errors).and_return({:description => ['required']})
           node = Capybara.string builder.public_send(field, :description)
-          node.should have_css('label.error[for="author_description"]')
-          node.should have_css('input.error[name="author[description]"]')
+          expect(node).to have_css('label.error[for="author_description"]')
+          expect(node).to have_css('input.error[name="author[description]"]')
         end
       end
     end
@@ -361,40 +361,40 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:description => ['required']})
         node = Capybara.string builder.text_area(:description)
-        node.should have_css('label.error[for="author_description"]')
-        node.should have_css('textarea.error[name="author[description]"]')
+        expect(node).to have_css('label.error[for="author_description"]')
+        expect(node).to have_css('textarea.error[name="author[description]"]')
       end
     end
     it "should display errors on select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
-        node.should have_css('label.error[for="author_favorite_book"]')
-        node.should have_css('select.error[name="author[favorite_book]"]')
+        expect(node).to have_css('label.error[for="author_favorite_book"]')
+        expect(node).to have_css('select.error[name="author[favorite_book]"]')
       end
     end
     it "should display errors on date_select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:birthdate => ['required']})
         node = Capybara.string builder.date_select(:birthdate)
-        node.should have_css('label.error[for="author_birthdate"]')
-        %w(1 2 3).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label.error[for="author_birthdate"]')
+        %w(1 2 3).each {|i| expect(node).to have_css("select.error[name='author[birthdate(#{i}i)]']") }
       end
     end
     it "should display errors on datetime_select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:birthdate => ['required']})
         node = Capybara.string builder.datetime_select(:birthdate)
-        node.should have_css('label.error[for="author_birthdate"]')
-        %w(1 2 3 4 5).each {|i| node.should have_css("select.error[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label.error[for="author_birthdate"]')
+        %w(1 2 3 4 5).each {|i| expect(node).to have_css("select.error[name='author[birthdate(#{i}i)]']") }
       end
     end
     it "should display errors on time_zone_select inputs"  do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:time_zone => ['required']})
         node = Capybara.string builder.time_zone_select(:time_zone)
-        node.should have_css('label.error[for="author_time_zone"]')
-        node.should have_css('select.error[name="author[time_zone]"]')
+        expect(node).to have_css('label.error[for="author_time_zone"]')
+        expect(node).to have_css('select.error[name="author[time_zone]"]')
       end
     end
 
@@ -402,8 +402,8 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
-        node.should have_css('label.error[for="author_favorite_book"]')
-        node.should have_css('select.error[name="author[favorite_book]"]')
+        expect(node).to have_css('label.error[for="author_favorite_book"]')
+        expect(node).to have_css('select.error[name="author[favorite_book]"]')
       end
     end
 
@@ -411,8 +411,8 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:favorite_book => ['required']})
         node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
-        node.should have_css('label.error[for="author_favorite_book"]')
-        node.should have_css('select.error[name="author[favorite_book]"]')
+        expect(node).to have_css('label.error[for="author_favorite_book"]')
+        expect(node).to have_css('select.error[name="author[favorite_book]"]')
       end
     end
 
@@ -422,14 +422,14 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
         node = Capybara.string builder.text_field(:login, html_safe_errors: true)
-        node.should have_link('link', href: 'link_target')
+        expect(node).to have_link('link', href: 'link_target')
       end
     end
     it "should not display HTML errors when the option is not specified" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return({:login => ['required <a href="link_target">link</a>']})
         node = Capybara.string builder.text_field(:login)
-        node.should_not have_link('link', href: 'link')
+        expect(node).to_not have_link('link', href: 'link')
       end
     end
 
@@ -439,9 +439,9 @@ describe "FoundationRailsHelper::FormHelper" do
           builder.check_box(:active, label: true) +
           builder.text_field(:description, label: 'Tell me about you')
 
-        node.should_not have_css('label[for="author_login"]')
-        node.should have_css('label[for="author_active"]', text: 'Active')
-        node.should have_css('label[for="author_description"]', text: 'Tell me about you')
+        expect(node).to_not have_css('label[for="author_login"]')
+        expect(node).to have_css('label[for="author_active"]', text: 'Active')
+        expect(node).to have_css('label[for="author_description"]', text: 'Tell me about you')
       end
     end
 
@@ -450,7 +450,7 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           allow(@author).to receive(:errors).and_return({:email => ['required']})
           node = Capybara.string builder.text_field(:email, class: 'righteous')
-          node.should have_css('input.righteous.error[name="author[email]"]')
+          expect(node).to have_css('input.righteous.error[name="author[email]"]')
         end
       end
     end
@@ -460,7 +460,7 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           allow(@author).to receive(:errors).and_return({:email => ['required']})
           node = Capybara.string builder.text_field(:email, class: :illgotten)
-          node.should have_css('input.illgotten.error[name="author[email]"]')
+          expect(node).to have_css('input.illgotten.error[name="author[email]"]')
         end
       end
     end
@@ -475,7 +475,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save')
-          node.should have_css('input[type="submit"][class="small radius success button"]')
+          expect(node).to have_css('input[type="submit"][class="small radius success button"]')
         end
       end
     end
@@ -490,7 +490,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save')
-          node.should have_css('input[type="submit"][class="superduper"]')
+          expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
@@ -499,7 +499,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save', class: 'superduper')
-          node.should have_css('input[type="submit"][class="superduper"]')
+          expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
@@ -514,7 +514,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save')
-          node.should have_css('input[type="submit"][class="small radius success button"]')
+          expect(node).to have_css('input[type="submit"][class="small radius success button"]')
         end
       end
     end
@@ -529,7 +529,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save')
-          node.should have_css('input[type="submit"][class="superduper"]')
+          expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
@@ -538,7 +538,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save', class: 'superduper')
-          node.should have_css('input[type="submit"][class="superduper"]')
+          expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
@@ -553,7 +553,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save')
-          node.should have_css('input[type="submit"][class="small radius success button"]')
+          expect(node).to have_css('input[type="submit"][class="small radius success button"]')
         end
       end
     end
@@ -568,7 +568,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save')
-          node.should have_css('input[type="submit"][class="superduper"]')
+          expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
@@ -577,7 +577,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit('Save', class: 'superduper')
-          node.should have_css('input[type="submit"][class="superduper"]')
+          expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
