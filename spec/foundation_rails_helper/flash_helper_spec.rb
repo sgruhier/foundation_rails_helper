@@ -12,26 +12,26 @@ describe FoundationRailsHelper::FlashHelper do
     it "displays flash message with #{foundation_type} class for #{message_type} message" do
       allow(self).to receive(:flash).and_return({message_type => "Flash message"})
       node = Capybara.string display_flash_messages
-      node.should have_css("div.alert-box.#{foundation_type}", :text => "Flash message")
-      node.should have_css("div.alert-box a.close", :text => "×")
+      expect(node).to have_css("div.alert-box.#{foundation_type}", :text => "Flash message")
+      expect(node).to have_css("div.alert-box a.close", :text => "×")
     end
   end
 
   it "displays flash message with overridden key matching" do
     allow(self).to receive(:flash).and_return({:notice => "Flash message"})
     node = Capybara.string display_flash_messages({:notice => :alert})
-    node.should have_css("div.alert-box.alert")
+    expect(node).to have_css("div.alert-box.alert")
   end
 
   it "displays flash message with custom key matching" do
     allow(self).to receive(:flash).and_return({:custom_type => "Flash message"})
     node = Capybara.string display_flash_messages({:custom_type => :custom_class})
-    node.should have_css("div.alert-box.custom_class")
+    expect(node).to have_css("div.alert-box.custom_class")
   end
 
   it "displays flash message with standard class if key doesn't match" do
     allow(self).to receive(:flash).and_return({:custom_type => "Flash message"})
     node = Capybara.string display_flash_messages
-    node.should have_css("div.alert-box.standard")
+    expect(node).to have_css("div.alert-box.standard")
   end
 end
