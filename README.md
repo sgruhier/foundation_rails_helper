@@ -25,11 +25,11 @@ A classic devise sign up view will look like this:
 
 ```erb
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-<%= f.email_field :email, label: 'E-mail' %>
-<%= f.password_field :password %>
-<%= f.password_field :password_confirmation %>
+  <%= f.email_field :email, label: 'E-mail' %>
+  <%= f.password_field :password %>
+  <%= f.password_field :password_confirmation %>
 
-<%= f.submit %>
+  <%= f.submit %>
 <% end %>
 ```
 
