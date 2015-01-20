@@ -31,10 +31,10 @@ module FoundationRailsHelper
     end
 
     def radio_button(attribute, tag_value, options = {})
-      options[:for] ||= "#{@object_name}_#{attribute}_#{tag_value}"
-      c = super(attribute, tag_value, options)
-      l = label(attribute, options.delete(:text), options)
-      l.gsub(/(for=\"\w*\"\>)/, "\\1#{c} ").html_safe
+      r = @template.radio_button(@object_name, attribute, tag_value, objectify_options(options))
+      l = label(attribute, options.delete(:text), options.merge!(value: tag_value))
+
+      "#{r}#{l}".html_safe
     end
 
     def password_field(attribute, options = {})
