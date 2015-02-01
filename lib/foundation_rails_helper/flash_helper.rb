@@ -8,8 +8,8 @@ module FoundationRailsHelper
     # </div>
     DEFAULT_KEY_MATCHING = {
       :alert     => :alert,
-      :notice    => :success,
-      :info      => :standard,
+      :notice    => :warning,
+      :info      => :info,
       :secondary => :secondary,
       :success   => :success,
       :error     => :alert
