@@ -9,14 +9,15 @@ module FoundationRailsHelper
     DEFAULT_KEY_MATCHING = {
       :alert     => :alert,
       :notice    => :success,
-      :info      => :standard,
+      :info      => :info,
       :secondary => :secondary,
       :success   => :success,
-      :error     => :alert
+      :error     => :alert,
+      :warning   => :warning
     }
     def display_flash_messages(key_matching = {})
       key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
-      
+
       flash.inject "" do |message, (key, value)|
         message += content_tag :div, :data => { :alert => "" }, :class => "alert-box #{key_matching[key.to_sym] || :standard}" do
           (value + link_to("&times;".html_safe, "#", :class => :close)).html_safe
