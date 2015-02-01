@@ -157,12 +157,25 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node).to have_css('input[type="radio"][name="author[active]"]')
       end
     end
-
-    it "should generate radio_button input" do
+    it "should generate radio_button input with a label" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.radio_button(:active, true, text: "Functioning")
-        expect(node).to have_css('input[type="radio"][name="author[active]"]')
+        node = Capybara.string builder.radio_button(:active, true, label: "Functioning")
         expect(node).to have_css('label[for="author_active_true"]', text: "Functioning")
+        expect(node).to have_css('input[type="radio"][name="author[active]"]')
+      end
+    end
+    it "should generate radio_button without a label" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.radio_button(:active, "ok", label: false)
+        expect(node).to_not have_css('label[for="author_active_ok"]')
+        expect(node).to have_css('input[type="radio"][name="author[active]"]')
+      end
+    end
+    it "should generate radio_button with label options" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.radio_button(:active, "ok", class: 'very', label_options: { class: 'special' })
+        expect(node).to have_css('label.special[for="author_active_ok"]')
+        expect(node).to have_css('input.very[type="radio"][name="author[active]"]')
       end
     end
 
