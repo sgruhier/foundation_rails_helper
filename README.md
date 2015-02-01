@@ -1,4 +1,4 @@
-# FoundationRailsHelper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
+# Foundation Rails Helper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
 Gem for Rails 4.1+ applications that use the excellent Zurb Foundation framework.
 
@@ -7,7 +7,7 @@ Gem for Rails 4.1+ applications that use the excellent Zurb Foundation framework
 
 So far it includes:
 
-* A custom Form Builder that generates a form using the Foundation framework classes. It replaces the current `form_for`, so there is no need to change your Rails code. Error messages are properly displayed.
+* A custom FormBuilder that generates a form using the Foundation framework classes. It replaces the current `form_for`, so there is no need to change your Rails code. Error messages are properly displayed.
 
 * A `display_flash_messages` helper method that uses Zurb Foundation Alerts UI.
 
@@ -43,10 +43,10 @@ A classic devise sign up view will look like this:
   <tbody>
     <tr>
       <td valign='top'>
-        <img src="https://cloud.githubusercontent.com/assets/1400414/5791055/f10d45ca-9e6c-11e4-9513-a52e7a56feb9.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/1400414/5994195/d9b467ce-aa1e-11e4-914c-f696724b53ed.png"/>
       </td>
       <td valign='top'>
-        <img src="https://cloud.githubusercontent.com/assets/1400414/5791057/f3455bb6-9e6c-11e4-882d-bbdc76bc9825.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/1400414/5994196/dbf4bc0a-aa1e-11e4-8c18-b7d3b1b370dc.png"/>
       </td>
     </tr>
   </tbody>
@@ -54,7 +54,7 @@ A classic devise sign up view will look like this:
 
 ### Flash messages
 
-![Flash-message](https://cloud.githubusercontent.com/assets/1400414/5791070/a13ecedc-9e6d-11e4-83cd-588fa296ef67.png "Flash-message")
+![Flash-message](https://cloud.githubusercontent.com/assets/393167/5845238/563dc094-a1b2-11e4-8548-2dd2950a60be.png "Flash-message")
 
 ## Installation
 
@@ -184,11 +184,7 @@ end
 
 ## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+See the [CONTRIBUTING](CONTRIBUTING.md) file.
 
 ## Copyright
 
