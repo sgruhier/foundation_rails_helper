@@ -34,6 +34,26 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  describe "label" do
+    context "when there aren't any errors and no class option is passed" do
+      it "should not have a class attribute" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.text_field(:login)
+          expect(node).to have_css('label:not([class=""])')
+        end        
+      end
+    end
+
+    it "should not have error class multiple times" do
+      form_for(@author) do |builder|
+        allow(@author).to receive(:errors).and_return({:login => ['required']})
+        node = Capybara.string builder.text_field(:login)
+        error_class = node.find('label')['class'].split(/\s+/).keep_if { |v| v == 'error' }
+        expect(error_class.size).to eq 1
+      end  
+    end
+  end
+
   describe "input generators" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
