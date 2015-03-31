@@ -16,8 +16,10 @@ module FoundationRailsHelper
     end
 
     def label(attribute, text = nil, options = {})
-      options[:class] ||= ""
-      options[:class] += " error" if has_error?(attribute)
+      if has_error?(attribute)
+        options[:class] ||= ""
+        options[:class] += " error"
+      end
       super(attribute, (text || "").html_safe, options)
     end
 
@@ -124,8 +126,6 @@ module FoundationRailsHelper
       end
       text = block.call.html_safe + " #{text}" if block_given?
       options ||= {}
-      options[:class] ||= ""
-      options[:class] += " error" if has_error?(attribute)
       label(attribute, text, options)
     end
 
