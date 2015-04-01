@@ -340,6 +340,15 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node).to have_css('select[name="author[favorite_book]"] optgroup[label="Pirate Exploits"] option[value="133"]', :text => "Treasure Island")
       end
     end
+
+    context "when there aren't any errors and no class option is passed" do
+      it "should not have a class attribute" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.text_field(:login)
+          expect(node).to have_css('input:not([class=""])')
+        end        
+      end
+    end
   end
 
   describe "errors generator" do
