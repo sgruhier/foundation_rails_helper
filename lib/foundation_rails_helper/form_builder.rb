@@ -140,8 +140,10 @@ module FoundationRailsHelper
       html = ''.html_safe
       html = custom_label(attribute, options[:label], options[:label_options]) if @options[:auto_labels] || options[:label]
       class_options = html_options || options
-      class_options[:class] = class_options[:class].to_s
-      class_options[:class] += " error" if has_error?(attribute)
+      if has_error?(attribute)
+        class_options[:class] = class_options[:class].to_s
+        class_options[:class] += " error"
+      end
       options.delete(:label)
       options.delete(:label_options)
       html += yield(class_options)
