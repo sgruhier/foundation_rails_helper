@@ -144,8 +144,9 @@ module FoundationRailsHelper
       class_options[:class] += " error" if has_error?(attribute)
       options.delete(:label)
       options.delete(:label_options)
+      hint = options.delete(:hint)
       html += yield(class_options)
-      html += error_and_hint(attribute, options)
+      html += error_and_hint(attribute, options.merge({hint: hint}))
     end
   end
 end

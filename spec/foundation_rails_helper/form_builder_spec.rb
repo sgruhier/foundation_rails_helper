@@ -340,6 +340,24 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node).to have_css('select[name="author[favorite_book]"] optgroup[label="Pirate Exploits"] option[value="133"]', :text => "Treasure Island")
       end
     end
+
+    describe "hint" do
+      it "should add a span element" do
+        form_for(@author) do |builder|
+          hint = 'Enter login'
+          node = Capybara.string builder.text_field(:login, :hint => hint)
+          p builder.text_field(:login, :hint => hint)
+          expect(node.find("span").text).to eq hint
+        end        
+      end
+
+      it "should not add hint attribute" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.text_field(:login, :hint => 'Enter login')
+          expect(node.find_field("author_login")['hint']).to be_nil
+        end
+      end
+    end
   end
 
   describe "errors generator" do
