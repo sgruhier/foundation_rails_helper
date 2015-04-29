@@ -34,4 +34,10 @@ describe FoundationRailsHelper::FlashHelper do
     node = Capybara.string display_flash_messages
     expect(node).to have_css("div.alert-box.standard")
   end
+  
+  it "shouldn't die when flash hash contains devise internal data" do
+    allow(self).to receive(:flash).and_return({:timedout => true})
+    node = Capybara.string display_flash_messages
+    expect(node).to have_css("div.alert-box.standard")
+  end
 end
