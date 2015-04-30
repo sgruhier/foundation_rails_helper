@@ -56,10 +56,30 @@ describe FoundationRailsHelper::FlashHelper do
     node = Capybara.string display_flash_messages
     expect(node).to have_css("div.alert-box.standard", :text => "Flash message")
   end
-  
-  it "shouldn't die when flash hash contains devise internal data" do
-    allow(self).to receive(:flash).and_return({:timedout => true})
-    node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.standard")
+
+  context "when the flash hash contains devise internal data" do
+    before do
+      FoundationRailsHelper.configure do |config|
+        config.ignored_flash_keys += [:timedout]
+      end
+    end
+
+    it "doesn't raise an error (e.g. NoMethodError)" do
+      allow(self).to receive(:flash).and_return({ "timedout" => true })
+      expect{ Capybara.string display_flash_messages }.not_to raise_error
+    end
+
+    it "doesn't display an alert for that data" do
+      allow(self).to receive(:flash).and_return({ "timedout" => true })
+      expect(display_flash_messages).to be_nil
+
+      # Ideally we'd create a node using Capybara.string, as in the other examples
+      # and set the following expectation:
+      #   expect(node).to_not have_css("div.alert-box")
+      # but Capybara.string doesn't behave nicely with nil input:
+      # the input gets assigned to the @native instance variable,
+      # which is used by the css matcher, so we get the following error:
+      #   undefined method `css' for nil:NilClass
+    end
   end
 end

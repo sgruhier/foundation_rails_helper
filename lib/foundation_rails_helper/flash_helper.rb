@@ -21,6 +21,7 @@ module FoundationRailsHelper
 
       capture do
         flash.each do |key, value|
+          next if FoundationRailsHelper.configuration.ignored_flash_keys.include? key.to_sym
           alert_class = key_matching[key.to_sym]
           concat alert_box(value, alert_class)
         end

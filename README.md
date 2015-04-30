@@ -182,6 +182,18 @@ FoundationRailsHelper.configure do |config|
 end
 ```
 
+### Ignored Flash Keys
+The flash helper assumes all flash entries are user-viewable messages.
+To exclude flash entries which are used for storing state
+(e.g. [Devise's `:timedout` flash](https://github.com/plataformatec/devise/issues/1777))
+you can specify a blacklist of keys to ignore with the **ignored_flash_keys** config option:
+```ruby
+FoundationRailsHelper.configure do |config|
+  # Default: []
+  config.ignored_flash_keys = [:timedout]
+end
+```
+
 ## Contributing
 
 See the [CONTRIBUTING](CONTRIBUTING.md) file.
