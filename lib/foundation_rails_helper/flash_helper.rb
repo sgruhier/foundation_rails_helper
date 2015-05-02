@@ -17,12 +17,29 @@ module FoundationRailsHelper
     }
     def display_flash_messages(key_matching = {})
       key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
+      key_matching.default = :standard
 
-      flash.inject "" do |message, (key, value)|
-        message += content_tag :div, :data => { :alert => "" }, :class => "alert-box #{key_matching[key.to_sym] || :standard}" do
-          (value + link_to("&times;".html_safe, "#", :class => :close)).html_safe
+      capture do
+        flash.each do |key, value|
+          next if FoundationRailsHelper.configuration.ignored_flash_keys.include? key.to_sym
+          alert_class = key_matching[key.to_sym]
+          concat alert_box(value, alert_class)
         end
-      end.html_safe
+      end
     end
+
+  private
+
+    def alert_box(value, alert_class)
+      content_tag :div, :data => { :alert => "" }, :class => "alert-box #{alert_class}" do
+        concat value
+        concat close_link
+      end
+    end
+
+    def close_link
+      link_to("&times;".html_safe, "#", :class => :close)
+    end
+
   end
 end

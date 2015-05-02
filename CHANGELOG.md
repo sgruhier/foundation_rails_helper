@@ -1,3 +1,6 @@
+## NEXT VERSION
+* Flash Helper: a list of keys to be ignored can be specified - e.g. keys which are only used internally to pass data, not user-viewable messages(fix for #98)
+
 ## Version 1.0.0
 
 * Released Feb 03rd 2015
