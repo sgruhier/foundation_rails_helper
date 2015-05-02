@@ -171,16 +171,25 @@ The class attribute of the 'small' element will mirror the class attribute of th
 If the `html_safe_errors: true` option is specified on a field, then any HTML you may have embedded in a custom error string will be displayed with the html_safe option.
 
 ## Configuration
-Add an initializer file to your Rails app: *config/initializers/foundation_rails_helper.rb*.  See below for current options.
+Add an initializer file to your Rails app: *config/initializers/foundation_rails_helper.rb*
+containing the following block:
 
-### Submit Button Class
-To use a different class for the [submit button](https://github.com/sgruhier/foundation_rails_helper#submit-button) used in `form_for`, add a config named **button_class**.  Please note, the button class can still be overridden by an options hash.
 ```ruby
 FoundationRailsHelper.configure do |config|
-  # Default: 'small radius success button'
-  config.button_class = 'large secondary button'
+  # your options here
 end
 ```
+
+Currently supported options:
+
+### Submit Button Class
+To use a different class for the [submit button](https://github.com/sgruhier/foundation_rails_helper#submit-button) used in `form_for`, add a config named **button_class**:
+```ruby
+# Default: 'small radius success button'
+config.button_class = 'large secondary button'
+```
+
+Please note, the button class can still be overridden by an options hash.
 
 ### Ignored Flash Keys
 The flash helper assumes all flash entries are user-viewable messages.
@@ -188,10 +197,8 @@ To exclude flash entries which are used for storing state
 (e.g. [Devise's `:timedout` flash](https://github.com/plataformatec/devise/issues/1777))
 you can specify a blacklist of keys to ignore with the **ignored_flash_keys** config option:
 ```ruby
-FoundationRailsHelper.configure do |config|
-  # Default: []
-  config.ignored_flash_keys = [:timedout]
-end
+# Default: []
+config.ignored_flash_keys = [:timedout]
 ```
 
 ## Contributing

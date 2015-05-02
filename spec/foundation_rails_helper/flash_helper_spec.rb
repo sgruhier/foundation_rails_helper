@@ -20,7 +20,7 @@ describe FoundationRailsHelper::FlashHelper do
   end
 
   it "handles symbol keys" do
-    allow(self).to receive(:flash).and_return({ "success" => "Flash message" })
+    allow(self).to receive(:flash).and_return({ :success => "Flash message" })
     node = Capybara.string display_flash_messages
     expect(node).to have_css("div.alert-box.success", :text => "Flash message")
   end
