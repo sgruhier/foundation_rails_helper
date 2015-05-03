@@ -40,7 +40,7 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           node = Capybara.string builder.text_field(:login)
           expect(node).to have_css('label:not([class=""])')
-        end        
+        end
       end
     end
 
@@ -50,7 +50,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.text_field(:login)
         error_class = node.find('label')['class'].split(/\s+/).keep_if { |v| v == 'error' }
         expect(error_class.size).to eq 1
-      end  
+      end
     end
   end
 
@@ -368,13 +368,22 @@ describe "FoundationRailsHelper::FormHelper" do
           node = Capybara.string builder.text_field(:login, :hint => hint)
           p builder.text_field(:login, :hint => hint)
           expect(node.find("span").text).to eq hint
-        end        
+        end
       end
 
       it "should not add hint attribute" do
         form_for(@author) do |builder|
           node = Capybara.string builder.text_field(:login, :hint => 'Enter login')
           expect(node.find_field("author_login")['hint']).to be_nil
+        end
+      end
+    end
+
+    context "when there aren't any errors and no class option is passed" do
+      it "should not have a class attribute" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.text_field(:login)
+          expect(node).to have_css('input:not([class=""])')
         end
       end
     end
