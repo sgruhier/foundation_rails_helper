@@ -110,11 +110,11 @@ generates:
 <input id="user_name" name="user[name]" type="text">
 ```
 
-Prevent the generation of a label:
-
+Preventing the generation of labels can be accomplished two ways. To disable on a form element:
 ```ruby
 f.text_field :name, label: false
 ```
+For all form elements, add the option: `auto_labels: false` to the form helper.
 
 Change the label text and add a class on the label:
 
