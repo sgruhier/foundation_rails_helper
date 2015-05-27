@@ -129,8 +129,8 @@ module FoundationRailsHelper
       label(attribute, text, options)
     end
 
-    def tag_from_options(name,options)
-      if options and options[:size].present? and options[:value].present?
+    def tag_from_options(name, options)
+      if options && options[:size].present? && options[:value].present?
         content_tag(:div, content_tag(:span, options[:value], :class=>name),
                     :class=>"small-#{options[:size]} large-#{options[:size]} columns")
       else
@@ -138,22 +138,28 @@ module FoundationRailsHelper
       end
     end
 
+    def calculate_label_size(prefix_options, postfix_options)
+      columns = 12
+      columns -= prefix_options[:size].to_i if prefix_options[:size].present?
+      columns -= postfix_options[:size].to_i if postfix_options[:size].present?
+      columns
+    end
+
     def wrap_prefix_and_postfix(block, prefix_options, postfix_options)
-      label_size = 12
 
       prefix = tag_from_options("prefix", prefix_options)
-      label_size -= prefix_options[:size].to_i unless prefix.blank?
-
       postfix = tag_from_options("postfix", postfix_options)
-      label_size -= postfix_options[:size].to_i unless postfix.blank?
 
-      if label_size < 12
-        html = content_tag(:div,
-                           prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
-                           :class=>"row collapse")
-      else
-        html = block
-      end
+      label_size = calculate_label_size(prefix_options, postfix_options)
+
+      html = 
+        if label_size < 12
+          content_tag(:div,
+                   prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
+                   :class=>"row collapse")
+        else
+          block
+        end
 
       html.html_safe
     end
