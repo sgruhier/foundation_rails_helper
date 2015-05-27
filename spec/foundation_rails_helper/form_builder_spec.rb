@@ -366,7 +366,6 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           hint = 'Enter login'
           node = Capybara.string builder.text_field(:login, :hint => hint)
-          p builder.text_field(:login, :hint => hint)
           expect(node.find("span").text).to eq hint
         end
       end
