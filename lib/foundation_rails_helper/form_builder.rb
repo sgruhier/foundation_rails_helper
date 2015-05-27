@@ -135,14 +135,14 @@ module FoundationRailsHelper
                     content_tag(:span, options[:value], :class=>name),
                     :class=>"small-#{options[:size]} large-#{options[:size]} columns")
       else
-        ""
+        "".html_safe
       end
     end
 
     def calculate_label_size(prefix_options, postfix_options)
       columns = 12
-      columns -= prefix_options[:size].to_i if prefix_options[:size].present?
-      columns -= postfix_options[:size].to_i if postfix_options[:size].present?
+      columns -= prefix_options.fetch(:size, 0).to_i if prefix_options.present?
+      columns -= postfix_options.fetch(:size, 0).to_i if postfix_options.present?
       columns
     end
 

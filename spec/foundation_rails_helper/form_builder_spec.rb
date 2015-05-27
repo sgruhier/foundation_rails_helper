@@ -54,6 +54,98 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  describe "prefix" do
+    context "when input field has a prefix" do
+      before do
+        form_for(@author) do |builder|
+          @node = Capybara.string builder.text_field(:login, :prefix => {size:2, value:"Prefix"})
+        end
+      end
+
+      it "wraps input in the div with class 'row collapse'" do
+          expect(@node.find('.row.collapse')).to_not be nil
+      end
+
+      it "wraps prefix in the div with the right column size" do
+        expect(@node.find('.row.collapse')).to have_css('div.small-2.large-2.columns')
+      end
+
+      it "creates prefix span with right value" do
+        expect(@node.find('.row.collapse').find('div.small-2.large-2.columns').find('span').text).to eq "Prefix"
+      end
+
+      it "creates prefix span with right class" do
+        expect(@node.find('.row.collapse')).to have_css('span.prefix')
+      end
+
+      it "wraps input in the div with the right column size" do
+        expect(@node.find('.row.collapse')).to have_css('div.small-10.large-10.columns')
+      end
+
+      it "has right value for the input" do
+        expect(@node.find('.row.collapse').find('div.small-10.large-10.columns')).to have_css('input[type="text"][name="author[login]"]')
+      end
+    end
+
+    context "without prefix" do
+      it "will not wrap input into a div" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.text_field(:login)
+          expect(node).to_not have_css('div.row.collapse')
+        end
+      end
+    end
+  end
+
+  describe "postfix" do
+    context "when input field has a postfix" do
+      before do
+        form_for(@author) do |builder|
+          @node = Capybara.string builder.text_field(:login, :postfix => {size:2, value:"Postfix"})
+        end
+      end
+
+      it "wraps input in the div with class 'row collapse'" do
+          expect(@node.find('.row.collapse')).to_not be nil
+      end
+
+      it "wraps postfix in the div with the right column size" do
+        expect(@node.find('.row.collapse')).to have_css('div.small-2.large-2.columns')
+      end
+
+      it "creates postfix span with right value" do
+        expect(@node.find('.row.collapse').find('div.small-2.large-2.columns').find('span').text).to eq "Postfix"
+      end
+
+      it "creates postfix span with right class" do
+        expect(@node.find('.row.collapse')).to have_css('span.postfix')
+      end
+
+      it "wraps input in the div with the right column size" do
+        expect(@node.find('.row.collapse')).to have_css('div.small-10.large-10.columns')
+      end
+
+      it "has right value for the input" do
+        expect(@node.find('.row.collapse').find('div.small-10.large-10.columns')).to have_css('input[type="text"][name="author[login]"]')
+      end
+    end
+  end
+
+  describe "bot prefix and postfix" do
+    context "when input field has a prefix" do
+      before do
+        form_for(@author) do |builder|
+          @node = Capybara.string builder.text_field(:login, :prefix => {size:2, value:"Prefix"}, :postfix => {size:2,value:"Postfix"})
+        end
+      end
+
+      it "wraps input in the div with the right column size" do
+        expect(@node.find('.row.collapse')).to have_css('div.small-8.large-8.columns')
+      end
+      
+    end
+  end
+
   describe "input generators" do
     it "should generate text_field input" do
       form_for(@author) do |builder|
