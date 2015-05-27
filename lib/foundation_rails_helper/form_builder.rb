@@ -130,12 +130,12 @@ module FoundationRailsHelper
     end
 
     def tag_from_options(name,options)
-        if options and options[:size].present? and options[:value].present?
-            content_tag(:div, content_tag(:span, options[:value], :class=>name),
-                               :class=>"small-#{options[:size]} large-#{options[:size]} columns")
-        else
-            ""
-        end
+      if options and options[:size].present? and options[:value].present?
+        content_tag(:div, content_tag(:span, options[:value], :class=>name),
+                    :class=>"small-#{options[:size]} large-#{options[:size]} columns")
+      else
+        ""
+      end
     end
 
     def wrap_prefix_and_postfix(block, prefix_options, postfix_options)
@@ -148,11 +148,11 @@ module FoundationRailsHelper
       label_size -= postfix_options[:size].to_i unless postfix.blank?
 
       if label_size < 12
-          html = content_tag(:div,
-              prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
-              :class=>"row collapse")
+        html = content_tag(:div,
+                           prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
+                           :class=>"row collapse")
       else
-          html = block
+        html = block
       end
 
       html.html_safe
