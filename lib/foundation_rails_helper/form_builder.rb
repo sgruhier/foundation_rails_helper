@@ -129,6 +129,35 @@ module FoundationRailsHelper
       label(attribute, text, options)
     end
 
+    def tag_from_options(name,options)
+        if options and options[:size].present? and options[:value].present?
+            content_tag(:div, content_tag(:span, options[:value], :class=>name),
+                               :class=>"small-#{options[:size]} large-#{options[:size]} columns")
+        else
+            ""
+        end
+    end
+
+    def wrap_prefix_and_postfix(block, prefix_options, postfix_options)
+      label_size = 12
+
+      prefix = tag_from_options("prefix", prefix_options)
+      label_size -= prefix_options[:size].to_i unless prefix.blank?
+
+      postfix = tag_from_options("postfix", postfix_options)
+      label_size -= postfix_options[:size].to_i unless postfix.blank?
+
+      if label_size < 12
+          html = content_tag(:div,
+              prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
+              :class=>"row collapse")
+      else
+          html = block
+      end
+
+      html.html_safe
+    end
+
     def error_and_hint(attribute, options = {})
       html = ""
       html += content_tag(:span, options[:hint], :class => :hint) if options[:hint]
@@ -147,7 +176,9 @@ module FoundationRailsHelper
       options.delete(:label)
       options.delete(:label_options)
       hint = options.delete(:hint)
-      html += yield(class_options)
+      prefix = options.delete(:prefix)
+      postfix = options.delete(:postfix)
+      html += wrap_prefix_and_postfix( yield(class_options), prefix, postfix )
       html += error_and_hint(attribute, options.merge({hint: hint}))
     end
   end
