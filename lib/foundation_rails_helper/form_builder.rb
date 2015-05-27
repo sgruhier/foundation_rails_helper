@@ -131,7 +131,8 @@ module FoundationRailsHelper
 
     def tag_from_options(name, options)
       if options && options[:size].present? && options[:value].present?
-        content_tag(:div, content_tag(:span, options[:value], :class=>name),
+        content_tag(:div,
+                    content_tag(:span, options[:value], :class=>name),
                     :class=>"small-#{options[:size]} large-#{options[:size]} columns")
       else
         ""
@@ -155,8 +156,8 @@ module FoundationRailsHelper
       html = 
         if label_size < 12
           content_tag(:div,
-                   prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
-                   :class=>"row collapse")
+                      prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
+                      :class=>"row collapse")
         else
           block
         end
