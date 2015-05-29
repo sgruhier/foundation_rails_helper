@@ -130,13 +130,12 @@ module FoundationRailsHelper
     end
 
     def tag_from_options(name, options)
-      if options && options[:small].present? && options[:large].present? && options[:value].present?
-        content_tag(:div,
-                    content_tag(:span, options[:value], :class => name),
-                    :class => "small-#{options[:small]} large-#{options[:large]} columns")
-      else
-        "".html_safe
-      end
+      return "".html_safe unless
+        options && options[:small].present? && options[:large].present? && options[:value].present?
+
+      content_tag(:div,
+                  content_tag(:span, options[:value], :class => name),
+                  :class => "small-#{options[:small]} large-#{options[:large]} columns")
     end
 
     def calculate_input_size(prefix_options, postfix_options)
