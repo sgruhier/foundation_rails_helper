@@ -130,20 +130,28 @@ module FoundationRailsHelper
     end
 
     def tag_from_options(name, options)
-      if options && options[:size].present? && options[:value].present?
+      if options && options[:small].present? && options[:large].present? && options[:value].present?
         content_tag(:div,
-                    content_tag(:span, options[:value], :class=>name),
-                    :class=>"small-#{options[:size]} large-#{options[:size]} columns")
+                    content_tag(:span, options[:value], :class => name),
+                    :class => "small-#{options[:small]} large-#{options[:large]} columns")
       else
         "".html_safe
       end
     end
 
-    def calculate_label_size(prefix_options, postfix_options)
-      columns = 12
-      columns -= prefix_options.fetch(:size, 0).to_i if prefix_options.present?
-      columns -= postfix_options.fetch(:size, 0).to_i if postfix_options.present?
-      columns
+    def calculate_input_size(prefix_options, postfix_options)
+      input_size = OpenStruct.new(changed?: false, small: 12, large: 12)
+      if prefix_options.present?
+        input_size.small -= prefix_options.fetch(:small, 0).to_i
+        input_size.large -= prefix_options.fetch(:large, 0).to_i
+        input_size.send("changed?=", true)
+      end
+      if postfix_options.present?
+        input_size.small -= postfix_options.fetch(:small, 0).to_i
+        input_size.large -= postfix_options.fetch(:large, 0).to_i
+        input_size.send("changed?=", true)
+      end
+      input_size
     end
 
     def wrap_prefix_and_postfix(block, prefix_options, postfix_options)
@@ -151,13 +159,13 @@ module FoundationRailsHelper
       prefix = tag_from_options("prefix", prefix_options)
       postfix = tag_from_options("postfix", postfix_options)
 
-      label_size = calculate_label_size(prefix_options, postfix_options)
+      input_size = calculate_input_size(prefix_options, postfix_options)
 
       html = 
-        if label_size < 12
+        if input_size.changed?
           content_tag(:div,
-                      prefix + content_tag(:div, block, :class=>"small-#{label_size} large-#{label_size} columns") + postfix,
-                      :class=>"row collapse")
+                      prefix + content_tag(:div, block, :class => "small-#{input_size.small} large-#{input_size.large} columns") + postfix,
+                      :class => "row collapse")
         else
           block
         end

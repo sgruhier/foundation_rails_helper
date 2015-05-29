@@ -58,7 +58,7 @@ describe "FoundationRailsHelper::FormHelper" do
     context "when input field has a prefix" do
       before do
         form_for(@author) do |builder|
-          @node = Capybara.string builder.text_field(:login, :prefix => {size:2, value:"Prefix"})
+          @node = Capybara.string builder.text_field(:login, :prefix => {small: 3, large: 6, value: "Prefix"})
         end
       end
 
@@ -67,11 +67,11 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps prefix in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-2.large-2.columns')
+        expect(@node.find('.row.collapse')).to have_css('div.small-3.large-6.columns')
       end
 
       it "creates prefix span with right value" do
-        expect(@node.find('.row.collapse').find('div.small-2.large-2.columns').find('span').text).to eq "Prefix"
+        expect(@node.find('.row.collapse').find('div.small-3.large-6.columns').find('span').text).to eq "Prefix"
       end
 
       it "creates prefix span with right class" do
@@ -79,11 +79,11 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-10.large-10.columns')
+        expect(@node.find('.row.collapse')).to have_css('div.small-9.large-6.columns')
       end
 
       it "has right value for the input" do
-        expect(@node.find('.row.collapse').find('div.small-10.large-10.columns')).to have_css('input[type="text"][name="author[login]"]')
+        expect(@node.find('.row.collapse').find('div.small-9.large-6.columns')).to have_css('input[type="text"][name="author[login]"]')
       end
     end
 
@@ -101,7 +101,7 @@ describe "FoundationRailsHelper::FormHelper" do
     context "when input field has a postfix" do
       before do
         form_for(@author) do |builder|
-          @node = Capybara.string builder.text_field(:login, :postfix => {size:2, value:"Postfix"})
+          @node = Capybara.string builder.text_field(:login, :postfix => {small: 3, large: 6, value: "Postfix"})
         end
       end
 
@@ -110,11 +110,11 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps postfix in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-2.large-2.columns')
+        expect(@node.find('.row.collapse')).to have_css('div.small-3.large-6.columns')
       end
 
       it "creates postfix span with right value" do
-        expect(@node.find('.row.collapse').find('div.small-2.large-2.columns').find('span').text).to eq "Postfix"
+        expect(@node.find('.row.collapse').find('div.small-3.large-6.columns').find('span').text).to eq "Postfix"
       end
 
       it "creates postfix span with right class" do
@@ -122,11 +122,11 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-10.large-10.columns')
+        expect(@node.find('.row.collapse')).to have_css('div.small-9.large-6.columns')
       end
 
       it "has right value for the input" do
-        expect(@node.find('.row.collapse').find('div.small-10.large-10.columns')).to have_css('input[type="text"][name="author[login]"]')
+        expect(@node.find('.row.collapse').find('div.small-9.large-6.columns')).to have_css('input[type="text"][name="author[login]"]')
       end
     end
   end
@@ -135,12 +135,12 @@ describe "FoundationRailsHelper::FormHelper" do
     context "when input field has a prefix" do
       before do
         form_for(@author) do |builder|
-          @node = Capybara.string builder.text_field(:login, :prefix => {size:2, value:"Prefix"}, :postfix => {size:2,value:"Postfix"})
+          @node = Capybara.string builder.text_field(:login, :prefix => {small: 3, large: 3, value:"Prefix"}, :postfix => {small: 3, large: 3, value: "Postfix"})
         end
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-8.large-8.columns')
+        expect(@node.find('.row.collapse')).to have_css('div.small-6.large-6.columns')
       end
       
     end
