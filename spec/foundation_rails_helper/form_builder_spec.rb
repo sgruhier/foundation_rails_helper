@@ -131,7 +131,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
-  describe "bot prefix and postfix" do
+  describe "with both prefix and postfix" do
     context "when input field has a prefix" do
       before do
         form_for(@author) do |builder|
