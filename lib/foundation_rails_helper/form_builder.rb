@@ -129,27 +129,35 @@ module FoundationRailsHelper
       label(attribute, text, options)
     end
 
+    def column_classes(options)
+      classes = ""
+      classes += "small-#{options[:small]} " if options[:small].present? && options[:small].to_i < 12
+      classes += "medium-#{options[:medium]} " if options[:medium].present? && options[:medium].to_i < 12
+      classes += "large-#{options[:large]} " if options[:large].present? && options[:large].to_i < 12
+      classes += "columns"
+      classes
+    end
+
     def tag_from_options(name, options)
       return "".html_safe unless
-        options && options[:small].present? && options[:large].present? && options[:value].present?
+        options && options[:value].present?
 
       content_tag(:div,
                   content_tag(:span, options[:value], :class => name),
-                  :class => "small-#{options[:small]} large-#{options[:large]} columns")
+                  :class => "#{ column_classes( options ) }")
+    end
+
+    def decrement_input_size(input, column, options)
+      if options.has_key?(column)
+        input[column] -= options.fetch(column).to_i
+        input.send("changed?=", true)
+      end
     end
 
     def calculate_input_size(prefix_options, postfix_options)
-      input_size = OpenStruct.new(changed?: false, small: 12, large: 12)
-      if prefix_options.present?
-        input_size.small -= prefix_options.fetch(:small, 0).to_i
-        input_size.large -= prefix_options.fetch(:large, 0).to_i
-        input_size.send("changed?=", true)
-      end
-      if postfix_options.present?
-        input_size.small -= postfix_options.fetch(:small, 0).to_i
-        input_size.large -= postfix_options.fetch(:large, 0).to_i
-        input_size.send("changed?=", true)
-      end
+      input_size = OpenStruct.new(changed?: false, small: 12, medium:12, large: 12)
+      %w(small medium large).each{|size| decrement_input_size(input_size, size.to_sym, prefix_options)} if prefix_options.present?
+      %w(small medium large).each{|size| decrement_input_size(input_size, size.to_sym, postfix_options)} if postfix_options.present?
       input_size
     end
 
@@ -163,7 +171,8 @@ module FoundationRailsHelper
       html = 
         if input_size.changed?
           content_tag(:div,
-                      prefix + content_tag(:div, block, :class => "small-#{input_size.small} large-#{input_size.large} columns") + postfix,
+                      prefix + content_tag(:div, block,
+                                           :class => "#{ column_classes( input_size ) }") + postfix,
                       :class => "row collapse")
         else
           block
