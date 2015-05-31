@@ -149,7 +149,7 @@ module FoundationRailsHelper
 
     def decrement_input_size(input, column, options)
       if options.has_key?(column)
-        input[column] -= options.fetch(column).to_i
+        input.send("#{column}=", ( input.send(column) - options.fetch(column).to_i))
         input.send("changed?=", true)
       end
     end
@@ -172,7 +172,7 @@ module FoundationRailsHelper
         if input_size.changed?
           content_tag(:div,
                       prefix + content_tag(:div, block,
-                                           :class => "#{ column_classes( input_size ) }") + postfix,
+                                           :class => "#{ column_classes( input_size.marshal_dump ) }") + postfix,
                       :class => "row collapse")
         else
           block
