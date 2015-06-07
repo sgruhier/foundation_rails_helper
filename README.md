@@ -170,6 +170,24 @@ The class attribute of the 'small' element will mirror the class attribute of th
 
 If the `html_safe_errors: true` option is specified on a field, then any HTML you may have embedded in a custom error string will be displayed with the html_safe option.
 
+### Prefix and Postfix
+Simple prefix and postfix span elements can be added beside inputs.
+```ruby
+f.text_field :name, prefix { value: 'foo' small: 2, large: 3 }
+```
+generates
+```html
+<div class="row collapse">
+  <div class="small-2 large-3 columns">
+    <span class="prefix">foo</span>
+  </div>
+  <div class="small-10 large-9 columns">
+    <input type="text" name="user[name]" id="user_name">
+  </div>
+</div>
+```
+
+
 ## Configuration
 Add an initializer file to your Rails app: *config/initializers/foundation_rails_helper.rb*
 containing the following block:
