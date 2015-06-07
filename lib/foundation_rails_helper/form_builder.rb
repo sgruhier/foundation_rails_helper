@@ -129,6 +129,58 @@ module FoundationRailsHelper
       label(attribute, text, options)
     end
 
+    def column_classes(options)
+      classes = ""
+      classes += "small-#{options[:small]} " if options[:small].present? && options[:small].to_i < 12
+      classes += "medium-#{options[:medium]} " if options[:medium].present? && options[:medium].to_i < 12
+      classes += "large-#{options[:large]} " if options[:large].present? && options[:large].to_i < 12
+      classes += "columns"
+      classes
+    end
+
+    def tag_from_options(name, options)
+      return "".html_safe unless
+        options && options[:value].present?
+
+      content_tag(:div,
+                  content_tag(:span, options[:value], :class => name),
+                  :class => "#{ column_classes( options ) }")
+    end
+
+    def decrement_input_size(input, column, options)
+      if options.has_key?(column)
+        input.send("#{column}=", ( input.send(column) - options.fetch(column).to_i))
+        input.send("changed?=", true)
+      end
+    end
+
+    def calculate_input_size(prefix_options, postfix_options)
+      input_size = OpenStruct.new(changed?: false, small: 12, medium:12, large: 12)
+      %w(small medium large).each{|size| decrement_input_size(input_size, size.to_sym, prefix_options)} if prefix_options.present?
+      %w(small medium large).each{|size| decrement_input_size(input_size, size.to_sym, postfix_options)} if postfix_options.present?
+      input_size
+    end
+
+    def wrap_prefix_and_postfix(block, prefix_options, postfix_options)
+
+      prefix = tag_from_options("prefix", prefix_options)
+      postfix = tag_from_options("postfix", postfix_options)
+
+      input_size = calculate_input_size(prefix_options, postfix_options)
+
+      html = 
+        if input_size.changed?
+          content_tag(:div,
+                      prefix + content_tag(:div, block,
+                                           :class => "#{ column_classes( input_size.marshal_dump ) }") + postfix,
+                      :class => "row collapse")
+        else
+          block
+        end
+
+      html.html_safe
+    end
+
     def error_and_hint(attribute, options = {})
       html = ""
       html += content_tag(:span, options[:hint], :class => :hint) if options[:hint]
@@ -147,7 +199,9 @@ module FoundationRailsHelper
       options.delete(:label)
       options.delete(:label_options)
       hint = options.delete(:hint)
-      html += yield(class_options)
+      prefix = options.delete(:prefix)
+      postfix = options.delete(:postfix)
+      html += wrap_prefix_and_postfix( yield(class_options), prefix, postfix )
       html += error_and_hint(attribute, options.merge({hint: hint}))
     end
   end
