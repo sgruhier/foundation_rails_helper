@@ -315,6 +315,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string builder.radio_button(:active, "ok", label: false)
         expect(node).to_not have_css('label[for="author_active_ok"]')
+        expect(node).to_not have_css('input[label="false"]')
         expect(node).to have_css('input[type="radio"][name="author[active]"]')
       end
     end
