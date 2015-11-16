@@ -36,8 +36,9 @@ module FoundationRailsHelper
     def radio_button(attribute, tag_value, options = {})
       options[:label_options] ||= {}
       label_options = options.delete(:label_options).merge!(value: tag_value)
-      unless options[:label] == false
-        l = label(attribute, options.delete(:label), label_options)
+      label_text = options.delete(:label)
+      unless label_text == false
+        l = label(attribute, label_text, label_options)
       end
       r = @template.radio_button(@object_name, attribute, tag_value,
                                  objectify_options(options))
