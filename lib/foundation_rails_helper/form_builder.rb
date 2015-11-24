@@ -187,18 +187,18 @@ module FoundationRailsHelper
       input_size = calculate_input_size(prefix_options, postfix_options)
 
       row_classes = "row collapse"
-      row_classes << " prefix-#{prefix_options[:input_style]}" if prefix_options.try(:[], :input_style).present?
-      row_classes << " postfix-#{postfix_options[:input_style]}" if postfix_options.try(:[], :input_style).present?
+      if prefix_options.try(:[], :input_style).present?
+        row_classes << " prefix-#{prefix_options[:input_style]}"
+      end
+      if postfix_options.try(:[], :input_style).present?
+        row_classes << " postfix-#{postfix_options[:input_style]}"
+      end
+
+      input_classes = column_classes(input_size.marshal_dump)
+      input = content_tag(:div, block, class: input_classes)
 
       html = if input_size.changed?
-        content_tag(:div,
-          prefix <<
-          content_tag(:div, block, {
-            class: column_classes(input_size.marshal_dump)
-          }) <<
-          postfix,
-          class: row_classes
-        )
+        content_tag(:div, prefix << input << postfix, class: row_classes)
       else
         block
       end
