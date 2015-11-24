@@ -106,27 +106,27 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps input in the div with class 'row collapse'" do
-        expect(@node.find('.row.collapse.prefix-round')).to_not be nil
+        expect(@node.find('.row.collapse.postfix-round')).to_not be nil
       end
 
       it "wraps postfix in the div with the right column size" do
-        expect(@node.find('.row.collapse.prefix-round')).to have_css('div.small-2.medium-4.large-6.columns')
+        expect(@node.find('.row.collapse.postfix-round')).to have_css('div.small-2.medium-4.large-6.columns')
       end
 
       it "creates postfix span with right value" do
-        expect(@node.find('.row.collapse.prefix-round').find('div.small-2.medium-4.large-6.columns').find('span').text).to eq "Postfix"
+        expect(@node.find('.row.collapse.postfix-round').find('div.small-2.medium-4.large-6.columns').find('span').text).to eq "Postfix"
       end
 
       it "creates postfix span with right class" do
-        expect(@node.find('.row.collapse.prefix-round')).to have_css('span.postfix')
+        expect(@node.find('.row.collapse.postfix-round')).to have_css('span.postfix')
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse.prefix-round')).to have_css('div.small-10.medium-8.large-6.columns')
+        expect(@node.find('.row.collapse.postfix-round')).to have_css('div.small-10.medium-8.large-6.columns')
       end
 
       it "has right value for the input" do
-        expect(@node.find('.row.collapse.prefix-round').find('div.small-10.medium-8.large-6.columns')).to have_css('input[type="text"][name="author[login]"]')
+        expect(@node.find('.row.collapse.postfix-round').find('div.small-10.medium-8.large-6.columns')).to have_css('input[type="text"][name="author[login]"]')
       end
     end
 
