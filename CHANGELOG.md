@@ -1,5 +1,12 @@
-## NEXT VERSION
+## Version 1.1.0
+* Form Helper: [Prefix and
+  Postfix](http://foundation.zurb.com/sites/docs/v/5.5.3/components/forms.html#pre-postfix-labels-amp-actions) are now supported  (PR #104 thanks djkz)
 * Flash Helper: a list of keys to be ignored can be specified - e.g. keys which are only used internally to pass data, not user-viewable messages(fix for #98)
+* FIX: Hints are added as span elements (PR #96 thanks collimarco)
+* FIX: Labels and fields don't have empty class attributes or repeated error classes
+  (thanks collimarco)
+* FIX: Radio buttons don't have the `label="false"` on them when `label:
+  false` is set (PR #107 thanks frenkel)
 
 ## Version 1.0.0
 
