@@ -41,20 +41,38 @@ describe FoundationRailsHelper::FlashHelper do
 
   it "displays flash message with overridden key matching" do
     allow(self).to receive(:flash).and_return({ "notice" => "Flash message" })
-    node = Capybara.string display_flash_messages({:notice => :alert})
+    node = Capybara.string display_flash_messages(key_matching: {:notice => :alert})
     expect(node).to have_css("div.alert-box.alert", :text => "Flash message")
   end
 
   it "displays flash message with custom key matching" do
     allow(self).to receive(:flash).and_return({ "custom_type" => "Flash message" })
-    node = Capybara.string display_flash_messages({:custom_type => :custom_class})
+    node = Capybara.string display_flash_messages(key_matching: {:custom_type => :custom_class})
     expect(node).to have_css("div.alert-box.custom_class", :text => "Flash message")
   end
 
-  it "displays flash message with standard class if key doesn't match" do
+  it "displays flash message with no class if key doesn't match" do
     allow(self).to receive(:flash).and_return({ "custom_type" => "Flash message" })
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.standard", :text => "Flash message")
+    expect(node).to have_css("div.alert-box", :text => "Flash message")
+  end
+
+  it "displays flash message with no dismiss link if opts[:dismiss_toggle] == false" do
+    allow(self).to receive(:flash).and_return({ "notice" => "Flash message" })
+    node = Capybara.string display_flash_messages(:dismiss_toggle => false)
+    expect(node).not_to have_css("div.alert-box a.close")
+  end
+
+  it "displays flash message with custom dismiss link" do
+    allow(self).to receive(:flash).and_return({ "notice" => "Flash message" })
+    node = Capybara.string display_flash_messages(:dismiss_toggle => "Close")
+    expect(node).to have_css("div.alert-box.success a.close", :text => "Close")
+  end
+
+  it "displays flash message with custom style" do
+    allow(self).to receive(:flash).and_return({ "notice" => "Flash message" })
+    node = Capybara.string display_flash_messages(:style => 'radius')
+    expect(node).to have_css("div.alert-box.success.radius")
   end
 
   context "when the flash hash contains devise internal data" do
