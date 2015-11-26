@@ -3,4 +3,6 @@ rvm:
   - 2.1.0
   - 2.2.0
 deploy:
-  edge: true
+  edge:
+    source: travis-ci/dpl
+    branch: master
