@@ -23,6 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'tzinfo',        '~> 1.2', '>= 1.2.2'
 
   gem.add_development_dependency 'rspec-rails', '~> 3.1', '>= 3.1.0'
-  gem.add_development_dependency 'mime-types',  '2.6.2'
   gem.add_development_dependency 'capybara',    '~> 2.4', '>= 2.4.3'
 end
