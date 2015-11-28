@@ -173,15 +173,15 @@ If the `html_safe_errors: true` option is specified on a field, then any HTML yo
 ### Prefix and Postfix
 Simple prefix and postfix span elements can be added beside inputs.
 ```ruby
-f.text_field :name, prefix { value: 'foo' small: 2, large: 3 }
+f.text_field :name, prefix: { value: 'foo', small: 2, medium: 3, large: 4, input_style: 'radius' }
 ```
 generates
 ```html
-<div class="row collapse">
-  <div class="small-2 large-3 columns">
+<div class="row collapse prefix-radius">
+  <div class="small-2 medium-3 large-4 columns">
     <span class="prefix">foo</span>
   </div>
-  <div class="small-10 large-9 columns">
+  <div class="small-10 medium-9 large-8 columns">
     <input type="text" name="user[name]" id="user_name">
   </div>
 </div>

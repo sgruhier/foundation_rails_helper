@@ -140,25 +140,19 @@ module FoundationRailsHelper
     end
 
     def column_classes(options)
-      classes = ''
-      if options[:small].present? && options[:small].to_i < 12
-        classes += "small-#{options[:small]} "
-      end
-      if options[:medium].present? && options[:medium].to_i < 12
-        classes += "medium-#{options[:medium]} "
-      end
-      if options[:large].present? && options[:large].to_i < 12
-        classes += "large-#{options[:large]} "
-      end
-      classes + 'columns'
+      classes = "columns"
+      classes << " small-#{options[:small]}" if [*1..11].include?(options[:small].try(:to_i))
+      classes << " medium-#{options[:medium]}" if [*1..11].include?(options[:medium].try(:to_i))
+      classes << " large-#{options[:large]}" if [*1..11].include?(options[:large].try(:to_i))
+      classes
     end
 
     def tag_from_options(name, options)
       return ''.html_safe unless options && options[:value].present?
 
       content_tag(:div,
-                  content_tag(:span, options[:value], :class => name),
-                  :class => "#{ column_classes( options ) }")
+        content_tag(:span, options[:value], :class => name),
+        :class => "#{ column_classes( options ) }")
     end
 
     def decrement_input_size(input, column, options)
@@ -187,20 +181,27 @@ module FoundationRailsHelper
     end
 
     def wrap_prefix_and_postfix(block, prefix_options, postfix_options)
-      prefix = tag_from_options('prefix', prefix_options)
-      postfix = tag_from_options('postfix', postfix_options)
+      prefix = tag_from_options("prefix", prefix_options)
+      postfix = tag_from_options("postfix", postfix_options)
 
       input_size = calculate_input_size(prefix_options, postfix_options)
-      klass = "#{column_classes(input_size.marshal_dump)}"
-      input = content_tag(:div, block, :class => klass)
 
-      html =
-        if input_size.changed?
-          content_tag(:div, prefix + input + postfix, :class => "row collapse")
-        else
-          block
-        end
+      row_classes = "row collapse"
+      if prefix_options.try(:[], :input_style).present?
+        row_classes << " prefix-#{prefix_options[:input_style]}"
+      end
+      if postfix_options.try(:[], :input_style).present?
+        row_classes << " postfix-#{postfix_options[:input_style]}"
+      end
 
+      input_classes = column_classes(input_size.marshal_dump)
+      input = content_tag(:div, block, class: input_classes)
+
+      html = if input_size.changed?
+        content_tag(:div, prefix << input << postfix, class: row_classes)
+      else
+        block
+      end
       html.html_safe
     end
 
