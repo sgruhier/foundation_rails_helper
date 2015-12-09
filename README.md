@@ -61,7 +61,7 @@ A classic devise sign up view will look like this:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'zurb-foundation'
+gem 'foundation-rails'
 gem 'foundation_rails_helper'
 ```
 
@@ -173,7 +173,7 @@ If the `html_safe_errors: true` option is specified on a field, then any HTML yo
 ### Prefix and Postfix
 Simple prefix and postfix span elements can be added beside inputs.
 ```ruby
-f.text_field :name, prefix { value: 'foo' small: 2, large: 3 }
+f.text_field :name, prefix { value: 'foo', small: 2, large: 3 }
 ```
 generates
 ```html
