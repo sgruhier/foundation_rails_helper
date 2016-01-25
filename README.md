@@ -75,6 +75,18 @@ $ bundle
 
 To use the built in flash helper, add `<%= display_flash_messages %>` to your layout file (eg. *app/views/layouts/application.html.erb*).
 
+You can pass in custom flash key matches, custom styles and a custom close link
+
+```ruby
+<%= display_flash_messages(key_matching: { success: 'my_successful_class', custom_flash_key: 'another_class' }) %>
+
+<%= display_flash_messages(style: 'radius') %>
+
+<%= display_flash_messages(dismiss_toggle: "Close") %>
+```
+
+You can also hide the dismiss toggle by passing `dismiss_toggle: false`
+
 ## Usage
 
 ### form_for
