@@ -7,6 +7,7 @@ describe FoundationRailsHelper::FlashHelper do
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::FormTagHelper
   include FoundationRailsHelper::FlashHelper
 
   FoundationRailsHelper::FlashHelper::DEFAULT_KEY_MATCHING.each do |message_type, foundation_type|
@@ -14,47 +15,47 @@ describe FoundationRailsHelper::FlashHelper do
       allow(self).to receive(:flash).and_return({message_type.to_s => "Flash message"})
       node = Capybara.string display_flash_messages
       expect(node).
-        to  have_css("div.alert-box.#{foundation_type}", :text => "Flash message").
-        and have_css("div.alert-box a.close", :text => "×")
+        to  have_css("div.callout.#{foundation_type}", :text => "Flash message").
+        and have_css("[data-close]", :text => "×")
     end
   end
 
   it "handles symbol keys" do
     allow(self).to receive(:flash).and_return({ :success => "Flash message" })
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.success", :text => "Flash message")
+    expect(node).to have_css("div.callout.success", :text => "Flash message")
   end
 
   it "handles string keys" do
     allow(self).to receive(:flash).and_return({ "success" => "Flash message" })
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.success", :text => "Flash message")
+    expect(node).to have_css("div.callout.success", :text => "Flash message")
   end
 
   it "displays multiple flash messages" do
     allow(self).to receive(:flash).and_return({ "success" => "Yay it worked", "error" => "But this other thing failed" })
     node = Capybara.string display_flash_messages
     expect(node).
-      to  have_css("div.alert-box.success", :text => "Yay it worked").
-      and have_css("div.alert-box.alert",   :text => "But this other thing failed")
+      to  have_css("div.callout.success", :text => "Yay it worked").
+      and have_css("div.callout.alert",   :text => "But this other thing failed")
   end
 
   it "displays flash message with overridden key matching" do
     allow(self).to receive(:flash).and_return({ "notice" => "Flash message" })
     node = Capybara.string display_flash_messages({:notice => :alert})
-    expect(node).to have_css("div.alert-box.alert", :text => "Flash message")
+    expect(node).to have_css("div.callout.alert", :text => "Flash message")
   end
 
   it "displays flash message with custom key matching" do
     allow(self).to receive(:flash).and_return({ "custom_type" => "Flash message" })
     node = Capybara.string display_flash_messages({:custom_type => :custom_class})
-    expect(node).to have_css("div.alert-box.custom_class", :text => "Flash message")
+    expect(node).to have_css("div.callout.custom_class", :text => "Flash message")
   end
 
   it "displays flash message with standard class if key doesn't match" do
     allow(self).to receive(:flash).and_return({ "custom_type" => "Flash message" })
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.standard", :text => "Flash message")
+    expect(node).to have_css("div.callout.primary", :text => "Flash message")
   end
 
   context "when the flash hash contains devise internal data" do
@@ -75,7 +76,7 @@ describe FoundationRailsHelper::FlashHelper do
 
       # Ideally we'd create a node using Capybara.string, as in the other examples
       # and set the following expectation:
-      #   expect(node).to_not have_css("div.alert-box")
+      #   expect(node).to_not have_css("div.callout")
       # but Capybara.string doesn't behave nicely with nil input:
       # the input gets assigned to the @native instance variable,
       # which is used by the css matcher, so we get the following error:
