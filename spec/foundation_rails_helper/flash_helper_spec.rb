@@ -76,7 +76,7 @@ describe FoundationRailsHelper::FlashHelper do
 
       # Ideally we'd create a node using Capybara.string, as in the other examples
       # and set the following expectation:
-      #   expect(node).to_not have_css("div.calloutalert-box")
+      #   expect(node).to_not have_css("div.callout")
       # but Capybara.string doesn't behave nicely with nil input:
       # the input gets assigned to the @native instance variable,
       # which is used by the css matcher, so we get the following error:
