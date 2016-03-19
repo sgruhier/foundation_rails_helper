@@ -16,13 +16,13 @@ Gem::Specification.new do |gem|
   gem.version       = FoundationRailsHelper::VERSION
   gem.license       = 'MIT'
 
-  gem.add_dependency 'railties',      '~> 4.1'
-  gem.add_dependency 'actionpack',    '~> 4.1'
-  gem.add_dependency 'activemodel',   '~> 4.1'
-  gem.add_dependency 'activesupport', '~> 4.1'
+  gem.add_dependency 'railties',      '>= 4.1'
+  gem.add_dependency 'actionpack',    '>= 4.1'
+  gem.add_dependency 'activemodel',   '>= 4.1'
+  gem.add_dependency 'activesupport', '>= 4.1'
   gem.add_dependency 'tzinfo',        '~> 1.2', '>= 1.2.2'
 
-  gem.add_development_dependency 'rspec-rails', '~> 3.1', '>= 3.1.0'
+  gem.add_development_dependency 'rspec-rails', '>=3.5.0.beta2'
   gem.add_development_dependency 'mime-types',  '~> 2'
   gem.add_development_dependency 'capybara',    '~> 2.4', '>= 2.4.3'
 end
