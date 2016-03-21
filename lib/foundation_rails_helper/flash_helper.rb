@@ -37,7 +37,7 @@ module FoundationRailsHelper
     def alert_box(value, alert_class)
       content_tag(
         :div,
-        class: "callout #{alert_class}",
+        class: "flash callout #{alert_class}",
         data: { closable: '' }
       ) do
         concat value
