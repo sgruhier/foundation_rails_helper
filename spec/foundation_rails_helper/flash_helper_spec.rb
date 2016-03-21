@@ -15,7 +15,7 @@ describe FoundationRailsHelper::FlashHelper do
       allow(self).to receive(:flash).and_return({message_type.to_s => "Flash message"})
       node = Capybara.string display_flash_messages
       expect(node).
-        to  have_css("div.callout.#{foundation_type}", :text => "Flash message").
+        to  have_css("div.flash.callout.#{foundation_type}", :text => "Flash message").
         and have_css("[data-close]", :text => "×")
     end
   end
