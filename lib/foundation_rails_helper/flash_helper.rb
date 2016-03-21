@@ -2,22 +2,25 @@ require 'action_view/helpers'
 
 module FoundationRailsHelper
   module FlashHelper
-    # <div class="alert-box [success alert secondary]">
+    # <div class="callout [success alert secondary]" data-closable>
     #   This is an alert box.
-    #   <a href="" class="close">&times;</a>
+    #   <button name="button" type="submit" class="close-button" data-close="">
+    #     <span>&times;</span>
+    #   </button>
     # </div>
     DEFAULT_KEY_MATCHING = {
       :alert     => :alert,
       :notice    => :success,
-      :info      => :info,
+      :info      => :primary,
       :secondary => :secondary,
       :success   => :success,
       :error     => :alert,
-      :warning   => :warning
+      :warning   => :warning,
+      :primary   => :primary
     }
     def display_flash_messages(key_matching = {})
       key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
-      key_matching.default = :standard
+      key_matching.default = :primary
 
       capture do
         flash.each do |key, value|
@@ -31,15 +34,25 @@ module FoundationRailsHelper
   private
 
     def alert_box(value, alert_class)
-      content_tag :div, :data => { :alert => "" }, :class => "alert-box #{alert_class}" do
+      content_tag(
+        :div,
+        :class => "flash callout #{alert_class}",
+        :data => { closable: '' }
+      ) do
         concat value
         concat close_link
       end
     end
 
     def close_link
-      link_to("&times;".html_safe, "#", :class => :close)
+      button_tag(
+        :class => 'close-button',
+        :type => 'button',
+        :data => { :close => '' },
+        :aria => { :label => 'Dismiss alert' }
+      ) do
+        content_tag(:span, '&times;'.html_safe, :aria => { :hidden => true })
+      end
     end
-
   end
 end
