@@ -1,3 +1,6 @@
+## Version 1.2.1
+* Lock Capybara at 2.6.x
+
 ## Version 1.2.0
 * Allow Rails 5 to be used
 
