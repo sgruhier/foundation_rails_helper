@@ -1,3 +1,9 @@
+## Version 1.2.1
+* Lock Capybara at 2.6.x
+
+## Version 1.2.0
+* Allow Rails 5 to be used
+
 ## Version 1.1.0
 * Form Helper: [Prefix and
   Postfix](http://foundation.zurb.com/sites/docs/v/5.5.3/components/forms.html#pre-postfix-labels-amp-actions) are now supported  (PR #104 thanks djkz)
