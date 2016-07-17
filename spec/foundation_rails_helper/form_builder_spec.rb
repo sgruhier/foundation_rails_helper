@@ -177,7 +177,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "wraps input in the div with the right column size" do
         expect(@node.find('.row.collapse')).to have_css('div.small-8.medium-6.large-4.columns')
       end
-      
+
     end
   end
 
@@ -283,7 +283,7 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate check_box input" do
       form_for(@author) do |builder|
         node = Capybara.string builder.check_box(:active)
-        expect(node).to have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]')
+        expect(node).to have_css('label[for="author_active"] input[type="hidden"][name="author[active]"][value="0"]', :visible => false)
         expect(node).to have_css('label[for="author_active"] input[type="checkbox"][name="author[active]"]')
         expect(node).to have_css('label[for="author_active"]', :text => "Active")
       end
@@ -291,7 +291,7 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should generate check_box input without a label" do
       form_for(@author) do |builder|
         node = Capybara.string builder.check_box(:active, :label => false)
-        expect(node).to have_css('input[type="hidden"][name="author[active]"][value="0"]')
+        expect(node).to have_css('input[type="hidden"][name="author[active]"][value="0"]', :visible => false)
         expect(node).to have_css('input[type="checkbox"][name="author[active]"]')
         expect(node).to_not have_css('label[for="author_active"]')
       end
