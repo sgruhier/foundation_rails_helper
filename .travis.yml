@@ -15,4 +15,8 @@ matrix:
       env: "RAILS_VERSION=5.0.0"
     - rvm: 2.1.9
       env: "RAILS_VERSION=5.0.0"
+    - rvm: 2.4.0-preview1
+      env: "RAILS_VERSION=4.1.0"
+    - rvm: 2.4.0-preview1
+      env: "RAILS_VERSION=4.2.0"
 sudo: false
