@@ -16,10 +16,20 @@ Gem::Specification.new do |gem|
   gem.version       = FoundationRailsHelper::VERSION
   gem.license       = 'MIT'
 
-  gem.add_dependency 'railties',      '>= 4.1'
-  gem.add_dependency 'actionpack',    '>= 4.1'
-  gem.add_dependency 'activemodel',   '>= 4.1'
-  gem.add_dependency 'activesupport', '>= 4.1'
+  # Allow different versions of the rails gems to be specified, for testing:
+  rails_version = ENV["RAILS_VERSION"] || "default"
+
+  rails = case rails_version
+          when "default"
+            ">= 4.1"
+          else
+            "~> #{rails_version}"
+          end
+
+  gem.add_dependency 'railties',      rails
+  gem.add_dependency 'actionpack',    rails
+  gem.add_dependency 'activemodel',   rails
+  gem.add_dependency 'activesupport', rails
   gem.add_dependency 'tzinfo',        '~> 1.2', '>= 1.2.2'
 
   gem.add_development_dependency 'rspec-rails', '>= 3.1'
