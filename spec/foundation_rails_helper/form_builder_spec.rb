@@ -400,7 +400,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         node = Capybara.string  builder.datetime_field(:forty_two)
         expect(node).to have_css('label[for="author_forty_two"]', :text => "Forty two")
-        expect(node).to have_css('input[type="datetime"][name="author[forty_two]"]')
+        expect(node).to have_css('input[type^="datetime"][name="author[forty_two]"]')
         value = DateTime.parse( node.find_field('author_forty_two').value)
         expect(value).to eq @author.forty_two.to_s
       end
