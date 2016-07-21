@@ -1,0 +1,10 @@
+AllCops:
+  Include:
+    - Rakefile
+    - Gemfile
+    - '*.gemspec'
+  Exclude:
+    - 'vendor/**/*'
+
+Documentation:
+  Enabled: false
