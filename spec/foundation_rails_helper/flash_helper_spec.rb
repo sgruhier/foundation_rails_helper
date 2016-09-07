@@ -10,6 +10,8 @@ describe FoundationRailsHelper::FlashHelper do
   include ActionView::Helpers::FormTagHelper
   include FoundationRailsHelper::FlashHelper
 
+  RSpec::Matchers.define_negated_matcher :not_have_css, :have_css
+
   FoundationRailsHelper::FlashHelper::DEFAULT_KEY_MATCHING.each do |message_type, foundation_type|
     it "displays flash message with #{foundation_type} class for #{message_type} message" do
       allow(self).to receive(:flash).and_return({message_type.to_s => "Flash message"})
@@ -82,5 +84,16 @@ describe FoundationRailsHelper::FlashHelper do
       # which is used by the css matcher, so we get the following error:
       #   undefined method `css' for nil:NilClass
     end
+  end
+
+  context "with (closable: false) option" do
+    it "doesn't display the close button" do
+      allow(self).to receive(:flash).and_return({ :success => "Flash message" })
+      node = Capybara.string display_flash_messages(closable: false)
+      expect(node).
+        to  have_css("div.flash.callout.success", :text => "Flash message").
+        and not_have_css("[data-close]", :text => "×")
+    end
+
   end
 end
