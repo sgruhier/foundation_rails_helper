@@ -270,24 +270,6 @@ Style/SpaceInsideStringInterpolation:
   Exclude:
     - 'lib/foundation_rails_helper/form_builder.rb'
 
-# Offense count: 229
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Rakefile'
-    - 'foundation_rails_helper.gemspec'
-    - 'lib/foundation_rails_helper.rb'
-    - 'lib/foundation_rails_helper/flash_helper.rb'
-    - 'lib/foundation_rails_helper/form_builder.rb'
-    - 'lib/foundation_rails_helper/version.rb'
-    - 'spec/foundation_rails_helper/configuration_spec.rb'
-    - 'spec/foundation_rails_helper/flash_helper_spec.rb'
-    - 'spec/foundation_rails_helper/form_builder_spec.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/mock_rails.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

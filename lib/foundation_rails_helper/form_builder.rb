@@ -196,7 +196,7 @@ module FoundationRailsHelper
 
       html =
         if input_size.changed?
-          content_tag(:div, prefix + input + postfix, :class => "row collapse")
+          content_tag(:div, prefix + input + postfix, :class => 'row collapse')
         else
           block
         end

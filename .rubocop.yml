@@ -8,5 +8,10 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
+Style/StringLiterals:
+  Exclude:
+    - 'spec/**/*'
+  EnforcedStyle: single_quotes
+
 Documentation:
   Enabled: false

@@ -31,14 +31,14 @@ module FoundationRailsHelper
   private
 
     def alert_box(value, alert_class)
-      content_tag :div, :data => { :alert => "" }, :class => "alert-box #{alert_class}" do
+      content_tag :div, :data => { :alert => '' }, :class => "alert-box #{alert_class}" do
         concat value
         concat close_link
       end
     end
 
     def close_link
-      link_to("&times;".html_safe, "#", :class => :close)
+      link_to('&times;'.html_safe, '#', :class => :close)
     end
 
   end
