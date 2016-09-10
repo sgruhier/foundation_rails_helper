@@ -3,13 +3,11 @@ module ActionView
     module FormHelper
       def form_for_with_foundation(record, options = {}, &block)
         options[:builder] ||= FoundationRailsHelper::FormBuilder
-        options[:auto_labels] = true unless options.has_key? :auto_labels
         form_for_without_foundation(record, options, &block)
       end
 
       def fields_for_with_foundation(record_name, record_object = nil, options = {}, &block)
         options[:builder] ||= FoundationRailsHelper::FormBuilder
-        options[:auto_labels] = true unless options.has_key? :auto_labels
         fields_for_without_foundation(record_name, record_object, options, &block)
       end
 
