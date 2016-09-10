@@ -20,14 +20,14 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
-  it "should not display labels by if there are options without auto_labels: false" do
+  it "should display labels if there are options without auto_labels: false" do
     form_for(@author, {html: {class: 'myclass'}}) do |builder|
       node = Capybara.string builder.text_field(:login)
       expect(node).to have_css('label[for="author_login"]', :text => "Login")
     end
   end
 
-  it "should not display labels by if there are options without auto_labels: false" do
+  it "should not display labels if there are options with auto_labels: false" do
     form_for(@author, {html: {class: 'myclass'}, auto_labels: false}) do |builder|
       node = Capybara.string builder.text_field(:login)
       expect(node).to_not have_css('label[for="author_login"]', :text => "Login")
