@@ -20,6 +20,13 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  it "should display labels if auto_labels: true is set" do
+    form_for(@author, auto_labels: true) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      expect(node).to have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
   it "should display labels if there are options without auto_labels: false" do
     form_for(@author, {html: {class: 'myclass'}}) do |builder|
       node = Capybara.string builder.text_field(:login)
@@ -31,6 +38,20 @@ describe "FoundationRailsHelper::FormHelper" do
     form_for(@author, {html: {class: 'myclass'}, auto_labels: false}) do |builder|
       node = Capybara.string builder.text_field(:login)
       expect(node).to_not have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
+  it "should display labels if :auto_labels is set to nil" do
+    form_for(@author, auto_labels: nil) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      expect(node).to have_css('label[for="author_login"]', :text => "Login")
+    end
+  end
+
+  it "should display labels if :auto_labels is set to a string" do
+    form_for(@author, auto_labels: "false") do |builder|
+      node = Capybara.string builder.text_field(:login)
+      expect(node).to have_css('label[for="author_login"]', :text => "Login")
     end
   end
 
