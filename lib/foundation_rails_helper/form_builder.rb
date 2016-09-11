@@ -138,17 +138,38 @@ module FoundationRailsHelper
     end
 
     def column_classes(options)
-      classes = ''
-      if options[:small].present? && options[:small].to_i < 12
-        classes += "small-#{options[:small]} "
+      classes = SizeClassCalcluator.new(options).classes
+      classes + ' columns'
+    end
+
+    class SizeClassCalcluator
+      def initialize(size_options)
+        @small = size_options[:small]
+        @medium = size_options[:medium]
+        @large = size_options[:large]
       end
-      if options[:medium].present? && options[:medium].to_i < 12
-        classes += "medium-#{options[:medium]} "
+
+      def classes
+        [small_class, medium_class, large_class].compact.join(' ')
       end
-      if options[:large].present? && options[:large].to_i < 12
-        classes += "large-#{options[:large]} "
+
+      private
+
+      def small_class
+        "small-#{@small}" if valid_size(@small)
       end
-      classes + 'columns'
+
+      def medium_class
+        "medium-#{@medium}" if valid_size(@medium)
+      end
+
+      def large_class
+        "large-#{@large}" if valid_size(@large)
+      end
+
+      def valid_size(value)
+        value.present? && value.to_i < 12
+      end
     end
 
     def tag_from_options(name, options)
