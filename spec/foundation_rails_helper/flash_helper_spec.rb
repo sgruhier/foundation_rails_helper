@@ -11,50 +11,50 @@ describe FoundationRailsHelper::FlashHelper do
 
   FoundationRailsHelper::FlashHelper::DEFAULT_KEY_MATCHING.each do |message_type, foundation_type|
     it "displays flash message with #{foundation_type} class for #{message_type} message" do
-      allow(self).to receive(:flash).and_return({message_type.to_s => "Flash message"})
+      allow(self).to receive(:flash).and_return(message_type.to_s => "Flash message")
       node = Capybara.string display_flash_messages
-      expect(node).
-        to  have_css("div.alert-box.#{foundation_type}", :text => "Flash message").
-        and have_css("div.alert-box a.close", :text => "×")
+      expect(node)
+        .to  have_css("div.alert-box.#{foundation_type}", text: "Flash message")
+        .and have_css("div.alert-box a.close", text: "×")
     end
   end
 
   it "handles symbol keys" do
-    allow(self).to receive(:flash).and_return({ :success => "Flash message" })
+    allow(self).to receive(:flash).and_return(success: "Flash message")
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.success", :text => "Flash message")
+    expect(node).to have_css("div.alert-box.success", text: "Flash message")
   end
 
   it "handles string keys" do
-    allow(self).to receive(:flash).and_return({ "success" => "Flash message" })
+    allow(self).to receive(:flash).and_return("success" => "Flash message")
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.success", :text => "Flash message")
+    expect(node).to have_css("div.alert-box.success", text: "Flash message")
   end
 
   it "displays multiple flash messages" do
-    allow(self).to receive(:flash).and_return({ "success" => "Yay it worked", "error" => "But this other thing failed" })
+    allow(self).to receive(:flash).and_return("success" => "Yay it worked", "error" => "But this other thing failed")
     node = Capybara.string display_flash_messages
-    expect(node).
-      to  have_css("div.alert-box.success", :text => "Yay it worked").
-      and have_css("div.alert-box.alert",   :text => "But this other thing failed")
+    expect(node)
+      .to  have_css("div.alert-box.success", text: "Yay it worked")
+      .and have_css("div.alert-box.alert",   text: "But this other thing failed")
   end
 
   it "displays flash message with overridden key matching" do
-    allow(self).to receive(:flash).and_return({ "notice" => "Flash message" })
-    node = Capybara.string display_flash_messages({:notice => :alert})
-    expect(node).to have_css("div.alert-box.alert", :text => "Flash message")
+    allow(self).to receive(:flash).and_return("notice" => "Flash message")
+    node = Capybara.string display_flash_messages(notice: :alert)
+    expect(node).to have_css("div.alert-box.alert", text: "Flash message")
   end
 
   it "displays flash message with custom key matching" do
-    allow(self).to receive(:flash).and_return({ "custom_type" => "Flash message" })
-    node = Capybara.string display_flash_messages({:custom_type => :custom_class})
-    expect(node).to have_css("div.alert-box.custom_class", :text => "Flash message")
+    allow(self).to receive(:flash).and_return("custom_type" => "Flash message")
+    node = Capybara.string display_flash_messages(custom_type: :custom_class)
+    expect(node).to have_css("div.alert-box.custom_class", text: "Flash message")
   end
 
   it "displays flash message with standard class if key doesn't match" do
-    allow(self).to receive(:flash).and_return({ "custom_type" => "Flash message" })
+    allow(self).to receive(:flash).and_return("custom_type" => "Flash message")
     node = Capybara.string display_flash_messages
-    expect(node).to have_css("div.alert-box.standard", :text => "Flash message")
+    expect(node).to have_css("div.alert-box.standard", text: "Flash message")
   end
 
   context "when the flash hash contains devise internal data" do
@@ -65,12 +65,12 @@ describe FoundationRailsHelper::FlashHelper do
     end
 
     it "doesn't raise an error (e.g. NoMethodError)" do
-      allow(self).to receive(:flash).and_return({ "timedout" => true })
-      expect{ Capybara.string display_flash_messages }.not_to raise_error
+      allow(self).to receive(:flash).and_return("timedout" => true)
+      expect { Capybara.string display_flash_messages }.not_to raise_error
     end
 
     it "doesn't display an alert for that data" do
-      allow(self).to receive(:flash).and_return({ "timedout" => true })
+      allow(self).to receive(:flash).and_return("timedout" => true)
       expect(display_flash_messages).to be_nil
 
       # Ideally we'd create a node using Capybara.string, as in the other examples

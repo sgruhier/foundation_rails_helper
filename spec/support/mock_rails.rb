@@ -28,7 +28,7 @@ module FoundationRailsSpecHelper
   include ActionDispatch::Routing::UrlFor
 
   def active_model_validator(kind, attributes, options = {})
-    validator = mock("ActiveModel::Validations::#{kind.to_s.titlecase}Validator", :attributes => attributes, :options => options)
+    validator = mock("ActiveModel::Validations::#{kind.to_s.titlecase}Validator", attributes: attributes, options: options)
     allow(validator).to receive(:kind).and_return(kind)
     validator
   end
@@ -85,9 +85,17 @@ module FoundationRailsSpecHelper
   def mock_everything
     # Resource-oriented styles like form_for(@post) will expect a path method for the object,
     # so we're defining some here.
-    def author_path(*args); "/authors/1"; end
-    def authors_path(*args); "/authors"; end
-    def new_author_path(*args); "/authors/new"; end
+    def author_path(*_args)
+      "/authors/1"
+    end
+
+    def authors_path(*_args)
+      "/authors"
+    end
+
+    def new_author_path(*_args)
+      "/authors/new"
+    end
 
     @author = ::Author.new
     allow(@author).to receive(:class).and_return(::Author)
@@ -108,7 +116,7 @@ module FoundationRailsSpecHelper
     allow(@author).to receive(:to_key).and_return(nil)
     allow(@author).to receive(:persisted?).and_return(nil)
     allow(@author).to receive(:time_zone).and_return("Perth")
-    allow(@author).to receive(:publish_date).and_return(Date.new( 2000, 1, 1 ))
+    allow(@author).to receive(:publish_date).and_return(Date.new(2000, 1, 1))
     allow(@author).to receive(:forty_two).and_return(@author.birthdate + 42.years)
     allow(@author).to receive(:favorite_color).and_return("#424242")
     allow(@author).to receive(:favorite_book).and_return(nil)
@@ -132,7 +140,7 @@ module FoundationRailsSpecHelper
     allow(::Author).to receive(:where).and_return([@author])
     allow(::Author).to receive(:human_attribute_name) { |column_name| column_name.to_s.humanize }
     allow(::Author).to receive(:human_name).and_return('::Author')
-    allow(::Author).to receive(:content_columns).and_return([double('column', :name => 'login'), double('column', :name => 'created_at')])
+    allow(::Author).to receive(:content_columns).and_return([double('column', name: 'login'), double('column', name: 'created_at')])
     allow(::Author).to receive(:to_key).and_return(nil)
     allow(::Author).to receive(:persisted?).and_return(nil)
 
@@ -147,7 +155,6 @@ module FoundationRailsSpecHelper
       def protect_against_forgery?
         false
       end
-
     end
   end
 end

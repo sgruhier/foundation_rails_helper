@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe FoundationRailsHelper do
-
   describe FoundationRailsHelper::Configuration do
     describe "#button_class" do
       it "default value is 'small radius success button'" do
@@ -57,5 +56,4 @@ describe FoundationRailsHelper do
       end
     end
   end
-
 end

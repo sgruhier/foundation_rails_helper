@@ -37,9 +37,7 @@ module FoundationRailsHelper
       options[:label_options] ||= {}
       label_options = options.delete(:label_options).merge!(value: tag_value)
       label_text = options.delete(:label)
-      unless label_text == false
-        l = label(attribute, label_text, label_options)
-      end
+      l = label(attribute, label_text, label_options) unless label_text == false
       r = @template.radio_button(@object_name, attribute, tag_value,
                                  objectify_options(options))
 
@@ -48,26 +46,26 @@ module FoundationRailsHelper
 
     def password_field(attribute, options = {})
       field attribute, options do |opts|
-        super(attribute, opts.merge(:autocomplete => :off))
+        super(attribute, opts.merge(autocomplete: :off))
       end
     end
 
     def datetime_select(attribute, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
-        super(attribute, options, html_opts.merge(:autocomplete => :off))
+        super(attribute, options, html_opts.merge(autocomplete: :off))
       end
     end
 
     def date_select(attribute, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
-        super(attribute, options, html_opts.merge(:autocomplete => :off))
+        super(attribute, options, html_opts.merge(autocomplete: :off))
       end
     end
 
     def time_zone_select(attribute, priorities = nil, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
         super(attribute, priorities, options,
-              html_opts.merge(:autocomplete => :off))
+              html_opts.merge(autocomplete: :off))
       end
     end
 
@@ -96,8 +94,8 @@ module FoundationRailsHelper
 
     def autocomplete(attribute, url, options = {})
       field attribute, options do |opts|
-        opts.merge!(:update_elements => opts[:update_elements],
-                    :min_length => 0, :value => object.send(attribute))
+        opts.merge!(update_elements: opts[:update_elements],
+                    min_length: 0, value: object.send(attribute))
         autocomplete_field(attribute, url, opts)
       end
     end
@@ -107,7 +105,7 @@ module FoundationRailsHelper
       super(value, options)
     end
 
-  private
+    private
 
     def has_error?(attribute)
       object.respond_to?(:errors) && !object.errors[attribute].blank?
@@ -121,11 +119,11 @@ module FoundationRailsHelper
 
       error_messages = object.errors[attribute].join(', ')
       error_messages = error_messages.html_safe if options[:html_safe_errors]
-      content_tag(:small, error_messages, :class => class_name)
+      content_tag(:small, error_messages, class: class_name)
     end
 
-    def custom_label(attribute, text, options, &block)
-      return block_given? ? block.call.html_safe : ''.html_safe if text == false
+    def custom_label(attribute, text, options)
+      return block_given? ? yield.html_safe : ''.html_safe if text == false
       if text.nil? || text == true
         text =
           if object.class.respond_to?(:human_attribute_name)
@@ -134,7 +132,7 @@ module FoundationRailsHelper
             attribute.to_s.humanize
           end
       end
-      text = block.call.html_safe + " #{text}" if block_given?
+      text = yield.html_safe + " #{text}" if block_given?
       options ||= {}
       label(attribute, text, options)
     end
@@ -157,8 +155,8 @@ module FoundationRailsHelper
       return ''.html_safe unless options && options[:value].present?
 
       content_tag(:div,
-                  content_tag(:span, options[:value], :class => name),
-                  :class => "#{ column_classes( options ) }")
+                  content_tag(:span, options[:value], class: name),
+                  class: column_classes(options).to_s)
     end
 
     def decrement_input_size(input, column, options)
@@ -191,12 +189,12 @@ module FoundationRailsHelper
       postfix = tag_from_options('postfix', postfix_options)
 
       input_size = calculate_input_size(prefix_options, postfix_options)
-      klass = "#{column_classes(input_size.marshal_dump)}"
-      input = content_tag(:div, block, :class => klass)
+      klass = column_classes(input_size.marshal_dump).to_s
+      input = content_tag(:div, block, class: klass)
 
       html =
         if input_size.changed?
-          content_tag(:div, prefix + input + postfix, :class => 'row collapse')
+          content_tag(:div, prefix + input + postfix, class: 'row collapse')
         else
           block
         end
@@ -206,14 +204,12 @@ module FoundationRailsHelper
 
     def error_and_hint(attribute, options = {})
       html = ''
-      if options[:hint]
-        html += content_tag(:span, options[:hint], :class => :hint)
-      end
+      html += content_tag(:span, options[:hint], class: :hint) if options[:hint]
       html += error_for(attribute, options) || ''
       html.html_safe
     end
 
-    def field(attribute, options, html_options = nil, &block)
+    def field(attribute, options, html_options = nil)
       auto_labels = true unless @options[:auto_labels] == false
       html = if auto_labels || options[:label]
                custom_label(attribute, options[:label], options[:label_options])
