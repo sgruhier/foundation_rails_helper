@@ -214,7 +214,8 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, html_options = nil, &block)
-      if @options[:auto_labels] || options[:label]
+      auto_labels = true unless @options[:auto_labels] == false
+      if auto_labels || options[:label]
         html = custom_label(attribute, options[:label], options[:label_options])
       else
         html = ''.html_safe
