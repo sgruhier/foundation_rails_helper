@@ -1,3 +1,7 @@
+## Version 1.2.2
+* Fix Rails 5 deprecation warnings about alias_method_chain
+* Allow Capybara to be upgraded beyond 2.6.x
+
 ## Version 1.2.1
 * Lock Capybara at 2.6.x
 
