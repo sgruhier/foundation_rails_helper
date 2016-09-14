@@ -3,9 +3,9 @@ require 'spec_helper'
 describe FoundationRailsHelper do
   describe FoundationRailsHelper::Configuration do
     describe "#button_class" do
-      it "default value is 'small radius success button'" do
+      it "default value is 'success button'" do
         config = FoundationRailsHelper::Configuration.new
-        expect(config.button_class).to eq('small radius success button')
+        expect(config.button_class).to eq('success button')
       end
     end
 
@@ -41,7 +41,7 @@ describe FoundationRailsHelper do
         FoundationRailsHelper.reset
 
         config = FoundationRailsHelper.configuration
-        expect(config.button_class).to eq('small radius success button')
+        expect(config.button_class).to eq('success button')
       end
 
       it "resets the configured ignored flash keys" do
