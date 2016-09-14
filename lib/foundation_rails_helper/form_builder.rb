@@ -30,7 +30,7 @@ module FoundationRailsHelper
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options, checked_value, unchecked_value)
-      end + error_and_hint(attribute, options)
+      end + error_and_help_text(attribute, options)
     end
 
     def radio_button(attribute, tag_value, options = {})
@@ -223,9 +223,11 @@ module FoundationRailsHelper
       html.html_safe
     end
 
-    def error_and_hint(attribute, options = {})
+    def error_and_help_text(attribute, options = {})
       html = ''
-      html += content_tag(:span, options[:hint], class: :hint) if options[:hint]
+      if options[:help_text]
+        html += content_tag(:p, options[:help_text], class: 'help-text')
+      end
       html += error_for(attribute, options) || ''
       html.html_safe
     end
@@ -246,12 +248,12 @@ module FoundationRailsHelper
 
       options.delete(:label)
       options.delete(:label_options)
-      hint = options.delete(:hint)
+      help_text = options.delete(:help_text)
       prefix = options.delete(:prefix)
       postfix = options.delete(:postfix)
 
       html += wrap_prefix_and_postfix(yield(class_options), prefix, postfix)
-      html + error_and_hint(attribute, options.merge(hint: hint))
+      html + error_and_help_text(attribute, options.merge(help_text: help_text))
     end
   end
 end
