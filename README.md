@@ -122,8 +122,7 @@ Change the label text and add a class on the label:
 f.text_field :name, label: 'Nombre', label_options: { class: 'large' }
 ```
 
-<!-- TODO: Help text option   -->
-<!-- If the help_text option is specified
+If the help_text option is specified
 
 ```ruby
 f.text_field :name, help_text: "I'm a text field"
@@ -133,7 +132,7 @@ an additional p element will be added after the input element:
 
 ```html
 <p class="help-text">I'm a text field</p>
-``` -->
+```
 
 ### Submit Button
 
