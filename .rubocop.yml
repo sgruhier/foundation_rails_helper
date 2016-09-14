@@ -1,6 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
+  TargetRubyVersion: 2.3
   Include:
     - Rakefile
     - Gemfile
@@ -12,6 +13,12 @@ Style/StringLiterals:
   Exclude:
     - 'spec/**/*'
   EnforcedStyle: single_quotes
+
+# A quick fix for not having magic comments at the top of each file
+# # frozen_string_literal: true
+# https://github.com/bbatsov/rubocop/issues/3284
+FrozenStringLiteralComment:
+  Enabled: false
 
 Documentation:
   Enabled: false
