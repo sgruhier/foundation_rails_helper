@@ -16,6 +16,8 @@ So far it includes:
 * Only Rails 4.1/4.2/5 and Foundation 5 are fully supported
 * Some features may work with Foundation 4 and older, but results may vary, and markup which exists only for those versions will be gradually removed
 * Legacy branches exist for Rails 3 and 4.0 (see the rails3 and rails4.0 branches). These are not actively supported, and fixes are not retroactively applied, but pull requests are welcome.
+* We test against ruby versions 2.1 and up. This gem may still work fine on
+  1.9.3, but your mileage may vary
 
 
 ## Screenshots

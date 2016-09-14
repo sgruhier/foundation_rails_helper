@@ -1,3 +1,10 @@
+## NEXT VERSION
+### Breaking changes:
+* Dropped support for Ruby 1.9.3
+
+### Features:
+* Add Rubocop code style linting
+
 ## Version 1.2.2
 * Fix Rails 5 deprecation warnings about alias_method_chain
 * Allow Capybara to be upgraded beyond 2.6.x

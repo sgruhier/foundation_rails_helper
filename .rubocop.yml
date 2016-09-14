@@ -1,0 +1,17 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Include:
+    - Rakefile
+    - Gemfile
+    - '*.gemspec'
+  Exclude:
+    - 'vendor/**/*'
+
+Style/StringLiterals:
+  Exclude:
+    - 'spec/**/*'
+  EnforcedStyle: single_quotes
+
+Documentation:
+  Enabled: false
