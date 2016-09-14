@@ -9,11 +9,6 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
-Style/StringLiterals:
-  Exclude:
-    - 'spec/**/*'
-  EnforcedStyle: single_quotes
-
 # A quick fix for not having magic comments at the top of each file
 # # frozen_string_literal: true
 # https://github.com/bbatsov/rubocop/issues/3284
