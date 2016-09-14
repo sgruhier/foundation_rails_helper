@@ -682,7 +682,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit("Save")
-          expect(node).to have_css('input[type="submit"][class="small radius success button"]')
+          expect(node).to have_css('input[type="submit"][class="success button"]')
         end
       end
     end
