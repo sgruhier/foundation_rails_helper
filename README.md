@@ -137,7 +137,7 @@ an additional p element will be added after the input element:
 
 ### Submit Button
 
-The 'submit' helper wraps the rails helper and sets the class attribute to "small radius success button" by default.
+The 'submit' helper wraps the rails helper and sets the class attribute to "success button" by default.
 
 ```ruby
 f.submit

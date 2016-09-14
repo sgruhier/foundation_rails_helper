@@ -512,7 +512,7 @@ describe "FoundationRailsHelper::FormHelper" do
     describe "hint" do
       it "should add a span element" do
         form_for(@author) do |builder|
-          hint = "Enter login"
+          hint = 'Enter login'
           node = Capybara.string builder.text_field(:login, hint: hint)
           expect(node.find("span").text).to eq hint
         end
@@ -520,8 +520,8 @@ describe "FoundationRailsHelper::FormHelper" do
 
       it "should not add hint attribute" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.text_field(:login, hint: "Enter login")
-          expect(node.find_field("author_login")["hint"]).to be_nil
+          node = Capybara.string builder.text_field(:login, hint: 'Enter login')
+          expect(node.find_field("author_login")['hint']).to be_nil
         end
       end
     end
@@ -682,7 +682,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit("Save")
-          expect(node).to have_css('input[type="submit"][class="small radius success button"]')
+          expect(node).to have_css('input[type="submit"][class="success button"]')
         end
       end
     end
