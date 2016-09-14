@@ -509,19 +509,19 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    describe "hint" do
-      it "should add a span element" do
+    describe "help_text" do
+      it "should add a p element" do
         form_for(@author) do |builder|
-          hint = "Enter login"
-          node = Capybara.string builder.text_field(:login, hint: hint)
-          expect(node.find("span").text).to eq hint
+          help_text = "Enter login"
+          node = Capybara.string builder.text_field(:login, help_text: help_text)
+          expect(node.find("p").text).to eq help_text
         end
       end
 
-      it "should not add hint attribute" do
+      it "should not add help_text attribute" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.text_field(:login, hint: "Enter login")
-          expect(node.find_field("author_login")["hint"]).to be_nil
+          node = Capybara.string builder.text_field(:login, help_text: "Enter login")
+          expect(node.find_field("author_login")["help_text"]).to be_nil
         end
       end
     end
