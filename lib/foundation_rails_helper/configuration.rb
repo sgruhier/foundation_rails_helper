@@ -20,7 +20,7 @@ module FoundationRailsHelper
     attr_accessor :ignored_flash_keys
 
     def initialize
-      @button_class = 'small radius success button'
+      @button_class = 'success button'
       @ignored_flash_keys = []
     end
   end
