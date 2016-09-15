@@ -86,15 +86,15 @@ module FoundationRailsSpecHelper
     # Resource-oriented styles like form_for(@post) will expect a path method for the object,
     # so we're defining some here.
     def author_path(*_args)
-      "/authors/1"
+      '/authors/1'
     end
 
     def authors_path(*_args)
-      "/authors"
+      '/authors'
     end
 
     def new_author_path(*_args)
-      "/authors/new"
+      '/authors/new'
     end
 
     @author = ::Author.new
@@ -109,29 +109,29 @@ module FoundationRailsSpecHelper
     allow(@author).to receive(:active).and_return(true)
     allow(@author).to receive(:description).and_return('bla bla bla')
     allow(@author).to receive(:avatar).and_return('avatar.png')
-    allow(@author).to receive(:birthdate).and_return(DateTime.parse("1969-06-18 20:30"))
+    allow(@author).to receive(:birthdate).and_return(DateTime.parse('1969-06-18 20:30'))
     allow(@author).to receive(:id).and_return(37)
     allow(@author).to receive(:new_record?).and_return(false)
     allow(@author).to receive(:errors).and_return(double('errors', :[] => nil))
     allow(@author).to receive(:to_key).and_return(nil)
     allow(@author).to receive(:persisted?).and_return(nil)
-    allow(@author).to receive(:time_zone).and_return("Perth")
+    allow(@author).to receive(:time_zone).and_return('Perth')
     allow(@author).to receive(:publish_date).and_return(Date.new(2000, 1, 1))
     allow(@author).to receive(:forty_two).and_return(@author.birthdate + 42.years)
-    allow(@author).to receive(:favorite_color).and_return("#424242")
+    allow(@author).to receive(:favorite_color).and_return('#424242')
     allow(@author).to receive(:favorite_book).and_return(nil)
 
     @book_0 = ::Book.new
-    allow(@book_0).to receive(:id).and_return("78")
+    allow(@book_0).to receive(:id).and_return('78')
     allow(@book_0).to receive(:title).and_return("Gulliver's Travels")
     @book_1 = ::Book.new
-    allow(@book_1).to receive(:id).and_return("133")
-    allow(@book_1).to receive(:title).and_return("Treasure Island")
+    allow(@book_1).to receive(:id).and_return('133')
+    allow(@book_1).to receive(:title).and_return('Treasure Island')
     @genre_0 = ::Genre.new
-    allow(@genre_0).to receive(:name).and_return("Exploration")
+    allow(@genre_0).to receive(:name).and_return('Exploration')
     allow(@genre_0).to receive(:books).and_return([@book_0])
     @genre_1 = ::Genre.new
-    allow(@genre_1).to receive(:name).and_return("Pirate Exploits")
+    allow(@genre_1).to receive(:name).and_return('Pirate Exploits')
     allow(@genre_1).to receive(:books).and_return([@book_1])
 
     allow(::Author).to receive(:scoped).and_return(::Author)

@@ -7,7 +7,7 @@ describe "FoundationRailsHelper::FormHelper" do
     mock_everything
   end
 
-  it 'should have FoundationRailsHelper::FormHelper as default buidler' do
+  it "should have FoundationRailsHelper::FormHelper as default buidler" do
     form_for(@author) do |builder|
       expect(builder.class).to eq FoundationRailsHelper::FormBuilder
     end
@@ -28,14 +28,14 @@ describe "FoundationRailsHelper::FormHelper" do
   end
 
   it "should not display labels by if there are options without auto_labels: false" do
-    form_for(@author, html: { class: 'myclass' }) do |builder|
+    form_for(@author, html: { class: "myclass" }) do |builder|
       node = Capybara.string builder.text_field(:login)
       expect(node).to have_css('label[for="author_login"]', text: "Login")
     end
   end
 
   it "should not display labels if there are options with auto_labels: false" do
-    form_for(@author, html: { class: 'myclass' }, auto_labels: false) do |builder|
+    form_for(@author, html: { class: "myclass" }, auto_labels: false) do |builder|
       node = Capybara.string builder.text_field(:login)
       expect(node).to_not have_css('label[for="author_login"]', text: "Login")
     end
@@ -67,9 +67,9 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should not have error class multiple times" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(login: ['required'])
+        allow(@author).to receive(:errors).and_return(login: ["required"])
         node = Capybara.string builder.text_field(:login)
-        error_class = node.find('label')['class'].split(/\s+/).keep_if { |v| v == 'error' }
+        error_class = node.find("label")["class"].split(/\s+/).keep_if { |v| v == "error" }
         expect(error_class.size).to eq 1
       end
     end
@@ -84,27 +84,27 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps input in the div with class 'row collapse'" do
-        expect(@node.find('.row.collapse')).to_not be nil
+        expect(@node.find(".row.collapse")).to_not be nil
       end
 
       it "wraps prefix in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-2.medium-4.large-6.columns')
+        expect(@node.find(".row.collapse")).to have_css("div.small-2.medium-4.large-6.columns")
       end
 
       it "creates prefix span with right value" do
-        expect(@node.find('.row.collapse').find('div.small-2.medium-4.large-6.columns').find('span').text).to eq "Prefix"
+        expect(@node.find(".row.collapse").find("div.small-2.medium-4.large-6.columns").find("span").text).to eq "Prefix"
       end
 
       it "creates prefix span with right class" do
-        expect(@node.find('.row.collapse')).to have_css('span.prefix')
+        expect(@node.find(".row.collapse")).to have_css("span.prefix")
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-10.medium-8.large-6.columns')
+        expect(@node.find(".row.collapse")).to have_css("div.small-10.medium-8.large-6.columns")
       end
 
       it "has right value for the input" do
-        expect(@node.find('.row.collapse').find('div.small-10.medium-8.large-6.columns')).to have_css('input[type="text"][name="author[login]"]')
+        expect(@node.find(".row.collapse").find("div.small-10.medium-8.large-6.columns")).to have_css('input[type="text"][name="author[login]"]')
       end
     end
 
@@ -112,7 +112,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "will not wrap input into a div" do
         form_for(@author) do |builder|
           node = Capybara.string builder.text_field(:login)
-          expect(node).to_not have_css('div.row.collapse')
+          expect(node).to_not have_css("div.row.collapse")
         end
       end
     end
@@ -127,27 +127,27 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps input in the div with class 'row collapse'" do
-        expect(@node.find('.row.collapse')).to_not be nil
+        expect(@node.find(".row.collapse")).to_not be nil
       end
 
       it "wraps postfix in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-2.medium-4.large-6.columns')
+        expect(@node.find(".row.collapse")).to have_css("div.small-2.medium-4.large-6.columns")
       end
 
       it "creates postfix span with right value" do
-        expect(@node.find('.row.collapse').find('div.small-2.medium-4.large-6.columns').find('span').text).to eq "Postfix"
+        expect(@node.find(".row.collapse").find("div.small-2.medium-4.large-6.columns").find("span").text).to eq "Postfix"
       end
 
       it "creates postfix span with right class" do
-        expect(@node.find('.row.collapse')).to have_css('span.postfix')
+        expect(@node.find(".row.collapse")).to have_css("span.postfix")
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-10.medium-8.large-6.columns')
+        expect(@node.find(".row.collapse")).to have_css("div.small-10.medium-8.large-6.columns")
       end
 
       it "has right value for the input" do
-        expect(@node.find('.row.collapse').find('div.small-10.medium-8.large-6.columns')).to have_css('input[type="text"][name="author[login]"]')
+        expect(@node.find(".row.collapse").find("div.small-10.medium-8.large-6.columns")).to have_css('input[type="text"][name="author[login]"]')
       end
     end
 
@@ -161,26 +161,26 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps postfix in the div with the right column size" do
-        expect(@small_node.find('.row.collapse')).to have_css('div.small-2.columns')
-        expect(@medium_node.find('.row.collapse')).to have_css('div.medium-2.columns')
-        expect(@large_node.find('.row.collapse')).to have_css('div.large-2.columns')
+        expect(@small_node.find(".row.collapse")).to have_css("div.small-2.columns")
+        expect(@medium_node.find(".row.collapse")).to have_css("div.medium-2.columns")
+        expect(@large_node.find(".row.collapse")).to have_css("div.large-2.columns")
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@small_node.find('.row.collapse')).to have_css('div.small-10.columns')
-        expect(@medium_node.find('.row.collapse')).to have_css('div.medium-10.columns')
-        expect(@large_node.find('.row.collapse')).to have_css('div.large-10.columns')
+        expect(@small_node.find(".row.collapse")).to have_css("div.small-10.columns")
+        expect(@medium_node.find(".row.collapse")).to have_css("div.medium-10.columns")
+        expect(@large_node.find(".row.collapse")).to have_css("div.large-10.columns")
       end
 
       it "excludes other classes from the prefix" do
-        expect(@small_node.find('.row.collapse')).to_not have_css('div.medium-2.columns')
-        expect(@small_node.find('.row.collapse')).to_not have_css('div.large-2.columns')
+        expect(@small_node.find(".row.collapse")).to_not have_css("div.medium-2.columns")
+        expect(@small_node.find(".row.collapse")).to_not have_css("div.large-2.columns")
       end
 
       it "excludes other classes from the input" do
-        expect(@small_node.find('.row.collapse')).to have_css('div.small-10.columns')
-        expect(@small_node.find('.row.collapse')).to_not have_css('div.medium-12.columns')
-        expect(@small_node.find('.row.collapse')).to_not have_css('div.large-12.columns')
+        expect(@small_node.find(".row.collapse")).to have_css("div.small-10.columns")
+        expect(@small_node.find(".row.collapse")).to_not have_css("div.medium-12.columns")
+        expect(@small_node.find(".row.collapse")).to_not have_css("div.large-12.columns")
       end
     end
   end
@@ -196,7 +196,7 @@ describe "FoundationRailsHelper::FormHelper" do
       end
 
       it "wraps input in the div with the right column size" do
-        expect(@node.find('.row.collapse')).to have_css('div.small-8.medium-6.large-4.columns')
+        expect(@node.find(".row.collapse")).to have_css("div.small-8.medium-6.large-4.columns")
       end
     end
   end
@@ -207,7 +207,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.text_field(:login)
         expect(node).to have_css('label[for="author_login"]', text: "Login")
         expect(node).to have_css('input[type="text"][name="author[login]"]')
-        expect(node.find_field('author_login').value).to eq @author.login
+        expect(node.find_field("author_login").value).to eq @author.login
       end
     end
 
@@ -216,13 +216,13 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.text_field(:login, label: false)
         expect(node).to_not have_css('label[for="author_login"]', text: "Login")
         expect(node).to have_css('input[type="text"][name="author[login]"]')
-        expect(node.find_field('author_login').value).to eq @author.login
+        expect(node.find_field("author_login").value).to eq @author.login
       end
     end
 
     it "should generate text_field with class from options" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.text_field(:login, class: 'righteous')
+        node = Capybara.string builder.text_field(:login, class: "righteous")
         expect(node).to have_css('input.righteous[type="text"][name="author[login]"]')
       end
     end
@@ -232,7 +232,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.password_field(:password)
         expect(node).to have_css('label[for="author_password"]', text: "Password")
         expect(node).to have_css('input[type="password"][name="author[password]"]')
-        expect(node.find_field('author_password').value).to be_nil
+        expect(node.find_field("author_password").value).to be_nil
       end
     end
 
@@ -241,7 +241,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.email_field(:email)
         expect(node).to have_css('label[for="author_email"]', text: "Email")
         expect(node).to have_css('input[type="email"][name="author[email]"]')
-        expect(node.find_field('author_email').value).to eq @author.email
+        expect(node.find_field("author_email").value).to eq @author.email
       end
     end
 
@@ -250,7 +250,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.url_field(:url)
         expect(node).to have_css('label[for="author_url"]', text: "Url")
         expect(node).to have_css('input[type="url"][name="author[url]"]')
-        expect(node.find_field('author_url').value).to eq @author.url
+        expect(node.find_field("author_url").value).to eq @author.url
       end
     end
 
@@ -259,7 +259,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.phone_field(:phone)
         expect(node).to have_css('label[for="author_phone"]', text: "Phone")
         expect(node).to have_css('input[type="tel"][name="author[phone]"]')
-        expect(node.find_field('author_phone').value).to eq @author.phone
+        expect(node.find_field("author_phone").value).to eq @author.phone
       end
     end
 
@@ -268,7 +268,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.number_field(:some_number)
         expect(node).to have_css('label[for="author_some_number"]', text: "Some number")
         expect(node).to have_css('input[type="number"][name="author[some_number]"]')
-        expect(node.find_field('author_some_number').value).to eq @author.some_number
+        expect(node.find_field("author_some_number").value).to eq @author.some_number
       end
     end
 
@@ -277,7 +277,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.text_area(:description)
         expect(node).to have_css('label[for="author_description"]', text: "Description")
         expect(node).to have_css('textarea[name="author[description]"]')
-        expect(node.find_field('author_description').value.strip).to eq @author.description
+        expect(node.find_field("author_description").value.strip).to eq @author.description
       end
     end
 
@@ -286,7 +286,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.file_field(:avatar)
         expect(node).to have_css('label[for="author_avatar"]', text: "Avatar")
         expect(node).to have_css('input[type="file"][name="author[avatar]"]')
-        expect(node.find_field('author_avatar').value).to be_nil
+        expect(node.find_field("author_avatar").value).to be_nil
       end
     end
 
@@ -341,7 +341,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should generate radio_button with label options" do
       form_for(@author) do |builder|
-        node = Capybara.string builder.radio_button(:active, "ok", class: 'very', label_options: { class: 'special' })
+        node = Capybara.string builder.radio_button(:active, "ok", class: "very", label_options: { class: "special" })
         expect(node).to have_css('label.special[for="author_active_ok"]')
         expect(node).to have_css('input.very[type="radio"][name="author[active]"]')
       end
@@ -412,7 +412,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.date_field(:publish_date)
         expect(node).to have_css('label[for="author_publish_date"]', text: "date")
         expect(node).to have_css('input[type="date"][name="author[publish_date]"]')
-        expect(node.find_field('author_publish_date').value).to eq @author.publish_date.to_s
+        expect(node.find_field("author_publish_date").value).to eq @author.publish_date.to_s
       end
     end
 
@@ -421,7 +421,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.datetime_field(:forty_two)
         expect(node).to have_css('label[for="author_forty_two"]', text: "Forty two")
         expect(node).to have_css('input[type^="datetime"][name="author[forty_two]"]')
-        value = DateTime.parse(node.find_field('author_forty_two').value)
+        value = DateTime.parse(node.find_field("author_forty_two").value)
         expect(value).to eq @author.forty_two.to_s
       end
     end
@@ -431,7 +431,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.datetime_local_field(:forty_two)
         expect(node).to have_css('label[for="author_forty_two"]', text: "Forty two")
         expect(node).to have_css('input[type="datetime-local"][name="author[forty_two]"]')
-        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
+        expect(node.find_field("author_forty_two").value).to eq @author.forty_two.strftime("%Y-%m-%dT%H:%M:%S")
       end
     end
 
@@ -440,7 +440,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.month_field(:forty_two)
         expect(node).to have_css('label[for="author_forty_two"]', text: "Forty two")
         expect(node).to have_css('input[type="month"][name="author[forty_two]"]')
-        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%Y-%m")
+        expect(node.find_field("author_forty_two").value).to eq @author.forty_two.strftime("%Y-%m")
       end
     end
 
@@ -449,7 +449,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.week_field(:forty_two)
         expect(node).to have_css('label[for="author_forty_two"]', text: "Forty two")
         expect(node).to have_css('input[type="week"][name="author[forty_two]"]')
-        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%Y-W%V")
+        expect(node.find_field("author_forty_two").value).to eq @author.forty_two.strftime("%Y-W%V")
       end
     end
 
@@ -458,7 +458,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.time_field(:forty_two)
         expect(node).to have_css('label[for="author_forty_two"]', text: "Forty two")
         expect(node).to have_css('input[type="time"][name="author[forty_two]"]')
-        expect(node.find_field('author_forty_two').value).to eq @author.forty_two.strftime("%H:%M:%S.%L")
+        expect(node.find_field("author_forty_two").value).to eq @author.forty_two.strftime("%H:%M:%S.%L")
       end
     end
 
@@ -467,7 +467,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.range_field(:some_number)
         expect(node).to have_css('label[for="author_some_number"]', text: "Some number")
         expect(node).to have_css('input[type="range"][name="author[some_number]"]')
-        expect(node.find_field('author_some_number').value).to eq @author.some_number
+        expect(node.find_field("author_some_number").value).to eq @author.some_number
       end
     end
 
@@ -476,7 +476,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.search_field(:description)
         expect(node).to have_css('label[for="author_description"]', text: "Description")
         expect(node).to have_css('input[type="search"][name="author[description]"]')
-        expect(node.find_field('author_description').value).to eq @author.description
+        expect(node.find_field("author_description").value).to eq @author.description
       end
     end
 
@@ -485,7 +485,7 @@ describe "FoundationRailsHelper::FormHelper" do
         node = Capybara.string builder.color_field(:favorite_color)
         expect(node).to have_css('label[for="author_favorite_color"]', text: "Favorite color")
         expect(node).to have_css('input[type="color"][name="author[favorite_color]"]')
-        expect(node.find_field('author_favorite_color').value).to eq @author.favorite_color
+        expect(node.find_field("author_favorite_color").value).to eq @author.favorite_color
       end
     end
 
@@ -512,7 +512,7 @@ describe "FoundationRailsHelper::FormHelper" do
     describe "hint" do
       it "should add a span element" do
         form_for(@author) do |builder|
-          hint = 'Enter login'
+          hint = "Enter login"
           node = Capybara.string builder.text_field(:login, hint: hint)
           expect(node.find("span").text).to eq hint
         end
@@ -520,8 +520,8 @@ describe "FoundationRailsHelper::FormHelper" do
 
       it "should not add hint attribute" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.text_field(:login, hint: 'Enter login')
-          expect(node.find_field("author_login")['hint']).to be_nil
+          node = Capybara.string builder.text_field(:login, hint: "Enter login")
+          expect(node.find_field("author_login")["hint"]).to be_nil
         end
       end
     end
@@ -540,14 +540,14 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should not display errors" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
-        expect(node).to_not have_css('small.error')
+        expect(node).to_not have_css("small.error")
       end
     end
     it "should display errors" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(login: ['required'])
+        allow(@author).to receive(:errors).and_return(login: ["required"])
         node = Capybara.string builder.text_field(:login)
-        expect(node).to have_css('small.error', text: "required")
+        expect(node).to have_css("small.error", text: "required")
       end
     end
     %w(file_field email_field text_field telephone_field phone_field
@@ -557,7 +557,7 @@ describe "FoundationRailsHelper::FormHelper" do
        password_field).each do |field|
       it "should display errors on #{field} inputs" do
         form_for(@author) do |builder|
-          allow(@author).to receive(:errors).and_return(description: ['required'])
+          allow(@author).to receive(:errors).and_return(description: ["required"])
           node = Capybara.string builder.public_send(field, :description)
           expect(node).to have_css('label.error[for="author_description"]')
           expect(node).to have_css('input.error[name="author[description]"]')
@@ -566,7 +566,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on text_area inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(description: ['required'])
+        allow(@author).to receive(:errors).and_return(description: ["required"])
         node = Capybara.string builder.text_area(:description)
         expect(node).to have_css('label.error[for="author_description"]')
         expect(node).to have_css('textarea.error[name="author[description]"]')
@@ -574,7 +574,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on select inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(favorite_book: ['required'])
+        allow(@author).to receive(:errors).and_return(favorite_book: ["required"])
         node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
         expect(node).to have_css('label.error[for="author_favorite_book"]')
         expect(node).to have_css('select.error[name="author[favorite_book]"]')
@@ -582,7 +582,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on date_select inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(birthdate: ['required'])
+        allow(@author).to receive(:errors).and_return(birthdate: ["required"])
         node = Capybara.string builder.date_select(:birthdate)
         expect(node).to have_css('label.error[for="author_birthdate"]')
         %w(1 2 3).each { |i| expect(node).to have_css("select.error[name='author[birthdate(#{i}i)]']") }
@@ -590,7 +590,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on datetime_select inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(birthdate: ['required'])
+        allow(@author).to receive(:errors).and_return(birthdate: ["required"])
         node = Capybara.string builder.datetime_select(:birthdate)
         expect(node).to have_css('label.error[for="author_birthdate"]')
         %w(1 2 3 4 5).each { |i| expect(node).to have_css("select.error[name='author[birthdate(#{i}i)]']") }
@@ -598,7 +598,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
     it "should display errors on time_zone_select inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(time_zone: ['required'])
+        allow(@author).to receive(:errors).and_return(time_zone: ["required"])
         node = Capybara.string builder.time_zone_select(:time_zone)
         expect(node).to have_css('label.error[for="author_time_zone"]')
         expect(node).to have_css('select.error[name="author[time_zone]"]')
@@ -607,7 +607,7 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should display errors on collection_select inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(favorite_book: ['required'])
+        allow(@author).to receive(:errors).and_return(favorite_book: ["required"])
         node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
         expect(node).to have_css('label.error[for="author_favorite_book"]')
         expect(node).to have_css('select.error[name="author[favorite_book]"]')
@@ -616,7 +616,7 @@ describe "FoundationRailsHelper::FormHelper" do
 
     it "should display errors on grouped_collection_select inputs" do
       form_for(@author) do |builder|
-        allow(@author).to receive(:errors).and_return(favorite_book: ['required'])
+        allow(@author).to receive(:errors).and_return(favorite_book: ["required"])
         node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
         expect(node).to have_css('label.error[for="author_favorite_book"]')
         expect(node).to have_css('select.error[name="author[favorite_book]"]')
@@ -629,14 +629,14 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(login: ['required <a href="link_target">link</a>'])
         node = Capybara.string builder.text_field(:login, html_safe_errors: true)
-        expect(node).to have_link('link', href: 'link_target')
+        expect(node).to have_link("link", href: "link_target")
       end
     end
     it "should not display HTML errors when the option is not specified" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(login: ['required <a href="link_target">link</a>'])
         node = Capybara.string builder.text_field(:login)
-        expect(node).to_not have_link('link', href: 'link')
+        expect(node).to_not have_link("link", href: "link")
       end
     end
 
@@ -644,28 +644,28 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author, auto_labels: false) do |builder|
         node = Capybara.string builder.text_field(:login) +
                                builder.check_box(:active, label: true) +
-                               builder.text_field(:description, label: 'Tell me about you')
+                               builder.text_field(:description, label: "Tell me about you")
 
         expect(node).to_not have_css('label[for="author_login"]')
-        expect(node).to have_css('label[for="author_active"]', text: 'Active')
-        expect(node).to have_css('label[for="author_description"]', text: 'Tell me about you')
+        expect(node).to have_css('label[for="author_active"]', text: "Active")
+        expect(node).to have_css('label[for="author_description"]', text: "Tell me about you")
       end
     end
 
-    context 'when class option given' do
+    context "when class option given" do
       it "should add it to the error class" do
         form_for(@author) do |builder|
-          allow(@author).to receive(:errors).and_return(email: ['required'])
-          node = Capybara.string builder.text_field(:email, class: 'righteous')
+          allow(@author).to receive(:errors).and_return(email: ["required"])
+          node = Capybara.string builder.text_field(:email, class: "righteous")
           expect(node).to have_css('input.righteous.error[name="author[email]"]')
         end
       end
     end
 
-    context 'when invalid class option given' do
+    context "when invalid class option given" do
       it "should add it to the error class" do
         form_for(@author) do |builder|
-          allow(@author).to receive(:errors).and_return(email: ['required'])
+          allow(@author).to receive(:errors).and_return(email: ["required"])
           node = Capybara.string builder.text_field(:email, class: :illgotten)
           expect(node).to have_css('input.illgotten.error[name="author[email]"]')
         end
@@ -673,15 +673,15 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
-  describe 'submit button generator' do
+  describe "submit button generator" do
     after :each do
       FoundationRailsHelper.reset
     end
 
-    context 'when button_class config is not set' do
+    context "when button_class config is not set" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.submit('Save')
+          node = Capybara.string builder.submit("Save")
           expect(node).to have_css('input[type="submit"][class="small radius success button"]')
         end
       end
@@ -690,22 +690,22 @@ describe "FoundationRailsHelper::FormHelper" do
     context 'when button_class config is "superduper"' do
       before do
         FoundationRailsHelper.configure do |config|
-          config.button_class = 'superduper'
+          config.button_class = "superduper"
         end
       end
 
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.submit('Save')
+          node = Capybara.string builder.submit("Save")
           expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
     end
 
-    context 'when option value is "superduper"' do
+    context "when option value is 'superduper'" do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.submit('Save', class: 'superduper')
+          node = Capybara.string builder.submit("Save", class: "superduper")
           expect(node).to have_css('input[type="submit"][class="superduper"]')
         end
       end
