@@ -17,7 +17,7 @@ module FoundationRailsHelper
       :error     => :alert,
       :warning   => :warning,
       :primary   => :primary
-    }
+    }.freeze
     def display_flash_messages(**options)
       closable = true
       closable = options.delete(:closable) if options.has_key?(:closable)
@@ -46,12 +46,12 @@ module FoundationRailsHelper
 
     def close_link
       button_tag(
-        :class => 'close-button',
-        :type => 'button',
-        :data => { :close => '' },
-        :aria => { :label => 'Dismiss alert' }
+        class: 'close-button',
+        type: 'button',
+        data: { close: '' },
+        aria: { label: 'Dismiss alert' }
       ) do
-        content_tag(:span, '&times;'.html_safe, :aria => { :hidden => true })
+        content_tag(:span, '&times;'.html_safe, aria: { hidden: true })
       end
     end
   end
