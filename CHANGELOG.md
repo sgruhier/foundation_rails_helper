@@ -3,6 +3,7 @@ This will be used for Foundation 5 support
 
 ### Breaking changes:
 * Dropped support for Ruby 1.9.3
+* display_flash_messages now requires the key_matching hash to be prefixed with the keyword argument :key_matching
 
 ### Features:
 * Add Rubocop code style linting
