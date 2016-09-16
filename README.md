@@ -64,7 +64,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'foundation-rails'
-gem 'foundation_rails_helper', '~> 1.2.0'
+gem 'foundation_rails_helper', '~> 2.0.0'
 ```
 
 And then execute:
