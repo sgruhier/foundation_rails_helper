@@ -19,10 +19,16 @@ module FoundationRailsHelper
       primary:   :primary
     }.freeze
 
-    def display_flash_messages(**options)
-      closable = true
-      closable = options.delete(:closable) if options.has_key?(:closable)
-      key_matching = DEFAULT_KEY_MATCHING.merge(options)
+    # Displays the flash messages found in ActionDispatch's +flash+ hash using Foundation's
+    # +callout+ component.
+    #
+    # Parameters:
+    # * +closable+ - A boolean to determine whether the displayed flash messages should
+    #   be closable by the user. Defaults to true.
+    # * +key_matching+ - A Hash of key/value pairs mapping flash keys to the
+    #   corresponding class to use for the callout box.
+    def display_flash_messages(closable: true, key_matching: {})
+      key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
       key_matching.default = :primary
 
       capture do

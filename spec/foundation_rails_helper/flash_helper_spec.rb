@@ -42,13 +42,13 @@ describe FoundationRailsHelper::FlashHelper do
 
   it "displays flash message with overridden key matching" do
     allow(self).to receive(:flash).and_return("notice" => "Flash message")
-    node = Capybara.string display_flash_messages(notice: :alert)
+    node = Capybara.string display_flash_messages(key_matching: { notice: :alert })
     expect(node).to have_css("div.callout.alert", text: "Flash message")
   end
 
   it "displays flash message with custom key matching" do
     allow(self).to receive(:flash).and_return("custom_type" => "Flash message")
-    node = Capybara.string display_flash_messages(custom_type: :custom_class)
+    node = Capybara.string display_flash_messages(key_matching: { custom_type: :custom_class })
     expect(node).to have_css("div.callout.custom_class", text: "Flash message")
   end
 
@@ -86,12 +86,11 @@ describe FoundationRailsHelper::FlashHelper do
 
   context "with (closable: false) option" do
     it "doesn't display the close button" do
-      allow(self).to receive(:flash).and_return({ success: "Flash message" })
+      allow(self).to receive(:flash).and_return(success: "Flash message")
       node = Capybara.string display_flash_messages(closable: false)
       expect(node)
         .to  have_css("div.flash.callout.success", text: "Flash message")
         .and have_no_css("[data-close]", text: "×")
     end
-
   end
 end

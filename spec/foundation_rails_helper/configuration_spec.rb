@@ -5,7 +5,7 @@ describe FoundationRailsHelper do
     describe "#button_class" do
       it "default value is 'success button'" do
         config = FoundationRailsHelper::Configuration.new
-        expect(config.button_class).to eq('success button')
+        expect(config.button_class).to eq("success button")
       end
     end
 
