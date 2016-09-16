@@ -88,9 +88,9 @@ describe FoundationRailsHelper::FlashHelper do
     it "doesn't display the close button" do
       allow(self).to receive(:flash).and_return({ success: "Flash message" })
       node = Capybara.string display_flash_messages(closable: false)
-      expect(node).
-        to  have_css("div.flash.callout.success", text: "Flash message").
-        and have_no_css("[data-close]", text: "×")
+      expect(node)
+        .to  have_css("div.flash.callout.success", text: "Flash message")
+        .and have_no_css("[data-close]", text: "×")
     end
 
   end
