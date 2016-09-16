@@ -19,29 +19,29 @@ module FoundationRailsHelper
       primary:   :primary
     }.freeze
 
-    def display_flash_messages(key_matching = {})
-      key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
+    def display_flash_messages(**options)
+      closable = true
+      closable = options.delete(:closable) if options.has_key?(:closable)
+      key_matching = DEFAULT_KEY_MATCHING.merge(options)
       key_matching.default = :primary
 
       capture do
         flash.each do |key, value|
           next if FoundationRailsHelper.configuration.ignored_flash_keys.include? key.to_sym
           alert_class = key_matching[key.to_sym]
-          concat alert_box(value, alert_class)
+          concat alert_box(value, alert_class, closable)
         end
       end
     end
 
     private
 
-    def alert_box(value, alert_class)
-      content_tag(
-        :div,
-        class: "flash callout #{alert_class}",
-        data: { closable: '' }
-      ) do
+    def alert_box(value, alert_class, closable)
+      options = { class: "flash callout #{alert_class}" }
+      options[:data] = { closable: '' } if closable
+      content_tag(:div, options) do
         concat value
-        concat close_link
+        concat close_link if closable
       end
     end
 
