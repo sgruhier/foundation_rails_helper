@@ -9,15 +9,14 @@ So far it includes:
 
 * A custom FormBuilder that generates a form using the Foundation framework classes. It replaces the current `form_for`, so there is no need to change your Rails code. Error messages are properly displayed.
 
-* A `display_flash_messages` helper method that uses Zurb Foundation Alerts UI.
+* A `display_flash_messages` helper method that uses Zurb Foundation Callout UI.
 
 #### Compatibility
 
-* Only Rails 4.1/4.2/5 and Foundation 5 are fully supported
-* Some features may work with Foundation 4 and older, but results may vary, and markup which exists only for those versions will be gradually removed
-* Legacy branches exist for Rails 3 and 4.0 (see the rails3 and rails4.0 branches). These are not actively supported, and fixes are not retroactively applied, but pull requests are welcome.
-* We test against ruby versions 2.1 and up. This gem may still work fine on
-  1.9.3, but your mileage may vary
+* Only Rails 4.1/4.2/5, and Foundation 6 are fully supported
+* Some features may work with Foundation 5 and older, but results may vary, and markup which exists only for those versions will be gradually removed
+* Legacy branches exist for Rails 3, 4.0, and Foundation 5 (see the rails3, rails4.0, and foundation-5 branches). These are not actively supported, and fixes are not retroactively applied, but pull requests are welcome.
+* We test against ruby versions 2.1 and up. This gem may still work fine on 1.9.3, but your mileage may vary
 
 
 ## Screenshots
@@ -27,7 +26,7 @@ A classic devise sign up view will look like this:
 
 ```erb
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= f.email_field :email, label: 'E-mail' %>
+  <%= f.email_field :email %>
   <%= f.password_field :password %>
   <%= f.password_field :password_confirmation %>
 
@@ -45,10 +44,10 @@ A classic devise sign up view will look like this:
   <tbody>
     <tr>
       <td valign='top'>
-        <img src="https://cloud.githubusercontent.com/assets/1400414/5994195/d9b467ce-aa1e-11e4-914c-f696724b53ed.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/1400414/18522106/8b981524-7a63-11e6-8450-0605cc310205.png"/>
       </td>
       <td valign='top'>
-        <img src="https://cloud.githubusercontent.com/assets/1400414/5994196/dbf4bc0a-aa1e-11e4-8c18-b7d3b1b370dc.png"/>
+        <img src="https://cloud.githubusercontent.com/assets/1400414/18522107/8d0bfa24-7a63-11e6-8c0a-12757528b9ee.png"/>
       </td>
     </tr>
   </tbody>
@@ -56,15 +55,15 @@ A classic devise sign up view will look like this:
 
 ### Flash messages
 
-![Flash-message](https://cloud.githubusercontent.com/assets/393167/5845238/563dc094-a1b2-11e4-8548-2dd2950a60be.png "Flash-message")
+![Flash-message](https://cloud.githubusercontent.com/assets/1400414/18522256/3d13c97e-7a64-11e6-9ee2-33adc93cd573.png "Flash-message")
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'foundation-rails'
-gem 'foundation_rails_helper', '~> 1.2.0'
+gem 'foundation-rails' # required
+gem 'foundation_rails_helper', '~> 2.0.0'
 ```
 
 And then execute:
@@ -124,21 +123,21 @@ Change the label text and add a class on the label:
 f.text_field :name, label: 'Nombre', label_options: { class: 'large' }
 ```
 
-If the hint option is specified
+If the help_text option is specified
 
 ```ruby
-f.text_field :name, hint: "I'm a text field"
+f.text_field :name, help_text: "I'm a text field"
 ```
 
-an additional span element will be added after the input element:
+an additional p element will be added after the input element:
 
 ```html
-<span class="hint">I'm a text field</span>
+<p class="help-text">I'm a text field</p>
 ```
 
 ### Submit Button
 
-The 'submit' helper wraps the rails helper and sets the class attribute to "small radius success button" by default.
+The 'submit' helper wraps the rails helper and sets the class attribute to "success button" by default.
 
 ```ruby
 f.submit
@@ -147,7 +146,7 @@ f.submit
 generates:
 
 ```html
-<input class="small radius success button" name="commit" type="submit" value="Create User">
+<input class="success button" name="commit" type="submit" value="Create User">
 ```
 
 Specify the class option to override the default classes.
@@ -163,9 +162,9 @@ f.email_field :email
 generates:
 
 ```html
-<label class="error" for="user_email">Email</label>
-<input class="error" id="user_email" name="user[email]" type="email" value="">
-<small class="error">can't be blank</small>
+<label class="is-invalid-label" for="user_email">Email</label>
+<input class="is-invalid-input" id="user_email" name="user[email]" type="email" value="">
+<small class="form-error is-visible">can't be blank</small>
 ```
 
 The class attribute of the 'small' element will mirror the class attribute of the 'input' element.
@@ -205,8 +204,8 @@ Currently supported options:
 ### Submit Button Class
 To use a different class for the [submit button](https://github.com/sgruhier/foundation_rails_helper#submit-button) used in `form_for`, add a config named **button_class**:
 ```ruby
-# Default: 'small radius success button'
-config.button_class = 'large secondary button'
+# Default: 'success button'
+config.button_class = 'large hollow secondary button'
 ```
 
 Please note, the button class can still be overridden by an options hash.
@@ -227,6 +226,4 @@ See the [CONTRIBUTING](CONTRIBUTING.md) file.
 
 ## Copyright
 
-Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE - 2015
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sgruhier/foundation_rails_helper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE

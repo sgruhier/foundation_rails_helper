@@ -19,7 +19,7 @@ module FoundationRailsHelper
     def label(attribute, text = nil, options = {})
       if has_error?(attribute)
         options[:class] ||= ''
-        options[:class] += ' error'
+        options[:class] += ' is-invalid-label'
       end
 
       super(attribute, (text || '').html_safe, options)
@@ -30,7 +30,7 @@ module FoundationRailsHelper
         options.delete(:label)
         options.delete(:label_options)
         super(attribute, options, checked_value, unchecked_value)
-      end + error_and_hint(attribute, options)
+      end + error_and_help_text(attribute, options)
     end
 
     def radio_button(attribute, tag_value, options = {})
@@ -112,14 +112,14 @@ module FoundationRailsHelper
     end
 
     def error_for(attribute, options = {})
-      class_name = 'error'
+      class_name = 'form-error is-visible'
       class_name += " #{options[:class]}" if options[:class]
 
       return unless has_error?(attribute)
 
       error_messages = object.errors[attribute].join(', ')
       error_messages = error_messages.html_safe if options[:html_safe_errors]
-      content_tag(:small, error_messages, class: class_name)
+      content_tag(:small, error_messages, class: class_name.sub('is-invalid-input', ''))
     end
 
     def custom_label(attribute, text, options)
@@ -223,9 +223,11 @@ module FoundationRailsHelper
       html.html_safe
     end
 
-    def error_and_hint(attribute, options = {})
+    def error_and_help_text(attribute, options = {})
       html = ''
-      html += content_tag(:span, options[:hint], class: :hint) if options[:hint]
+      if options[:help_text]
+        html += content_tag(:p, options[:help_text], class: 'help-text')
+      end
       html += error_for(attribute, options) || ''
       html.html_safe
     end
@@ -241,17 +243,17 @@ module FoundationRailsHelper
 
       if has_error?(attribute)
         class_options[:class] = class_options[:class].to_s
-        class_options[:class] += ' error'
+        class_options[:class] += ' is-invalid-input'
       end
 
       options.delete(:label)
       options.delete(:label_options)
-      hint = options.delete(:hint)
+      help_text = options.delete(:help_text)
       prefix = options.delete(:prefix)
       postfix = options.delete(:postfix)
 
       html += wrap_prefix_and_postfix(yield(class_options), prefix, postfix)
-      html + error_and_hint(attribute, options.merge(hint: hint))
+      html + error_and_help_text(attribute, options.merge(help_text: help_text))
     end
   end
 end

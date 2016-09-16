@@ -69,7 +69,7 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(login: ["required"])
         node = Capybara.string builder.text_field(:login)
-        error_class = node.find("label")["class"].split(/\s+/).keep_if { |v| v == "error" }
+        error_class = node.find("label")["class"].split(/\s+/).keep_if { |v| v == "is-invalid-label" }
         expect(error_class.size).to eq 1
       end
     end
@@ -509,19 +509,19 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    describe "hint" do
-      it "should add a span element" do
+    describe "help_text" do
+      it "should add a p element" do
         form_for(@author) do |builder|
-          hint = "Enter login"
-          node = Capybara.string builder.text_field(:login, hint: hint)
-          expect(node.find("span").text).to eq hint
+          help_text = "Enter login"
+          node = Capybara.string builder.text_field(:login, help_text: help_text)
+          expect(node.find("p").text).to eq help_text
         end
       end
 
-      it "should not add hint attribute" do
+      it "should not add help_text attribute" do
         form_for(@author) do |builder|
-          node = Capybara.string builder.text_field(:login, hint: "Enter login")
-          expect(node.find_field("author_login")["hint"]).to be_nil
+          node = Capybara.string builder.text_field(:login, help_text: "Enter login")
+          expect(node.find_field("author_login")["help_text"]).to be_nil
         end
       end
     end
@@ -540,14 +540,14 @@ describe "FoundationRailsHelper::FormHelper" do
     it "should not display errors" do
       form_for(@author) do |builder|
         node = Capybara.string builder.text_field(:login)
-        expect(node).to_not have_css("small.error")
+        expect(node).to_not have_css("small.form-error")
       end
     end
     it "should display errors" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(login: ["required"])
         node = Capybara.string builder.text_field(:login)
-        expect(node).to have_css("small.error", text: "required")
+        expect(node).to have_css("small.form-error", text: "required")
       end
     end
     %w(file_field email_field text_field telephone_field phone_field
@@ -559,8 +559,8 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           allow(@author).to receive(:errors).and_return(description: ["required"])
           node = Capybara.string builder.public_send(field, :description)
-          expect(node).to have_css('label.error[for="author_description"]')
-          expect(node).to have_css('input.error[name="author[description]"]')
+          expect(node).to have_css('label.is-invalid-label[for="author_description"]')
+          expect(node).to have_css('input.is-invalid-input[name="author[description]"]')
         end
       end
     end
@@ -568,40 +568,40 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(description: ["required"])
         node = Capybara.string builder.text_area(:description)
-        expect(node).to have_css('label.error[for="author_description"]')
-        expect(node).to have_css('textarea.error[name="author[description]"]')
+        expect(node).to have_css('label.is-invalid-label[for="author_description"]')
+        expect(node).to have_css('textarea.is-invalid-input[name="author[description]"]')
       end
     end
     it "should display errors on select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(favorite_book: ["required"])
         node = Capybara.string builder.select(:favorite_book, [["Choice #1", :a], ["Choice #2", :b]])
-        expect(node).to have_css('label.error[for="author_favorite_book"]')
-        expect(node).to have_css('select.error[name="author[favorite_book]"]')
+        expect(node).to have_css('label.is-invalid-label[for="author_favorite_book"]')
+        expect(node).to have_css('select.is-invalid-input[name="author[favorite_book]"]')
       end
     end
     it "should display errors on date_select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(birthdate: ["required"])
         node = Capybara.string builder.date_select(:birthdate)
-        expect(node).to have_css('label.error[for="author_birthdate"]')
-        %w(1 2 3).each { |i| expect(node).to have_css("select.error[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label.is-invalid-label[for="author_birthdate"]')
+        %w(1 2 3).each { |i| expect(node).to have_css("select.is-invalid-input[name='author[birthdate(#{i}i)]']") }
       end
     end
     it "should display errors on datetime_select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(birthdate: ["required"])
         node = Capybara.string builder.datetime_select(:birthdate)
-        expect(node).to have_css('label.error[for="author_birthdate"]')
-        %w(1 2 3 4 5).each { |i| expect(node).to have_css("select.error[name='author[birthdate(#{i}i)]']") }
+        expect(node).to have_css('label.is-invalid-label[for="author_birthdate"]')
+        %w(1 2 3 4 5).each { |i| expect(node).to have_css("select.is-invalid-input[name='author[birthdate(#{i}i)]']") }
       end
     end
     it "should display errors on time_zone_select inputs" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(time_zone: ["required"])
         node = Capybara.string builder.time_zone_select(:time_zone)
-        expect(node).to have_css('label.error[for="author_time_zone"]')
-        expect(node).to have_css('select.error[name="author[time_zone]"]')
+        expect(node).to have_css('label.is-invalid-label[for="author_time_zone"]')
+        expect(node).to have_css('select.is-invalid-input[name="author[time_zone]"]')
       end
     end
 
@@ -609,8 +609,8 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(favorite_book: ["required"])
         node = Capybara.string builder.collection_select(:favorite_book, Book.all, :id, :title)
-        expect(node).to have_css('label.error[for="author_favorite_book"]')
-        expect(node).to have_css('select.error[name="author[favorite_book]"]')
+        expect(node).to have_css('label.is-invalid-label[for="author_favorite_book"]')
+        expect(node).to have_css('select.is-invalid-input[name="author[favorite_book]"]')
       end
     end
 
@@ -618,12 +618,12 @@ describe "FoundationRailsHelper::FormHelper" do
       form_for(@author) do |builder|
         allow(@author).to receive(:errors).and_return(favorite_book: ["required"])
         node = Capybara.string builder.grouped_collection_select(:favorite_book, Genre.all, :books, :name, :id, :title)
-        expect(node).to have_css('label.error[for="author_favorite_book"]')
-        expect(node).to have_css('select.error[name="author[favorite_book]"]')
+        expect(node).to have_css('label.is-invalid-label[for="author_favorite_book"]')
+        expect(node).to have_css('select.is-invalid-input[name="author[favorite_book]"]')
       end
     end
 
-    # N.B. check_box and radio_button inputs don't have the error class applied
+    # N.B. check_box and radio_button inputs don't have the is-invalid-input class applied
 
     it "should display HTML errors when the option is specified" do
       form_for(@author) do |builder|
@@ -657,7 +657,7 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           allow(@author).to receive(:errors).and_return(email: ["required"])
           node = Capybara.string builder.text_field(:email, class: "righteous")
-          expect(node).to have_css('input.righteous.error[name="author[email]"]')
+          expect(node).to have_css('input.righteous.is-invalid-input[name="author[email]"]')
         end
       end
     end
@@ -667,7 +667,7 @@ describe "FoundationRailsHelper::FormHelper" do
         form_for(@author) do |builder|
           allow(@author).to receive(:errors).and_return(email: ["required"])
           node = Capybara.string builder.text_field(:email, class: :illgotten)
-          expect(node).to have_css('input.illgotten.error[name="author[email]"]')
+          expect(node).to have_css('input.illgotten.is-invalid-input[name="author[email]"]')
         end
       end
     end
@@ -682,7 +682,7 @@ describe "FoundationRailsHelper::FormHelper" do
       it "should display form button with default class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit("Save")
-          expect(node).to have_css('input[type="submit"][class="small radius success button"]')
+          expect(node).to have_css('input[type="submit"][class="success button"]')
         end
       end
     end
@@ -702,7 +702,7 @@ describe "FoundationRailsHelper::FormHelper" do
       end
     end
 
-    context "when option value is 'superduper'" do
+    context 'when option value is "superduper"' do
       it "should display form button with 'superduper' class" do
         form_for(@author) do |builder|
           node = Capybara.string builder.submit("Save", class: "superduper")
