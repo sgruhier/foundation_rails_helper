@@ -1,4 +1,6 @@
-## NEXT VERSION
+## Version 2.0
+This will be used for Foundation 5 support
+
 ### Breaking changes:
 * Dropped support for Ruby 1.9.3
 
