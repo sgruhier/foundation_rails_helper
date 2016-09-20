@@ -105,21 +105,21 @@ module FoundationRailsHelper
       super(value, options)
     end
 
-    private
-
-    def has_error?(attribute)
-      object.respond_to?(:errors) && !object.errors[attribute].blank?
-    end
-
     def error_for(attribute, options = {})
+      return unless has_error?(attribute)
+
       class_name = 'form-error is-visible'
       class_name += " #{options[:class]}" if options[:class]
-
-      return unless has_error?(attribute)
 
       error_messages = object.errors[attribute].join(', ')
       error_messages = error_messages.html_safe if options[:html_safe_errors]
       content_tag(:small, error_messages, class: class_name.sub('is-invalid-input', ''))
+    end
+
+    private
+
+    def has_error?(attribute)
+      object.respond_to?(:errors) && !object.errors[attribute].blank?
     end
 
     def custom_label(attribute, text, options)
