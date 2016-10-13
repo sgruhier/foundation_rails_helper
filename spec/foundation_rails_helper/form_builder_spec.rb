@@ -316,6 +316,12 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node).to_not have_css('label[for="author_active"]')
       end
     end
+    it "should generate check_box input with a label with HTML content" do
+      form_for(@author) do |builder|
+        node = Capybara.string builder.check_box(:active, label: "<a href='/'>Accepts terms and conditions</a>")
+        expect(node).to have_css('label[for="author_active"] a', text: "Accepts terms and conditions")
+      end
+    end
 
     it "should generate radio_button input" do
       form_for(@author) do |builder|

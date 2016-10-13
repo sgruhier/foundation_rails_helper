@@ -3,6 +3,7 @@ require 'action_view/helpers'
 module FoundationRailsHelper
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::OutputSafetyHelper
     %w(file_field email_field text_field text_area telephone_field phone_field
        url_field number_field date_field datetime_field datetime_local_field
        month_field week_field time_field range_field search_field color_field)
@@ -132,7 +133,7 @@ module FoundationRailsHelper
             attribute.to_s.humanize
           end
       end
-      text = yield.html_safe + " #{text}" if block_given?
+      text = safe_join([yield, text.html_safe]) if block_given?
       options ||= {}
       label(attribute, text, options)
     end
