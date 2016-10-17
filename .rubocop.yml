@@ -17,3 +17,6 @@ FrozenStringLiteralComment:
 
 Documentation:
   Enabled: false
+
+Style/VariableNumber:
+    EnforcedStyle: 'snake_case'
