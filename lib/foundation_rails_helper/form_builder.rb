@@ -3,6 +3,7 @@ require 'action_view/helpers'
 module FoundationRailsHelper
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::OutputSafetyHelper
     %w(file_field email_field text_field text_area telephone_field phone_field
        url_field number_field date_field datetime_field datetime_local_field
        month_field week_field time_field range_field search_field color_field)
@@ -132,44 +133,14 @@ module FoundationRailsHelper
             attribute.to_s.humanize
           end
       end
-      text = yield.html_safe + " #{text}" if block_given?
+      text = safe_join([yield, text.html_safe]) if block_given?
       options ||= {}
       label(attribute, text, options)
     end
 
     def column_classes(options)
-      classes = SizeClassCalcluator.new(options).classes
+      classes = SizeClassCalculator.new(options).classes
       classes + ' columns'
-    end
-
-    class SizeClassCalcluator
-      def initialize(size_options)
-        @small = size_options[:small]
-        @medium = size_options[:medium]
-        @large = size_options[:large]
-      end
-
-      def classes
-        [small_class, medium_class, large_class].compact.join(' ')
-      end
-
-      private
-
-      def small_class
-        "small-#{@small}" if valid_size(@small)
-      end
-
-      def medium_class
-        "medium-#{@medium}" if valid_size(@medium)
-      end
-
-      def large_class
-        "large-#{@large}" if valid_size(@large)
-      end
-
-      def valid_size(value)
-        value.present? && value.to_i < 12
-      end
     end
 
     def tag_from_options(name, options)
