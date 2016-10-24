@@ -79,7 +79,7 @@ module FoundationRailsSpecHelper
 
   # Resource-oriented styles like form_for(@post) will expect a path method
   # for the object, so we're defining some here.
-  def authors_path(_args)
+  def authors_path(*_args)
     '/authors'
   end
 
