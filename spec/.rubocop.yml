@@ -5,3 +5,6 @@ StringLiterals:
   EnforcedStyle: double_quotes
   Exclude:
     - './spec_helper.rb'
+
+Metrics/BlockLength:
+  Enabled: false
