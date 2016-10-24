@@ -39,6 +39,7 @@ end
 
 # Thanks to Justin French for formtastic spec
 module FoundationRailsSpecHelper
+  include ActionView::RecordIdentifier # for Rails 4
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::FormOptionsHelper
   include ActionView::Helpers::DateHelper
