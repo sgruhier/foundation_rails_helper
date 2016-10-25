@@ -19,21 +19,22 @@ module FoundationRailsHelper
       primary:   :primary
     }.freeze
 
-    # Displays the flash messages found in ActionDispatch's +flash+ hash using Foundation's
-    # +callout+ component.
+    # Displays the flash messages found in ActionDispatch's +flash+ hash using
+    # Foundation's +callout+ component.
     #
     # Parameters:
-    # * +closable+ - A boolean to determine whether the displayed flash messages should
-    #   be closable by the user. Defaults to true.
+    # * +closable+ - A boolean to determine whether the displayed flash messages
+    # should be closable by the user. Defaults to true.
     # * +key_matching+ - A Hash of key/value pairs mapping flash keys to the
-    #   corresponding class to use for the callout box.
+    # corresponding class to use for the callout box.
     def display_flash_messages(closable: true, key_matching: {})
       key_matching = DEFAULT_KEY_MATCHING.merge(key_matching)
       key_matching.default = :primary
 
       capture do
         flash.each do |key, value|
-          next if FoundationRailsHelper.configuration.ignored_flash_keys.include? key.to_sym
+          next if ignored_key?(key.to_sym)
+
           alert_class = key_matching[key.to_sym]
           concat alert_box(value, alert_class, closable)
         end
@@ -60,6 +61,10 @@ module FoundationRailsHelper
       ) do
         content_tag(:span, '&times;'.html_safe, aria: { hidden: true })
       end
+    end
+
+    def ignored_key?(key)
+      FoundationRailsHelper.configuration.ignored_flash_keys.include?(key)
     end
   end
 end
