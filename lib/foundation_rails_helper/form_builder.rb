@@ -18,7 +18,7 @@ module FoundationRailsHelper
     end
 
     def label(attribute, text = nil, options = {})
-      if has_error?(attribute)
+      if error?(attribute)
         options[:class] ||= ''
         options[:class] += ' is-invalid-label'
       end
@@ -26,6 +26,7 @@ module FoundationRailsHelper
       super(attribute, (text || '').html_safe, options)
     end
 
+    # rubocop:disable LineLength
     def check_box(attribute, options = {}, checked_value = '1', unchecked_value = '0')
       custom_label(attribute, options[:label], options[:label_options]) do
         options.delete(:label)
@@ -33,6 +34,7 @@ module FoundationRailsHelper
         super(attribute, options, checked_value, unchecked_value)
       end + error_and_help_text(attribute, options)
     end
+    # rubocop:enable LineLength
 
     def radio_button(attribute, tag_value, options = {})
       options[:label_options] ||= {}
@@ -63,12 +65,14 @@ module FoundationRailsHelper
       end
     end
 
+    # rubocop:disable LineLength
     def time_zone_select(attribute, priorities = nil, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
         super(attribute, priorities, options,
               html_opts.merge(autocomplete: :off))
       end
     end
+    # rubocop:enable LineLength
 
     def select(attribute, choices, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
@@ -77,6 +81,7 @@ module FoundationRailsHelper
       end
     end
 
+    # rubocop:disable LineLength, ParameterLists
     def collection_select(attribute, collection, value_method, text_method, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
         html_options[:autocomplete] ||= :off
@@ -92,6 +97,7 @@ module FoundationRailsHelper
               option_key_method, option_value_method, options, html_opts)
       end
     end
+    # rubocop:enable LineLength, ParameterLists
 
     def autocomplete(attribute, url, options = {})
       field attribute, options do |opts|
@@ -107,35 +113,37 @@ module FoundationRailsHelper
     end
 
     def error_for(attribute, options = {})
-      return unless has_error?(attribute)
+      return unless error?(attribute)
 
       class_name = 'form-error is-visible'
       class_name += " #{options[:class]}" if options[:class]
 
       error_messages = object.errors[attribute].join(', ')
       error_messages = error_messages.html_safe if options[:html_safe_errors]
-      content_tag(:small, error_messages, class: class_name.sub('is-invalid-input', ''))
+      content_tag(:small, error_messages,
+                  class: class_name.sub('is-invalid-input', ''))
     end
 
     private
 
-    def has_error?(attribute)
+    def error?(attribute)
       object.respond_to?(:errors) && !object.errors[attribute].blank?
+    end
+
+    def default_label_text(object, attribute)
+      if object.class.respond_to?(:human_attribute_name)
+        return object.class.human_attribute_name(attribute)
+      end
+
+      attribute.to_s.humanize
     end
 
     def custom_label(attribute, text, options)
       return block_given? ? yield.html_safe : ''.html_safe if text == false
-      if text.nil? || text == true
-        text =
-          if object.class.respond_to?(:human_attribute_name)
-            object.class.human_attribute_name(attribute)
-          else
-            attribute.to_s.humanize
-          end
-      end
+
+      text = default_label_text(object, attribute) if text.nil? || text == true
       text = safe_join([yield, text.html_safe]) if block_given?
-      options ||= {}
-      label(attribute, text, options)
+      label(attribute, text, options || {})
     end
 
     def column_classes(options)
@@ -152,7 +160,7 @@ module FoundationRailsHelper
     end
 
     def decrement_input_size(input, column, options)
-      return unless options.key?(column)
+      return unless options.present? && options.key?(column)
 
       input.send("#{column}=",
                  (input.send(column) - options.fetch(column).to_i))
@@ -162,15 +170,9 @@ module FoundationRailsHelper
     def calculate_input_size(prefix_options, postfix_options)
       input_size =
         OpenStruct.new(changed?: false, small: 12, medium: 12, large: 12)
-      if prefix_options.present?
-        %w(small medium large).each do |size|
-          decrement_input_size(input_size, size.to_sym, prefix_options)
-        end
-      end
-      if postfix_options.present?
-        %w(small medium large).each do |size|
-          decrement_input_size(input_size, size.to_sym, postfix_options)
-        end
+      %w(small medium large).each do |size|
+        decrement_input_size(input_size, size.to_sym, prefix_options)
+        decrement_input_size(input_size, size.to_sym, postfix_options)
       end
 
       input_size
@@ -184,14 +186,8 @@ module FoundationRailsHelper
       klass = column_classes(input_size.marshal_dump).to_s
       input = content_tag(:div, block, class: klass)
 
-      html =
-        if input_size.changed?
-          content_tag(:div, prefix + input + postfix, class: 'row collapse')
-        else
-          block
-        end
-
-      html.html_safe
+      return block unless input_size.changed?
+      content_tag(:div, prefix + input + postfix, class: 'row collapse')
     end
 
     def error_and_help_text(attribute, options = {})
@@ -203,15 +199,17 @@ module FoundationRailsHelper
       html.html_safe
     end
 
+    def field_label(attribute, options)
+      auto_labels = @options[:auto_labels] != false
+      return ''.html_safe unless auto_labels || options[:label]
+      custom_label(attribute, options[:label], options[:label_options])
+    end
+
     def field(attribute, options, html_options = nil)
-      html = if auto_labels || options[:label]
-               custom_label(attribute, options[:label], options[:label_options])
-             else
-               ''.html_safe
-             end
+      html = field_label(attribute, options)
       class_options = html_options || options
 
-      if has_error?(attribute)
+      if error?(attribute)
         class_options[:class] = class_options[:class].to_s
         class_options[:class] += ' is-invalid-input'
       end
