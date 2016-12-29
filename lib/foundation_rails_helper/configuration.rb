@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module FoundationRailsHelper
   class << self
     attr_writer :configuration

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require File.expand_path('../lib/foundation_rails_helper/version', __FILE__)
 
 def rails_gem_version

@@ -9,12 +9,6 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
-# A quick fix for not having magic comments at the top of each file
-# # frozen_string_literal: true
-# https://github.com/bbatsov/rubocop/issues/3284
-FrozenStringLiteralComment:
-  Enabled: false
-
 Documentation:
   Enabled: false
 

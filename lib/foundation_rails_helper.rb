@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'foundation_rails_helper/version'
 require 'foundation_rails_helper/configuration'
 require 'foundation_rails_helper/form_builder'
