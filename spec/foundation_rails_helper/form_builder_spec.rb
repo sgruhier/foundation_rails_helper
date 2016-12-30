@@ -55,6 +55,15 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
+  it "should not display labels if :auto_labels is set to false at configuration time" do
+    allow(FoundationRailsHelper).to receive_message_chain(:configuration, :auto_labels).and_return(false)
+
+    form_for(@author) do |builder|
+      node = Capybara.string builder.text_field(:login)
+      expect(node).not_to have_css('label[for="author_login"]', text: "Login")
+    end
+  end
+
   describe "label" do
     context "when there aren't any errors and no class option is passed" do
       it "should not have a class attribute" do
