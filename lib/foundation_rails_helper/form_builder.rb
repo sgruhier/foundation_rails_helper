@@ -201,7 +201,6 @@ module FoundationRailsHelper
     end
 
     def field_label(attribute, options)
-      auto_labels = @options[:auto_labels] != false
       return ''.html_safe unless auto_labels || options[:label]
       custom_label(attribute, options[:label], options[:label_options])
     end
