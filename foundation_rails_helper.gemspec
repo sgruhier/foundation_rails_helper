@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require File.expand_path('../lib/foundation_rails_helper/version', __FILE__)
 
-class Gem::Specification
+class Gem::Specification # rubocop:disable ClassAndModuleChildren
   def self.rails_gem_version
     # Allow different versions of the rails gems to be specified, for testing
     @rails_gem_version ||=
