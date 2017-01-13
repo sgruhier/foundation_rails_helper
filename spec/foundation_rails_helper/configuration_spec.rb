@@ -32,6 +32,21 @@ describe FoundationRailsHelper do
       end
     end
 
+    describe "#auto_labels" do
+      it "default value is 'true'" do
+        config = FoundationRailsHelper::Configuration.new
+        expect(config.auto_labels).to be(true)
+      end
+    end
+
+    describe "#auto_labels=" do
+      it "can set the value" do
+        config = FoundationRailsHelper::Configuration.new
+        config.auto_labels = false
+        expect(config.auto_labels).to be(false)
+      end
+    end
+
     describe ".reset" do
       it "resets the configured button class" do
         FoundationRailsHelper.configure do |config|
@@ -53,6 +68,17 @@ describe FoundationRailsHelper do
 
         config = FoundationRailsHelper.configuration
         expect(config.ignored_flash_keys).to eq([])
+      end
+
+      it "resets the configured auto labels" do
+        FoundationRailsHelper.configure do |config|
+          config.auto_labels = false
+        end
+
+        FoundationRailsHelper.reset
+
+        config = FoundationRailsHelper.configuration
+        expect(config.auto_labels).to be(true)
       end
     end
   end

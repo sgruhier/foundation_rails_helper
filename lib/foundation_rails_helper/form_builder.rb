@@ -204,7 +204,6 @@ module FoundationRailsHelper
     end
 
     def field(attribute, options, html_options = nil)
-      auto_labels = true unless @options[:auto_labels] == false
       html = if auto_labels || options[:label]
                custom_label(attribute, options[:label], options[:label_options])
              else
@@ -225,6 +224,14 @@ module FoundationRailsHelper
 
       html += wrap_prefix_and_postfix(yield(class_options), prefix, postfix)
       html + error_and_help_text(attribute, options.merge(help_text: help_text))
+    end
+
+    def auto_labels
+      if @options[:auto_labels].nil?
+        FoundationRailsHelper.configuration.auto_labels
+      else
+        @options[:auto_labels]
+      end
     end
   end
 end
