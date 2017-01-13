@@ -8,7 +8,7 @@ class Gem::Specification
       if ENV['RAILS_VERSION']
         "~> #{ENV['RAILS_VERSION']}"
       else
-        ['~> 4.1', '>= 4.1.0']
+        ['~> 5.0', '>= 5.0.0']
       end
   end
 end
