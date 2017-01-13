@@ -63,7 +63,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'foundation-rails' # required
-gem 'foundation_rails_helper', '~> 3.0.0'
+gem 'foundation_rails_helper', '~> 2.0.0'
 ```
 
 And then execute:
