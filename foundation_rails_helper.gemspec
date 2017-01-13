@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 require File.expand_path('../lib/foundation_rails_helper/version', __FILE__)
 
-def rails_gem_version
-  # Allow different versions of the rails gems to be specified, for testing
-  @rails_gem_version ||=
-    case ENV['RAILS_VERSION']
-    when nil
-      '>= 4.1'
-    else
-      "~> #{ENV['RAILS_VERSION']}"
-    end
+class Gem::Specification
+  def self.rails_gem_version
+    # Allow different versions of the rails gems to be specified, for testing
+    @rails_gem_version ||=
+      if ENV['RAILS_VERSION']
+        "~> #{ENV['RAILS_VERSION']}"
+      else
+        ['~> 4.1', '>= 4.1.0']
+      end
+  end
 end
 
 Gem::Specification.new do |gem|
@@ -29,10 +30,10 @@ Gem::Specification.new do |gem|
   gem.version = FoundationRailsHelper::VERSION
   gem.license = 'MIT'
 
-  gem.add_dependency 'railties', rails_gem_version
-  gem.add_dependency 'actionpack', rails_gem_version
-  gem.add_dependency 'activemodel', rails_gem_version
-  gem.add_dependency 'activesupport', rails_gem_version
+  gem.add_dependency 'railties', Gem::Specification.rails_gem_version
+  gem.add_dependency 'actionpack', Gem::Specification.rails_gem_version
+  gem.add_dependency 'activemodel', Gem::Specification.rails_gem_version
+  gem.add_dependency 'activesupport', Gem::Specification.rails_gem_version
   gem.add_dependency 'tzinfo', '~> 1.2', '>= 1.2.2'
 
   gem.add_development_dependency 'rspec-rails', '>= 3.1'
