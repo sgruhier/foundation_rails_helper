@@ -1,3 +1,7 @@
+## Version 3.0.0
+* Added Foundation 6 support
+* Added auto_labels config
+
 ## Version 2.0
 This will be used for Foundation 5 support
 
