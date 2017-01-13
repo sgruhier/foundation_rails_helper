@@ -58,8 +58,9 @@ describe "FoundationRailsHelper::FormHelper" do
     end
   end
 
-  it "should not display labels if :auto_labels is set to false at configuration time" do
-    allow(FoundationRailsHelper).to receive_message_chain(:configuration, :auto_labels).and_return(false)
+  it "shouldn't display labels if :auto_labels false at configuration time" do
+    allow(FoundationRailsHelper)
+      .to receive_message_chain(:configuration, :auto_labels).and_return(false)
 
     form_for(@author) do |builder|
       node = Capybara.string builder.text_field(:login)
