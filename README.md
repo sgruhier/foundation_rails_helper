@@ -1,17 +1,29 @@
 # Foundation Rails Helper [![Build Status](https://secure.travis-ci.org/sgruhier/foundation_rails_helper.png)](http://travis-ci.org/sgruhier/foundation_rails_helper)
 
-Gem for Rails 4.1+ applications that use the excellent Zurb Foundation framework.
+Gem for Rails 4.1+ applications that use the excellent [Zurb Foundation framework](https://github.com/zurb/foundation-rails).
 
-* [Zurb Foundation](https://github.com/zurb/foundation)
-* [Zurb Foundation Rails](https://github.com/zurb/foundation-rails)
-
-So far it includes:
+Includes:
 
 * A custom FormBuilder that generates a form using the Foundation framework classes. It replaces the current `form_for`, so there is no need to change your Rails code. Error messages are properly displayed.
 
 * A `display_flash_messages` helper method that uses Zurb Foundation Callout UI.
 
-#### Compatibility
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'foundation-rails', '~> 6.0' # required
+gem 'foundation_rails_helper', '>= 3.0.0.beta3', '< 4.0'
+```
+
+And then execute:
+
+```bash
+$ bundle
+```
+
+## Compatibility
 
 * Only Rails 4.1/4.2/5, and Foundation 6 are fully supported
 * Some features may work with Foundation 5 and older, but results may vary, and markup which exists only for those versions will be gradually removed
@@ -57,26 +69,11 @@ A classic devise sign up view will look like this:
 
 ![Flash-message](https://cloud.githubusercontent.com/assets/1400414/18522256/3d13c97e-7a64-11e6-9ee2-33adc93cd573.png "Flash-message")
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'foundation-rails', '~> 6.0' # required
-gem 'foundation_rails_helper', '>= 3.0.0.beta3', '< 4.0'
-```
-
-And then execute:
-
-```bash
-$ bundle
-```
+## Usage
 
 ### Flash Messages
 
 To use the built in flash helper, add `<%= display_flash_messages %>` to your layout file (eg. *app/views/layouts/application.html.erb*).
-
-## Usage
 
 ### form_for
 
@@ -111,11 +108,11 @@ generates:
 <input id="user_name" name="user[name]" type="text">
 ```
 
-Preventing the generation of labels can be accomplished two ways. To disable on a form element:
+Preventing the generation of labels can be accomplished three ways. To disable on a form element:
 ```ruby
 f.text_field :name, label: false
 ```
-For all form elements, add the option: `auto_labels: false` to the form helper.
+For all form elements, add the option: `auto_labels: false` to the form helper.  To disable for all forms in you project, use the `auto_labels` config option, see the Configuration section for more information.
 
 Change the label text and add a class on the label:
 
@@ -199,8 +196,6 @@ FoundationRailsHelper.configure do |config|
 end
 ```
 
-Currently supported options:
-
 ### Submit Button Class
 To use a different class for the [submit button](https://github.com/sgruhier/foundation_rails_helper#submit-button) used in `form_for`, add a config named **button_class**:
 ```ruby
@@ -220,10 +215,17 @@ you can specify a blacklist of keys to ignore with the **ignored_flash_keys** co
 config.ignored_flash_keys = [:timedout]
 ```
 
+### Auto Labels
+If you prefer to not have the form builder automatically generate labels, set `auto_labels` to false.
+```ruby
+# Default: true
+config.auto_labels = false
+```
+
 ## Contributing
 
 See the [CONTRIBUTING](CONTRIBUTING.md) file.
 
 ## Copyright
 
-Sébastien Gruhier (http://xilinus.com, http://v2.maptimize.com) - MIT LICENSE
+Sébastien Gruhier (http://xilinus.com) - MIT LICENSE
