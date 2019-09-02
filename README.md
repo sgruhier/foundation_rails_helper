@@ -25,7 +25,7 @@ $ bundle
 
 ## Compatibility
 
-* Only Rails 4.1/4.2/5, and Foundation 6 are fully supported
+* Only Rails 4.1/4.2/5/6, and Foundation 6 are fully supported
 * Some features may work with Foundation 5 and older, but results may vary, and markup which exists only for those versions will be gradually removed
 * Legacy branches exist for Rails 3, 4.0, and Foundation 5 (see the rails3, rails4.0, and foundation-5 branches). These are not actively supported, and fixes are not retroactively applied, but pull requests are welcome.
 * We test against ruby versions 2.1 and up. This gem may still work fine on 1.9.3, but your mileage may vary
