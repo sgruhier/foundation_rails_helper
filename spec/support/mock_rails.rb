@@ -10,7 +10,9 @@ module FoundationRailsSpecHelper
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::FormOptionsHelper
   include ActionView::Helpers::DateHelper
-  include ActionController::PolymorphicRoutes if defined?(ActionController::PolymorphicRoutes)
+  if defined?(ActionController::PolymorphicRoutes)
+    include ActionController::PolymorphicRoutes
+  end
   include ActionDispatch::Routing::PolymorphicRoutes
   include AbstractController::UrlFor if defined?(AbstractController::UrlFor)
   # to use dom_class in Rails 4 tests
@@ -57,9 +59,7 @@ module FoundationRailsSpecHelper
   end
 
   def _routes
-    double('_routes',
-      :polymorphic_mappings => {}
-    )
+    double('_routes', polymorphic_mappings: {})
   end
 
   def self.included(base)
