@@ -10,7 +10,11 @@ module FoundationRailsSpecHelper
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::FormOptionsHelper
   include ActionView::Helpers::DateHelper
-  include ActionDispatch::Routing::UrlFor
+  if defined?(ActionController::PolymorphicRoutes)
+    include ActionController::PolymorphicRoutes
+  end
+  include ActionDispatch::Routing::PolymorphicRoutes
+  include AbstractController::UrlFor if defined?(AbstractController::UrlFor)
   # to use dom_class in Rails 4 tests
   # in Rails 5, RecordIdentifier is already required by FormHelper module
   include ActionView::RecordIdentifier
@@ -52,6 +56,10 @@ module FoundationRailsSpecHelper
   # the argument is required for Rails 4 tests
   def authors_path(*_args)
     '/authors'
+  end
+
+  def _routes
+    double('_routes', polymorphic_mappings: {})
   end
 
   def self.included(base)
