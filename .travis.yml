@@ -14,9 +14,9 @@ env:
   - "RAILS_VERSION=5.2.0"
   - "RAILS_VERSION=6.0.0"
   - "RAILS_VERSION=6.1.0"
-matrix:
+jobs:
   exclude:
-    - rvm: 2.4.7
+    - rvm: 2.4.10
       env: "RAILS_VERSION=6.1.0"
     - rvm: 2.3.8
       env: "RAILS_VERSION=6.1.0"
@@ -38,4 +38,3 @@ matrix:
       env: "RAILS_VERSION=4.2.0"
     - rvm: 2.4.10
       env: "RAILS_VERSION=4.2.0"
-sudo: false
