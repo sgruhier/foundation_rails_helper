@@ -763,8 +763,7 @@ describe "FoundationRailsHelper::FormHelper" do
     end
 
     %w(file_field email_field text_field telephone_field phone_field
-       url_field number_field date_field datetime_field datetime_local_field
-       month_field week_field time_field range_field search_field color_field
+       url_field number_field range_field search_field color_field
        password_field).each do |field|
       it "should display errors on #{field} inputs" do
         form_for(@author) do |builder|
@@ -775,6 +774,21 @@ describe "FoundationRailsHelper::FormHelper" do
             .to have_css('label.is-invalid-label[for="author_description"]')
           expect(node)
             .to have_css('input.is-invalid-input[name="author[description]"]')
+        end
+      end
+    end
+
+    %w(date_field datetime_field datetime_local_field month_field
+       week_field time_field).each do |field|
+      it "should display errors on #{field} inputs" do
+        form_for(@author) do |builder|
+          allow(@author)
+            .to receive(:errors).and_return(birthdate: ["required"])
+          node = Capybara.string builder.public_send(field, :birthdate)
+          expect(node)
+            .to have_css('label.is-invalid-label[for="author_birthdate"]')
+          expect(node)
+            .to have_css('input.is-invalid-input[name="author[birthdate]"]')
         end
       end
     end
