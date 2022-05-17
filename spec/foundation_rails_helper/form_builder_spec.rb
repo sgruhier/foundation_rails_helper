@@ -289,8 +289,23 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node)
           .to have_css('label[for="author_password"]', text: "Password")
         expect(node)
-          .to have_css('input[type="password"][name="author[password]"]')
+          .to have_css('input[type="password"][name="author[password]"][autocomplete="off"]')
         expect(node.find_field("author_password").value).to be_nil
+      end
+    end
+
+    context "when autocomplete attribute is defined in password_field input" do
+      let(:options) { { autocomplete: "new-password" } }
+
+      it "generates password_field input with autocomplete attribute" do
+        form_for(@author) do |builder|
+          node = Capybara.string builder.password_field(:password, options)
+          expect(node)
+            .to have_css('label[for="author_password"]', text: "Password")
+          expect(node)
+            .to have_css('input[type="password"][name="author[password]"][autocomplete="new-password"]')
+          expect(node.find_field("author_password").value).to be_nil
+        end
       end
     end
 
@@ -468,7 +483,7 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node)
           .to have_css('label[for="author_birthdate"]', text: "Birthdate")
         %w(1 2 3).each do |i|
-          expect(node).to have_css("select[name='author[birthdate(#{i}i)]']")
+          expect(node).to have_css("select[name='author[birthdate(#{i}i)]'][autocomplete='off']")
         end
         expect(node)
           .to have_css("#{select}1i #{option}[value=\"1969\"]")
@@ -519,7 +534,7 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node)
           .to have_css('label[for="author_birthdate"]', text: "Birthdate")
         %w(1 2 3 4 5).each do |i|
-          expect(node).to have_css("select[name='author[birthdate(#{i}i)]']")
+          expect(node).to have_css("select[name='author[birthdate(#{i}i)]'][autocomplete='off']")
         end
         expect(node).to have_css("#{select}1i #{option}[value=\"1969\"]")
         expect(node).to have_css("#{select}2i #{option}[value=\"6\"]")
@@ -559,7 +574,7 @@ describe "FoundationRailsHelper::FormHelper" do
         )
         expect(node)
           .to have_css('label[for="author_time_zone"]', text: "Time zone")
-        expect(node).to have_css('select[name="author[time_zone]"]')
+        expect(node).to have_css('select[name="author[time_zone]"][autocomplete="off"]')
         expect(node)
           .to have_css('select[name="author[time_zone]"] option[value="Perth"]',
                        text: "(GMT+08:00) Perth")

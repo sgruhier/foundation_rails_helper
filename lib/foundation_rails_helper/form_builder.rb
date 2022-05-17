@@ -50,27 +50,30 @@ module FoundationRailsHelper
 
     def password_field(attribute, options = {})
       field attribute, options do |opts|
-        super(attribute, opts.merge(autocomplete: :off))
+        opts[:autocomplete] ||= :off
+        super(attribute, opts)
       end
     end
 
     def datetime_select(attribute, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
-        super(attribute, options, html_opts.merge(autocomplete: :off))
+        html_options[:autocomplete] ||= :off
+        super(attribute, options, html_opts)
       end
     end
 
     def date_select(attribute, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
-        super(attribute, options, html_opts.merge(autocomplete: :off))
+        html_options[:autocomplete] ||= :off
+        super(attribute, options, html_opts)
       end
     end
 
     # rubocop:disable LineLength
     def time_zone_select(attribute, priorities = nil, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
-        super(attribute, priorities, options,
-              html_opts.merge(autocomplete: :off))
+        html_options[:autocomplete] ||= :off
+        super(attribute, priorities, options, html_opts)
       end
     end
     # rubocop:enable LineLength
