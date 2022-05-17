@@ -63,7 +63,8 @@ module FoundationRailsHelper
 
     def date_select(attribute, options = {}, html_options = {})
       field attribute, options, html_options do |html_opts|
-        super(attribute, options, html_opts.merge(autocomplete: :off))
+        html_options[:autocomplete] ||= :off
+        super(attribute, options, html_opts)
       end
     end
 
