@@ -574,7 +574,7 @@ describe "FoundationRailsHelper::FormHelper" do
         )
         expect(node)
           .to have_css('label[for="author_time_zone"]', text: "Time zone")
-        expect(node).to have_css('select[name="author[time_zone]"]')
+        expect(node).to have_css('select[name="author[time_zone]"][autocomplete="off"]')
         expect(node)
           .to have_css('select[name="author[time_zone]"] option[value="Perth"]',
                        text: "(GMT+08:00) Perth")
