@@ -50,7 +50,8 @@ module FoundationRailsHelper
 
     def password_field(attribute, options = {})
       field attribute, options do |opts|
-        super(attribute, opts.merge(autocomplete: :off))
+        opts[:autocomplete] ||= :off
+        super(attribute, opts)
       end
     end
 
