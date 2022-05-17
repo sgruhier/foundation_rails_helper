@@ -534,7 +534,7 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node)
           .to have_css('label[for="author_birthdate"]', text: "Birthdate")
         %w(1 2 3 4 5).each do |i|
-          expect(node).to have_css("select[name='author[birthdate(#{i}i)]']")
+          expect(node).to have_css("select[name='author[birthdate(#{i}i)]'][autocomplete='off']")
         end
         expect(node).to have_css("#{select}1i #{option}[value=\"1969\"]")
         expect(node).to have_css("#{select}2i #{option}[value=\"6\"]")
