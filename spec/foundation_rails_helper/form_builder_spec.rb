@@ -289,7 +289,7 @@ describe "FoundationRailsHelper::FormHelper" do
         expect(node)
           .to have_css('label[for="author_password"]', text: "Password")
         expect(node)
-          .to have_css('input[type="password"][name="author[password]"]')
+          .to have_css('input[type="password"][name="author[password]"][autocomplete="off"]')
         expect(node.find_field("author_password").value).to be_nil
       end
     end
