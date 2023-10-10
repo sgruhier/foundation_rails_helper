@@ -5,7 +5,7 @@ class Gem::Specification # rubocop:disable ClassAndModuleChildren
   def self.rails_gem_version
     # Allow different versions of the rails gems to be specified, for testing
     @rails_gem_version ||=
-      ENV['RAILS_VERSION'] ? "~> #{ENV['RAILS_VERSION']}" : ['>= 4.1', '< 7.1']
+      ENV['RAILS_VERSION'] ? "~> #{ENV['RAILS_VERSION']}" : ['>= 4.1', '< 7.2']
   end
 end
 
